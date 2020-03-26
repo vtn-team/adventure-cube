@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/DeckEdit.unity
+    guid: abb67a31f1ddb3844ae075fda2368237
+  - enabled: 1
+    path: Assets/Scenes/second.unity
+    guid: 814a0f9c0480424479a19d95926ae36b
+  m_configObjects: {}
