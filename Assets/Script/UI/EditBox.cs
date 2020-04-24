@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+using Block;
+
 public class EditBox : MonoBehaviour
 {
     Dropdown DropDown;

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using Block;
+
 public class FieldObject : MonoBehaviour
 {
     [SerializeField] MonoBlock DropCube = null;

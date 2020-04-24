@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Block;
+
 public class GameManager
 {
     static GameManager Instance = new GameManager();

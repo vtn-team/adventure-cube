@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Block;
+using Summon;
+
 public class MasterCube : MonoBehaviour
 {
     [SerializeField] protected List<MonoBlock.BlockType> Deck = new List<MonoBlock.BlockType>();
@@ -10,6 +13,7 @@ public class MasterCube : MonoBehaviour
     protected Rigidbody RigidBody;
     protected List<MonoBlock> ChildBlocks = new List<MonoBlock>();
     protected bool PowerOff = false;
+    protected ISummonGroup[] SummonGroup = new ISummonGroup[(int)SummonObject.SummonType.MAX];
 
     float Timer = 0.0f;
     Vector3 FromPos;
@@ -31,10 +35,11 @@ public class MasterCube : MonoBehaviour
         int x = -1;
         int y = -1;
         int z = -1;
+        int index = 1;
         Vector3 Center = this.transform.position;
         foreach (var b in Deck)
         {
-            var block = MonoBlock.Build(b, PlayerId, x, y, z);
+            var block = MonoBlock.Build(b, index, PlayerId, x, y, z, this);
             ChildBlocks.Add(block);
             block.transform.parent = this.transform;
             block.transform.position = new Vector3(Center.x + x, Center.y + y + 2.0f, Center.z + z);
@@ -51,6 +56,7 @@ public class MasterCube : MonoBehaviour
                     if (z > 1) break;
                 }
             }
+            index++;
         }
 
         MonoBlockCache.SetPlayerDeck(PlayerId, ChildBlocks);
@@ -60,46 +66,72 @@ public class MasterCube : MonoBehaviour
     {
         if (!RigidBody) return;
 
-        if (!IsAction) return;
-
-        //移動
-        if (Input.GetMouseButtonDown(0))
+        if (!IsMove)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            bool is_hit = Physics.Raycast(ray, out hit);
-            if (is_hit)
+            //移動
+            if (Input.GetMouseButtonDown(0))
             {
-                Timer = 0.0f;
-                FromPos = this.transform.position;
-                TargetPos = hit.point;
-                TargetPos.y = 0.0f;
-                IsMove = true;
-                this.transform.LookAt(TargetPos, Vector3.up);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                bool is_hit = Physics.Raycast(ray, out hit);
+                if (is_hit)
+                {
+                    Timer = 0.0f;
+                    FromPos = this.transform.position;
+                    TargetPos = hit.point;
+                    TargetPos.y = 0.0f;
+                    IsMove = true;
+                    this.transform.LookAt(TargetPos, Vector3.up);
+                }
             }
         }
 
-        //移動
-        if (Input.GetMouseButtonDown(1))
+        if (!IsAction)
         {
-            IsAction = true;
+            //移動
+            if (Input.GetMouseButtonDown(1))
+            {
+                IsAction = true;
+            }
         }
 
-        if (!IsMove) return;
-
-        Timer += Time.deltaTime;
-        if (Timer > 1.0f)
+        if (IsMove)
         {
-            Timer = 1.0f;
-            IsMove = false;
+            Timer += Time.deltaTime;
+            if (Timer > 1.0f)
+            {
+                Timer = 1.0f;
+                IsMove = false;
+            }
+            this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer);
         }
 
-        this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer);
+
+        //キューブの処理
+        ChildBlocks.ForEach(c => c.UpdateBlock());
+
+        //サモナーの処理
+        for(int i=0; i<(int)SummonObject.SummonType.MAX; ++i)
+        {
+            if (SummonGroup[i] == null) continue;
+            SummonGroup[i].Update();
+        }
     }
 
     public void CallEvent()
     {
 
+    }
+
+
+    public void AddSummonGroup(SummonObject.SummonType type, SummonObject summon)
+    {
+        if(SummonGroup[(int)type] == null)
+        {
+            SummonGroup[(int)type] = SummonObject.Build(type);
+        }
+        SummonGroup[(int)type].Add(summon);
+        SummonGroup[(int)type].Replace();
     }
 
     private void OnTriggerEnter(Collider target)

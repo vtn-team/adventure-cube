@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+using Block;
+
 public class GameScene : MonoBehaviour
 {
     public enum GamePhase {
