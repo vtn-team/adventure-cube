@@ -29,7 +29,7 @@ public class GameScene : MonoBehaviour
     float Timer = 0.0f;
     int NextCount = 0;
 
-    List<Enemy> EnemyList = new List<Enemy>();
+    List<FieldEnemy> EnemyList = new List<FieldEnemy>();
 
     private void Awake()
     {
