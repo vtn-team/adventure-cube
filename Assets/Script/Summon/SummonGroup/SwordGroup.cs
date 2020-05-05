@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Summon
 {
-    public class SwordGroup : ISummonGroup
+    public class SwordGroup : IObjectGroup<SummonObject>
     {
         List<Sword> Swords = new List<Sword>();
         
@@ -32,7 +32,7 @@ namespace Summon
         {
             for (int i = 0; i < Swords.Count; ++i)
             {
-                Swords[i].transform.Rotate(Vector3.up, 3.0f);
+                Swords[i].transform.Rotate(Vector3.up, 1.0f);
             }
         }
     }

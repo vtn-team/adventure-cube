@@ -36,7 +36,7 @@ namespace Summon
             return summon;
         }
 
-        static public ISummonGroup Build(SummonType type)
+        static public IObjectGroup<SummonObject> Build(SummonType type)
         {
             switch(type)
             {
