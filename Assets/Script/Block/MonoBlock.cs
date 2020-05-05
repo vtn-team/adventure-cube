@@ -18,19 +18,23 @@ namespace Block
         }
 
         [SerializeField] protected int Life = 100;
+        [SerializeField] protected int _figure = 1; //一応。
         protected bool IsActivate = false;
 
         protected bool isHit = true;
 
         protected MasterCube MasterCube { get; private set; }
         public int Index { get; private set; }
-        public int OwnerPlayerId { get; private set; }
         public int DeckX { get; private set; }
         public int DeckY { get; private set; }
         public int DeckZ { get; private set; }
 
+        public int Figure { get; protected set; }
+
+
         void Awake()
         {
+            Figure = _figure;
             MonoBlockCache.AddCache(this);
         }
 
@@ -72,14 +76,13 @@ namespace Block
             }
         }
 
-        static public MonoBlock Build(BlockType type, int index, int ownerId, int x, int y, int z, MasterCube master)
+        static public MonoBlock Build(BlockType type, int index, int x, int y, int z, MasterCube master)
         {
             var prefab = BlockBuilder.GetCache(type);
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<MonoBlock>();
             block.MasterCube = master;
             block.Index = index;
-            block.OwnerPlayerId = ownerId;
             block.DeckX = x;
             block.DeckY = y;
             block.DeckZ = z;
