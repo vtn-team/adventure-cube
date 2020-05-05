@@ -7,13 +7,13 @@ using Summon;
 
 public class MasterCube : MonoBehaviour
 {
-    [SerializeField] protected List<MonoBlock.BlockType> Deck = new List<MonoBlock.BlockType>();
-    [SerializeField] protected int PlayerId = 0;
-
     protected Rigidbody RigidBody;
     protected List<MonoBlock> ChildBlocks = new List<MonoBlock>();
     protected bool PowerOff = false;
-    protected ISummonGroup[] SummonGroup = new ISummonGroup[(int)SummonObject.SummonType.MAX];
+    protected IObjectGroup<SummonObject>[] SummonGroup = new IObjectGroup<SummonObject>[(int)SummonObject.SummonType.MAX];
+
+    public DamageCaster TakeDamageCaster { get; private set; }
+    public DamageCaster AttackDamageCaster { get; private set; }
 
     float Timer = 0.0f;
     Vector3 FromPos;
@@ -21,45 +21,12 @@ public class MasterCube : MonoBehaviour
     bool IsMove = false;
     bool IsAction = false;
 
-    public void Build()
+    public virtual void Build()
     {
         RigidBody = GetComponent<Rigidbody>();
-        /*
-        var deck = GameManager.GetDeck(PlayerId);
-        if (deck == null)
-        {
-            deck = Deck;
-        }
-        */
-
-        int x = -1;
-        int y = -1;
-        int z = -1;
-        int index = 1;
-        Vector3 Center = this.transform.position;
-        foreach (var b in Deck)
-        {
-            var block = MonoBlock.Build(b, index, PlayerId, x, y, z, this);
-            ChildBlocks.Add(block);
-            block.transform.parent = this.transform;
-            block.transform.position = new Vector3(Center.x + x, Center.y + y + 2.0f, Center.z + z);
-
-            x++;
-            if (x > 1)
-            {
-                x = -1;
-                y++;
-                if(y > 1)
-                {
-                    y = -1;
-                    z++;
-                    if (z > 1) break;
-                }
-            }
-            index++;
-        }
-
-        MonoBlockCache.SetPlayerDeck(PlayerId, ChildBlocks);
+        
+        TakeDamageCaster = new DamageCaster(ChildBlocks);
+        AttackDamageCaster = new DamageCaster(ChildBlocks);
     }
 
     private void Update()
@@ -132,6 +99,16 @@ public class MasterCube : MonoBehaviour
         }
         SummonGroup[(int)type].Add(summon);
         SummonGroup[(int)type].Replace();
+    }
+
+    public void Damage(int dir, int dmg)
+    {
+        int TargetId = 0;
+        TargetId = TakeDamageCaster.CastDamage(dir, ref dmg);
+        if (TargetId == -1) return;
+
+        Random.Range(0,26);
+
     }
 
     private void OnTriggerEnter(Collider target)
