@@ -9,7 +9,7 @@ namespace EnemyAction
     [Serializable]
     public class TerritoryMove : ICommand
     {
-        GameObject Target;
+        MasterCube Target;
 
         [SerializeField]
         float Speed;
@@ -19,7 +19,7 @@ namespace EnemyAction
 
         Vector3 HomePoint;
 
-        public void Setup(GameObject owner)
+        public void Setup(MasterCube owner)
         {
             Target = owner;
         }

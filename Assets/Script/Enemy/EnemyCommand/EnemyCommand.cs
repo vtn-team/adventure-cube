@@ -19,16 +19,20 @@ class EnemyCommand : MonoBehaviour, IUpdatable
     }
 
     [SerializeField]
+    MasterCube MasterCube = null;
+
+    [SerializeField]
     List<EnemyCommandSet> Commands = new List<EnemyCommandSet>();
 
     float Timer = 0.0f;
     bool IsEndExecute = false;
     EnemyCommandSet Current = null;
-    List<EnemyCommandSet> Stack = new List<EnemyCommandSet>();
+    LinkedList<EnemyCommandSet> Stack = new LinkedList<EnemyCommandSet>();
 
     private void Awake()
     {
-        UpdateManager.Add(this, 0);
+        LifeCycleManager.AddUpdate(this, 0);
+        MasterCube = GetComponent<MasterCube>();
     }
 
     public bool CastWait()
@@ -43,6 +47,11 @@ class EnemyCommand : MonoBehaviour, IUpdatable
 
     public void UnityUpdate()
     {
+        foreach(var s in Stack)
+        {
+            if (s.Command.Execute()) Stack.Remove(s);
+        }
+
         if(Current == null)
         {
             var cmds = Commands.Where(c => c.Probability > 0);
@@ -59,10 +68,7 @@ class EnemyCommand : MonoBehaviour, IUpdatable
             }
             if(Current != null)
             {
-                Debug.Log(Current);
-                Current.Command.Setup(this.gameObject);
-                Timer = 0.0f;
-                IsEndExecute = false;
+                UpdateNextCommand();
             }
             return;
         }
@@ -91,10 +97,33 @@ class EnemyCommand : MonoBehaviour, IUpdatable
             Timer += Time.deltaTime;
             if (Timer < Current.CoolTime) return;
         }
-        
-        if(Current.NextIndex != -1)
+
+        SearchNext();
+    }
+
+    void UpdateNextCommand()
+    {
+        Debug.Log(Current.Command.ToString());
+        Current.Command.Setup(MasterCube);
+
+        if (Current.IsWait)
+        {
+            Timer = 0.0f;
+            IsEndExecute = false;
+        }
+        else
+        {
+            Stack.AddLast(Current);
+            SearchNext();
+        }
+    }
+
+    void SearchNext()
+    {
+        if (Current.NextIndex != -1)
         {
             Current = Commands[Current.NextIndex];
+            UpdateNextCommand();
         }
         else
         {

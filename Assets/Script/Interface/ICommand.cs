@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface ICommand
 {
-    void Setup(GameObject owner);
+    void Setup(MasterCube owner);
 
     //舞フレーム呼び出され、trueで終了する
     bool Execute();

@@ -9,9 +9,9 @@ namespace EnemyAction
     class NeedleAttack : ICommand
     {
         [SerializeField] int Atk;
-        GameObject Owner;
+        MasterCube Owner;
 
-        public void Setup(GameObject owner)
+        public void Setup(MasterCube owner)
         {
             Owner = owner;
         }

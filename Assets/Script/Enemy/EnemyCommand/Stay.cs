@@ -8,7 +8,7 @@ namespace EnemyAction
 {
     class Stay : ICommand
     {
-        public void Setup(GameObject owner)
+        public void Setup(MasterCube owner)
         {
         }
 

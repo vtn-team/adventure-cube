@@ -10,29 +10,34 @@ namespace Summon
         {
             Blank,
             Sword,
+            Bullet,
             MAX
         }
 
         protected MasterCube MasterCube { get; private set; }
         protected MonoBlock OwnerCube { get; private set; }
-
-        void Awake()
-        {
-        }
+        public SummonType Type { get; protected set; }
         
         protected virtual void Setup()
         {
         }
 
-        static public SummonObject Build(SummonType type, string name, MonoBlock owner, MasterCube master)
+        static public T Build<T>(string name, MasterCube master, MonoBlock owner, Transform parent) where T : SummonObject
         {
             var prefab = ObjectSummoner.GetCache(name);
-            var obj = GameObject.Instantiate(prefab, master.transform);
-            var summon = obj.GetComponent<SummonObject>();
+            GameObject obj = null;
+            if (parent == null)
+            {
+                obj = GameObject.Instantiate(prefab);
+            }
+            else
+            {
+                obj = GameObject.Instantiate(prefab, parent);
+            }
+            var summon = obj.GetComponent<T>();
             summon.MasterCube = master;
             summon.OwnerCube = owner;
             summon.Setup();
-            master.AddSummonGroup(type, summon);
             return summon;
         }
 

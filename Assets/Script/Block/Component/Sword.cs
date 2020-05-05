@@ -7,11 +7,15 @@ namespace Block
 {
     public class Sword : MonoBlock
     {
-        SummonObject SwordObj;
+        [SerializeField]
+        string PrefabName = "Sword";
+        Summon.Sword Summon;
 
         protected override void Setup()
         {
-            SwordObj = SummonObject.Build(SummonObject.SummonType.Sword, "Sword", this, MasterCube);
+            Summon = SummonObject.Build<Summon.Sword>("Sword", MasterCube, this, MasterCube.transform);
+            SummonObject.SummonType type = Summon.Type;
+            MasterCube.AddSummonGroup(type, Summon);
         }
     }
 }
