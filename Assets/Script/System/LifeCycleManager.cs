@@ -8,10 +8,15 @@ public class LifeCycleManager
 {
     class PriorityQueue
     {
-        int Priority;
+        public int Priority { get; private set; }
         GameObject Object;
         IUpdatable Target;
-        public PriorityQueue(int p, IUpdatable t) { Priority = p; Target = t; Object = Target.gameObject; }
+        public PriorityQueue(int p, IUpdatable t)
+        {
+            Priority = p;
+            Target = t;
+            Object = Target != null ? Target.gameObject : null;
+        }
         public bool Update()
         {
             if (Target == null) return true;
@@ -39,7 +44,7 @@ public class LifeCycleManager
         }
     }
 
-    List<PriorityQueue> UpdateQueue = new List<PriorityQueue>();
+    LinkedList<PriorityQueue> UpdateQueue = new LinkedList<PriorityQueue>();
     List<PriorityQueue> AddUpdateQueue = new List<PriorityQueue>();
     List<GameObject> DestroyQueue = new List<GameObject>();
     List<PriorityQueue> Remove = new List<PriorityQueue>();
@@ -68,8 +73,24 @@ public class LifeCycleManager
         {
             UpdateQueue.Remove(q);
         }
-        UpdateQueue.AddRange(AddUpdateQueue);
-        AddUpdateQueue.Clear();
+
+        if (AddUpdateQueue.Count > 0)
+        {
+            foreach (var q in AddUpdateQueue)
+            {
+                var node = UpdateQueue.LastOrDefault(u => u.Priority <= q.Priority);
+                if (node == null)
+                {
+                    UpdateQueue.AddFirst(q);
+                }
+                else
+                {
+                    UpdateQueue.AddAfter(UpdateQueue.Find(node), q);
+                }
+            }
+            //UpdateQueue = UpdateQueue.Union(AddUpdateQueue).OrderBy(q => -q.Priority).ToList();
+            AddUpdateQueue.Clear();
+        }
     }
 
     void DestroyCallback()
