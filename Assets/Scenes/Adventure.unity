@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterCube: {fileID: 1318162524}
   Commands:
-  - IsWait: 1
+  - IsWait: 0
     Command:
       id: 0
     Probability: 0
@@ -1017,16 +1017,16 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: RandomMove, ns: EnemyAction, asm: Assembly-CSharp}
-      data:
-        Speed: 2
-        Range: 8
-    00000001:
       type: {class: Bullet, ns: EnemyAction, asm: Assembly-CSharp}
       data:
         ShotNum: 3
         Interval: 0.5
         BulletName: Bullet
+    00000001:
+      type: {class: RandomMove, ns: EnemyAction, asm: Assembly-CSharp}
+      data:
+        Speed: 1
+        Range: 10
 --- !u!54 &1318162530
 Rigidbody:
   m_ObjectHideFlags: 0
