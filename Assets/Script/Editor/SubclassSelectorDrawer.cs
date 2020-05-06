@@ -74,26 +74,28 @@ public class SubclassSelectorDrawer : PropertyDrawer
         for (int i = 0; i < propertyPaths.Length; i++) {
             FieldInfo field = fieldType.GetField(propertyPaths[i], bindingAttr);
             // 配列対応
-            if (field == null) {
-                if (propertyPaths.Contains("Array"))
+            if (propertyPaths[i].Contains("Array"))
+            {
+                // 配列の場合
+                if (fieldType.IsArray)
                 {
-                    // 配列の場合
-                    if (fieldType.IsArray)
-                    {
-                        // GetElementType で要素の型を取得する
-                        fieldType = fieldType.GetElementType();
-                    }
-                    // リストの場合
-                    else
-                    {
-                        // GetGenericArguments で要素の型を取得する
-                        var genericArguments = fieldType.GetGenericArguments();
-                        fieldType = genericArguments[0];
-                    }
+                    // GetElementType で要素の型を取得する
+                    fieldType = fieldType.GetElementType();
                 }
+                // リストの場合
+                else
+                {
+                    // GetGenericArguments で要素の型を取得する
+                    var genericArguments = fieldType.GetGenericArguments();
+                    fieldType = genericArguments[0];
+                }
+
+                //data[0]を評価しに行くので、とばす。
                 ++i;
                 continue;
             }
+
+            //else
             fieldType = field.FieldType;
         }
 
