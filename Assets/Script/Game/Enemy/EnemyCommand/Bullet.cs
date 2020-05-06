@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using Block;
 using Summon;
 
 namespace EnemyAction
@@ -41,6 +42,7 @@ namespace EnemyAction
                 var blt = SummonObject.Build<Summon.Bullet>("Bullet", Owner, null, null);
                 blt.transform.position = Owner.transform.position + Owner.transform.forward * 1.5f;
                 blt.AddForce(Owner.transform.forward * 250.0f);
+                blt.SetupAttackCallback(Attack, Owner.FriendId);
                 //Summon.AddLast(blt);
 
                 ShotCount++;
@@ -48,6 +50,11 @@ namespace EnemyAction
                 if (Interval > 0.0f) break;
             }
             return (ShotCount >= ShotNum);
+        }
+        
+        void Attack(MonoBlock target)
+        {
+            Debug.Log("attack");
         }
     }
 }

@@ -16,6 +16,12 @@ namespace Block
             Summon = SummonObject.Build<Summon.Sword>("Sword", MasterCube, this, MasterCube.transform);
             SummonObject.SummonType type = Summon.Type;
             MasterCube.AddSummonGroup(type, Summon);
+            Summon.SetupAttackCallback(Attack, MasterCube.FriendId);
+        }
+
+        void Attack(MonoBlock target)
+        {
+            Debug.Log("attack");
         }
     }
 }

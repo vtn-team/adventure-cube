@@ -13,9 +13,10 @@ public class MasterCube : MonoBehaviour
     protected IObjectGroup<SummonObject>[] SummonGroup = new IObjectGroup<SummonObject>[(int)SummonObject.SummonType.MAX];
 
     [SerializeField]
-    protected int FriendId = 0;
+    protected int friendId = 0;
     //protected UnitStatus Stats = new UnitStatus();
 
+    public int FriendId => friendId;
     public DamageCaster TakeDamageCaster { get; private set; }
     public DamageCaster AttackDamageCaster { get; private set; }
 
@@ -33,9 +34,9 @@ public class MasterCube : MonoBehaviour
 
     }
 
-    public bool IsFriend(int friendId)
+    public bool IsFriend(int fId)
     {
-        return FriendId == friendId;
+        return friendId == fId;
     }
 
     public void AddSummonGroup(SummonObject.SummonType type, SummonObject summon)

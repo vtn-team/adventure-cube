@@ -26,7 +26,11 @@ namespace Summon
             Type = SummonType.Bullet;
             Timer = 0.0f;
             base.Setup();
-            Collider.Setup(Attack, FriendId);
+        }
+
+        public void SetupAttackCallback(AttackCollider.MonoBlockHitCallback callback, int friendId)
+        {
+            Collider.Setup(callback, friendId);
         }
 
         public void AddForce(Vector3 force)
@@ -41,11 +45,6 @@ namespace Summon
             {
                 LifeCycleManager.RegisterDestroy(this.gameObject);
             }
-        }
-
-        void Attack(MonoBlock target)
-        {
-            Debug.Log("attack");
         }
     }
 }

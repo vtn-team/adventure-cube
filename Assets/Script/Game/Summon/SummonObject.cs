@@ -13,9 +13,7 @@ namespace Summon
             Bullet,
             MAX
         }
-
-        [SerializeField] protected int FriendId = 0;
-
+        
         protected MasterCube MasterCube { get; private set; }
         protected MonoBlock OwnerCube { get; private set; }
         public SummonType Type { get; protected set; }

@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75f16fef882e6d4da695a6b2e2752db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FriendId: 0
   Collider: {fileID: 5241718043754262696}
 --- !u!1 &7653321208125807903
 GameObject:
