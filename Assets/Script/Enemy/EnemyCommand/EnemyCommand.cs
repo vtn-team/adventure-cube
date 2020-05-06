@@ -28,28 +28,31 @@ class EnemyCommand : MonoBehaviour, IUpdatable
     bool IsEndExecute = false;
     EnemyCommandSet Current = null;
     LinkedList<EnemyCommandSet> Stack = new LinkedList<EnemyCommandSet>();
+    List<EnemyCommandSet> StackRemove = new List<EnemyCommandSet>();
 
     private void Awake()
     {
         LifeCycleManager.AddUpdate(this, 0);
         MasterCube = GetComponent<MasterCube>();
-    }
-
-    public bool CastWait()
-    {
-        return true;
-    }
-
-    public bool CoolDown()
-    {
-        return true;
+        StackRemove.Capacity = 10;
     }
 
     public void UnityUpdate()
     {
-        foreach(var s in Stack)
+        if (Stack.Count > 0)
         {
-            if (s.Command.Execute()) Stack.Remove(s);
+            StackRemove.Clear();
+            foreach (var s in Stack)
+            {
+                if (s.Command.Execute())
+                {
+                    StackRemove.Add(s);
+                }
+            }
+            foreach (var rm in StackRemove)
+            {
+                Stack.Remove(rm);
+            }
         }
 
         if(Current == null)
@@ -103,7 +106,7 @@ class EnemyCommand : MonoBehaviour, IUpdatable
 
     void UpdateNextCommand()
     {
-        Debug.Log(Current.Command.ToString());
+        //Debug.Log(Current.Command.ToString());
         Current.Command.Setup(MasterCube);
 
         if (Current.IsWait)
