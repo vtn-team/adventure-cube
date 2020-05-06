@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using Block;
+
 namespace Summon
 {
     public class Bullet : SummonObject, IUpdatable
     {
         [SerializeField]
         float Life = 1.5f;
+
+        [SerializeField]
+        AttackCollider Collider;
 
         float Timer = 0.0f;
         Rigidbody RigidBody;
@@ -21,6 +26,7 @@ namespace Summon
             Type = SummonType.Bullet;
             Timer = 0.0f;
             base.Setup();
+            Collider.Setup(Attack, FriendId);
         }
 
         public void AddForce(Vector3 force)
@@ -35,6 +41,11 @@ namespace Summon
             {
                 LifeCycleManager.RegisterDestroy(this.gameObject);
             }
+        }
+
+        void Attack(MonoBlock target)
+        {
+            Debug.Log("attack");
         }
     }
 }

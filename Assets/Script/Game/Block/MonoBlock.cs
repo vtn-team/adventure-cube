@@ -17,32 +17,26 @@ namespace Block
             MAX
         }
 
-        [SerializeField] protected int Life = 100;
-        [SerializeField] protected int _figure = 1; //一応。
-        protected bool IsActivate = false;
-
-        protected bool isHit = true;
+        [SerializeField] protected int life = 1;
+        [SerializeField] protected int figure = 1; //一応。
 
         protected MasterCube MasterCube { get; private set; }
         public int Index { get; private set; }
-        public int DeckX { get; private set; }
-        public int DeckY { get; private set; }
-        public int DeckZ { get; private set; }
 
+        public int Life { get; protected set; }
         public int Figure { get; protected set; }
 
 
         void Awake()
         {
-            Figure = _figure;
+            Life = life;
+            Figure = figure;
             MonoBlockCache.AddCache(this);
         }
 
-        //こわれる
-        protected virtual void Breakdown()
+        public bool IsFriend(int friendId)
         {
-            MonoBlockCache.DelCache(this);
-            Destroy(this.gameObject);
+            return MasterCube.IsFriend(friendId);
         }
 
         protected virtual void Setup()
@@ -55,17 +49,13 @@ namespace Block
 
         }
 
-        public virtual void Damage(int dmg)
+        public bool Damage(int dmg)
         {
             if (dmg > 0)
             {
                 Life -= dmg;
-                DamagePopup.Pop(this.gameObject, dmg);
             }
-            if (Life < 0)
-            {
-                Breakdown();
-            }
+            return Life <= 0;
         }
 
         private void OnTriggerEnter(Collider player)
@@ -76,18 +66,23 @@ namespace Block
             }
         }
 
-        static public MonoBlock Build(BlockType type, int index, int x, int y, int z, MasterCube master)
+        static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
         {
             var prefab = BlockBuilder.GetCache(type);
             var obj = GameObject.Instantiate(prefab);
-            var block = obj.GetComponent<MonoBlock>();
+            var block = obj.GetComponent<T>();
             block.MasterCube = master;
             block.Index = index;
-            block.DeckX = x;
-            block.DeckY = y;
-            block.DeckZ = z;
             block.Setup();
             return block;
+        }
+
+        static public void Assign(int index, GameObject root, MasterCube master)
+        {
+            var block = root.GetComponent<MonoBlock>();
+            block.MasterCube = master;
+            block.Index = index;
+            block.Setup();
         }
     }
 }

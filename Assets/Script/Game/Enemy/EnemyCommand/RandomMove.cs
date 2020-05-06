@@ -36,7 +36,9 @@ namespace EnemyAction
         public bool Execute()
         {
             //Target.transform.position = Vector3.Slerp(StartPos, TargetPos, Timer / TotalTime);
-            Owner.transform.position += (TargetPos - Owner.transform.position) * Time.deltaTime;
+            Vector3 sub = TargetPos - Owner.transform.position;
+            sub.y = 0.0f;
+            Owner.transform.position += sub * Time.deltaTime;
             return (Owner.transform.position - TargetPos).sqrMagnitude < 5.0f;
         }
     }
