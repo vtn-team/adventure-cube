@@ -26,7 +26,6 @@ public class AttackCollider : MonoBehaviour
             var mb = MonoBlockCache.GetCache(collision.gameObject);
             if (mb.IsFriend(FriendId)) return;
             
-            Debug.Log(collision.gameObject.name);
             Callback(mb);
         }
     }
