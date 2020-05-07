@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Runner
   - MonoBlock
+  - Character
+  - FieldBlock
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - 
   - 
-  - Runner
+  - Character
   - MonoBlock
   - FieldBlock
   - 
