@@ -17,4 +17,11 @@ class FieldEnemy : MasterCube
         ChildBlocks.Add(CoreCube);
         Build();
     }
+
+    protected override void Death()
+    {
+        base.Death();
+
+        FieldBlock.Drop(this, DropCube);
+    }
 }

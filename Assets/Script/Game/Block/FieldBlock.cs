@@ -8,14 +8,13 @@ namespace Block
 {
     public class FieldBlock
     {
+        static int FieldBlockLayer = 10;
 
         static public void Drop(MasterCube owner, MonoBlock drop)
         {
             var newCube = GameObject.Instantiate(drop);
             newCube.transform.position = owner.transform.position;
-
-            var collider = newCube.gameObject.AddComponent<BoxCollider>();
-            collider.isTrigger = true;
+            newCube.gameObject.layer = FieldBlockLayer;
         }
     }
 }
