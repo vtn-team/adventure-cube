@@ -7,7 +7,7 @@ using UnityEngine;
 using Block;
 using Summon;
 
-public class Player : MasterCube, IUpdatable
+public class Player : MasterCube
 {
     [SerializeField]
     protected List<MonoBlock.BlockType> Deck = new List<MonoBlock.BlockType>();
@@ -58,7 +58,7 @@ public class Player : MasterCube, IUpdatable
         //とりあえず
     }
 
-    public void UnityUpdate()
+    void UnityUpdate()
     {
         //if (!RigidBody) return;
 

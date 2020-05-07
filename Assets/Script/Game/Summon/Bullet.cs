@@ -8,7 +8,7 @@ using Block;
 
 namespace Summon
 {
-    public class Bullet : SummonObject, IUpdatable
+    public class Bullet : SummonObject
     {
         [SerializeField]
         float Life = 1.5f;
@@ -46,7 +46,7 @@ namespace Summon
             RigidBody.AddForce(force);
         }
 
-        public void UnityUpdate()
+        void UnityUpdate()
         {
             Timer += Time.deltaTime;
             if(Timer >= Life)

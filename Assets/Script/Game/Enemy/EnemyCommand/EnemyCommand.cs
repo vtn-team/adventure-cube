@@ -37,7 +37,7 @@ class EnemyCommand : MonoBehaviour
         StackRemove.Capacity = 10;
     }
 
-    public void UnityUpdate()
+    void UnityUpdate()
     {
         if (Stack.Count > 0)
         {
