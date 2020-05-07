@@ -15,6 +15,9 @@ namespace EnemyAction
         int ShotNum = 1;
 
         [SerializeField]
+        int Atk = 1;
+
+        [SerializeField]
         float Interval = 0;
 
         [SerializeField]
@@ -42,7 +45,7 @@ namespace EnemyAction
                 var blt = SummonObject.Build<Summon.Bullet>("Bullet", Owner, null, null);
                 blt.transform.position = Owner.transform.position + Owner.transform.forward * 1.5f;
                 blt.AddForce(Owner.transform.forward * 250.0f);
-                blt.SetupAttackCallback(Attack, Owner.FriendId);
+                blt.SetupAttackCallback(Atk, Owner);
                 //Summon.AddLast(blt);
 
                 ShotCount++;
@@ -50,11 +53,6 @@ namespace EnemyAction
                 if (Interval > 0.0f) break;
             }
             return (ShotCount >= ShotNum);
-        }
-        
-        void Attack(MonoBlock target)
-        {
-            Debug.Log("attack");
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class EnemyCommand : MonoBehaviour, IUpdatable
+class EnemyCommand : MonoBehaviour
 {
     [Serializable]
     class EnemyCommandSet
@@ -32,7 +32,7 @@ class EnemyCommand : MonoBehaviour, IUpdatable
 
     private void Awake()
     {
-        LifeCycleManager.AddUpdate(this, 0);
+        LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
         MasterCube = GetComponent<MasterCube>();
         StackRemove.Capacity = 10;
     }

@@ -6,8 +6,14 @@ namespace Summon
 {
     public class SwordGroup : IObjectGroup<SummonObject>
     {
+        MasterCube Owner;
         List<Sword> Swords = new List<Sword>();
         
+        public SwordGroup(MasterCube owner)
+        {
+            Owner = owner;
+        }
+
         public void Add(SummonObject s)
         {
             Swords.Add((Sword)s);

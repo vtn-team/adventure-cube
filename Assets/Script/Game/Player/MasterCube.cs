@@ -7,8 +7,8 @@ using Summon;
 
 public class MasterCube : MonoBehaviour
 {
-    protected Rigidbody RigidBody;
     protected List<MonoBlock> ChildBlocks = new List<MonoBlock>();
+    protected List<MonoBlock> RemoveList = new List<MonoBlock>();
     protected bool PowerOff = false;
     protected IObjectGroup<SummonObject>[] SummonGroup = new IObjectGroup<SummonObject>[(int)SummonObject.SummonType.MAX];
 
@@ -23,8 +23,8 @@ public class MasterCube : MonoBehaviour
 
     public virtual void Build()
     {
-        RigidBody = GetComponent<Rigidbody>();
-        
+        GameObjectCache.AddCharacterCache(this);
+
         TakeDamageCaster = new DamageCaster(ChildBlocks);
         AttackDamageCaster = new DamageCaster(ChildBlocks);
     }
@@ -43,21 +43,43 @@ public class MasterCube : MonoBehaviour
     {
         if(SummonGroup[(int)type] == null)
         {
-            SummonGroup[(int)type] = SummonObject.Build(type);
+            SummonGroup[(int)type] = SummonObject.Build(type, this);
         }
         SummonGroup[(int)type].Add(summon);
         SummonGroup[(int)type].Replace();
     }
     
-    /*
-    public void Damage(int dir, int dmg)
+    public void UpdateDamage(DamageCaster.DamageSet dmg)
     {
-        int TargetId = 0;
-        TargetId = TakeDamageCaster.CastDamage(dir, ref dmg);
-        if (TargetId == -1) return;
+        RemoveList.Clear();
 
-        Random.Range(0,26);
+        bool isAliveCore = false;
+        foreach(var b in ChildBlocks)
+        {
+            if (b.IsAlive())
+            {
+                if (b.Type == MonoBlock.BlockType.Core) isAliveCore = true;
+                continue;
+            }
 
+            b.BreakDown();
+            Debug.Log("breakdown");
+            RemoveList.Add(b);
+        }
+
+        //コアが全部消えたら死
+        if(!isAliveCore)
+        {
+            Death();
+        }
+
+        RemoveList.ForEach(rm => ChildBlocks.Remove(rm));
     }
-    */
+    
+    protected virtual void Death()
+    {
+        //tbd
+        //とりあえず
+        LifeCycleManager.RegisterDestroy(this.gameObject);
+    }
 }
