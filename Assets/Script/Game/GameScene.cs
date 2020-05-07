@@ -34,7 +34,7 @@ public class GameScene : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        MonoBlockCache.Setup();
+        GameObjectCache.Setup();
         TurnCount = 0;
     }
 

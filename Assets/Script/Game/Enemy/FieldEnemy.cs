@@ -8,10 +8,13 @@ using Block;
 
 class FieldEnemy : MasterCube
 {
+    [SerializeField] MonoBlock CoreCube;
     [SerializeField] MonoBlock DropCube;
 
     private void Awake()
     {
-        MonoBlock.Assign(0, this.gameObject, this);
+        MonoBlock.Assign(0, CoreCube.gameObject, this);
+        ChildBlocks.Add(CoreCube);
+        Build();
     }
 }

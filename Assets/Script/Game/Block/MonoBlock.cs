@@ -20,8 +20,9 @@ namespace Block
         [SerializeField] protected int life = 1;
         [SerializeField] protected int figure = 1; //一応。
 
-        protected MasterCube MasterCube { get; private set; }
+        public MasterCube MasterCube { get; private set; }
         public int Index { get; private set; }
+        public BlockType Type { get; private set; }
 
         public int Life { get; protected set; }
         public int Figure { get; protected set; }
@@ -31,12 +32,17 @@ namespace Block
         {
             Life = life;
             Figure = figure;
-            MonoBlockCache.AddCache(this);
+            GameObjectCache.AddMonoBlockCache(this);
         }
 
         public bool IsFriend(int friendId)
         {
             return MasterCube.IsFriend(friendId);
+        }
+
+        public virtual bool IsAlive()
+        {
+            return Life > 0;
         }
 
         protected virtual void Setup()
@@ -49,22 +55,22 @@ namespace Block
 
         }
 
-        public bool Damage(int dmg)
+        public virtual void Damage(int dmg)
         {
             if (dmg > 0)
             {
                 Life -= dmg;
             }
-            return Life <= 0;
         }
 
-        private void OnTriggerEnter(Collider player)
+        public virtual void BreakDown()
         {
-            if (player.CompareTag("Runner"))
-            {
-                //拾われた際に何かするなら
-            }
+            //tbd
+            //とりあえず
+            LifeCycleManager.RegisterDestroy(this.gameObject);
         }
+
+
 
         static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
         {
@@ -72,6 +78,7 @@ namespace Block
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<T>();
             block.MasterCube = master;
+            block.Type = type;
             block.Index = index;
             block.Setup();
             return block;
