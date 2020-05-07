@@ -6,22 +6,24 @@ using UnityEngine;
 
 public class LifeCycleManager
 {
+    public delegate void UnityUpdate();
+
     class PriorityQueue
     {
         public int Priority { get; private set; }
         GameObject Object;
-        IUpdatable Target;
-        public PriorityQueue(int p, IUpdatable t)
+        UnityUpdate Target;
+        public PriorityQueue(int p, GameObject o, UnityUpdate t)
         {
             Priority = p;
             Target = t;
-            Object = Target != null ? Target.gameObject : null;
+            Object = o;
         }
         public bool Update()
         {
             if (Target == null) return true;
             if (Object == null) return true;
-            Target.UnityUpdate();
+            Target();
             return false;
         }
     }
@@ -49,9 +51,9 @@ public class LifeCycleManager
     List<GameObject> DestroyQueue = new List<GameObject>();
     List<PriorityQueue> Remove = new List<PriorityQueue>();
     
-    static public void AddUpdate(IUpdatable target, int priority)
+    static public void AddUpdate(UnityUpdate target, GameObject o, int priority)
     {
-        Instance.AddUpdateQueue.Add(new PriorityQueue(priority, target));
+        Instance.AddUpdateQueue.Add(new PriorityQueue(priority, o, target));
     }
 
     static public void RegisterDestroy(GameObject obj)
