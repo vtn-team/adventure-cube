@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 825792043}
   - component: {fileID: 825792042}
   - component: {fileID: 825792041}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1258,7 +1258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   friendId: 1
   CoreCube: {fileID: 1318162524}
-  DropCube: {fileID: 0}
+  DropCube: {fileID: 9011029525292923434, guid: d10ade1d5257c7f4e990d419baf0bc1a,
+    type: 3}
 --- !u!4 &2022027368
 Transform:
   m_ObjectHideFlags: 0

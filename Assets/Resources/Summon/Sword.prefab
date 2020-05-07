@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 168841947641985015}
   - component: {fileID: 114168739967811202}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Summon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,9 +59,9 @@ GameObject:
   - component: {fileID: 3867976330898886004}
   - component: {fileID: 8971847263810917702}
   - component: {fileID: 5241718043754262696}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Summon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
