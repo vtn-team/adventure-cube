@@ -41,11 +41,11 @@ namespace Summon
             return summon;
         }
 
-        static public IObjectGroup<SummonObject> Build(SummonType type)
+        static public IObjectGroup<SummonObject> Build(SummonType type, MasterCube owner)
         {
             switch(type)
             {
-                case SummonType.Sword: return new SwordGroup();
+                case SummonType.Sword: return new SwordGroup(owner);
             }
             return null;
         }
