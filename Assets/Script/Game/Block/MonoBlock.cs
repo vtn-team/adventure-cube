@@ -74,7 +74,7 @@ namespace Block
 
         static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
         {
-            var prefab = BlockBuilder.GetCache(type);
+            var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<T>();
             block.MasterCube = master;

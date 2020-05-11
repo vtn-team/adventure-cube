@@ -24,7 +24,7 @@ namespace Summon
 
         static public T Build<T>(string name, MasterCube master, MonoBlock owner, Transform parent) where T : SummonObject
         {
-            var prefab = ObjectSummoner.GetCache(name);
+            var prefab = ResourceCache.GetCache(ResourceType.SummonObject, name);
             GameObject obj = null;
             if (parent == null)
             {
