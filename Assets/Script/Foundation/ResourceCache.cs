@@ -34,7 +34,7 @@ public class ResourceCache
 
     static public void SetupCubeSheet(string name)
     {
-        Instance.CubeSheet = Resources.Load<CubeSheet>(Instance.GetPrefabPath(ResourceType.Cube, name + ".asset"));
+        Instance.CubeSheet = Resources.Load<CubeSheet>(Instance.GetPrefabPath(ResourceType.Cube, name));
     }
 
     static public GameObject GetCube(int id)

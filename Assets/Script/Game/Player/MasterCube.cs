@@ -25,8 +25,7 @@ public class MasterCube : MonoBehaviour
         foreach (var b in Blocks)
         {
             int id = ResourceCache.CubeMaster.GetRandomCubeId(b.StockType);
-            var block = b.Build(id);
-            block.transform.parent = this.transform;
+            var block = b.Build(id, this.transform);
         }
 
         TakeDamageCaster = new DamageCaster(Inventory);

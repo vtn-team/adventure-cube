@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Block;
 using UnityEngine;
 
+[Serializable]
 public class CubeStock
 {
     [SerializeField] Vector3 PositionOffset = Vector3.zero;
@@ -22,12 +23,13 @@ public class CubeStock
 
     }
 
-    public MonoBlock Build(int id)
+    public MonoBlock Build(int id, Transform transform)
     {
         if (Cube != null) return null;
         
         Cube = MonoBlock.Build<MonoBlock>(id);
-        Cube.transform.position += PositionOffset;
+        Cube.transform.SetParent(transform);
+        Cube.transform.localPosition = PositionOffset;
         return Cube;
     }
 }
