@@ -10,7 +10,7 @@ public enum ResourceType
 
     PrefabTypeStart = 10,
     FieldMap,
-    MonoBlock,
+    Cube,
     SummonObject,
     PrefabTypeEnd,
 
@@ -26,8 +26,21 @@ public class ResourceCache
     StringBuilder Path = new StringBuilder(256);
     static ResourceCache Instance = new ResourceCache();
 
+    CubeSheet CubeSheet = null;
     CacheTemplate<GameObject> PrefabCache = new CacheTemplate<GameObject>();
     CacheTemplate<Material> MaterialCache = new CacheTemplate<Material>();
+
+    static public CubeSheet CubeMaster => Instance.CubeSheet;
+
+    static public void SetupCubeSheet(string name)
+    {
+        Instance.CubeSheet = Resources.Load<CubeSheet>(Instance.GetPrefabPath(ResourceType.Cube, name + ".asset"));
+    }
+
+    static public GameObject GetCube(int id)
+    {
+        return Instance.PrefabCache.GetCache(Instance.GetPrefabPath(ResourceType.Cube, Instance.CubeSheet.GetAssetKey(id)));
+    }
 
     static public GameObject GetCache(ResourceType type,  string name)
     {
@@ -61,7 +74,7 @@ public class ResourceCache
             switch(type)
             {
                 case ResourceType.FieldMap:     Path.AppendFormat("Field/{0}", name); break;
-                case ResourceType.MonoBlock:    Path.AppendFormat("Blocks/{0}", name); break;
+                case ResourceType.Cube:         Path.AppendFormat("Blocks/{0}", name); break;
                 case ResourceType.SummonObject: Path.AppendFormat("Summon/{0}", name); break;
             }
         }

@@ -51,7 +51,7 @@ public class AttackCollider : MonoBehaviour
                 Debug.Log("不正な設定のオブジェクト:" + collision.gameObject.name);
                 return;
             }
-            if (mc.IsFriend(FriendId)) return;
+            //if (mc.IsFriend(FriendId)) return;
 
             Callback(mc);
         }

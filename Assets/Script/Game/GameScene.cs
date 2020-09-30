@@ -35,6 +35,7 @@ public class GameScene : MonoBehaviour
     {
         Instance = this;
         GameObjectCache.Setup();
+        ResourceCache.SetupCubeSheet("CubeMasterTest");
         TurnCount = 0;
     }
 

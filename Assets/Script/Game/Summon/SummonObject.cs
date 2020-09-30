@@ -40,14 +40,5 @@ namespace Summon
             summon.Setup();
             return summon;
         }
-
-        static public IObjectGroup<SummonObject> Build(SummonType type, MasterCube owner)
-        {
-            switch(type)
-            {
-                case SummonType.Sword: return new SwordGroup(owner);
-            }
-            return null;
-        }
     }
 }

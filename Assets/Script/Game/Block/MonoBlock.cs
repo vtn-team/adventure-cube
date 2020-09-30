@@ -17,27 +17,26 @@ namespace Block
             MAX
         }
 
-        [SerializeField] protected int life = 1;
-        [SerializeField] protected int figure = 1; //一応。
-
-        public MasterCube MasterCube { get; private set; }
-        public int Index { get; private set; }
-        public BlockType Type { get; private set; }
+        //外部セット用で最初以外使用しない
+        [SerializeField] protected BlockType _BlockType = BlockType.Blank;
+        [SerializeField] protected int _Life = 1;
+        [SerializeField] protected int _Figure = 1;
+        [SerializeField] protected int _Rare = 1;
+        [SerializeField] protected int _Priority = 1;
 
         public int Life { get; protected set; }
         public int Figure { get; protected set; }
 
+        public BlockType Type => _BlockType;
+        public int Rare => _Rare;
+        public int Priority => _Priority;
 
         void Awake()
         {
-            Life = life;
-            Figure = figure;
-            GameObjectCache.AddMonoBlockCache(this);
-        }
+            Life = _Life;
+            Figure = _Figure;
 
-        public bool IsFriend(int friendId)
-        {
-            return MasterCube.IsFriend(friendId);
+            GameObjectCache.AddMonoBlockCache(this);
         }
 
         public virtual bool IsAlive()
@@ -72,24 +71,13 @@ namespace Block
 
 
 
-        static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
+        static public T Build<T>(int id) where T : MonoBlock
         {
-            var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
+            var prefab = ResourceCache.GetCube(id);
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<T>();
-            block.MasterCube = master;
-            block.Type = type;
-            block.Index = index;
             block.Setup();
             return block;
-        }
-
-        static public void Assign(int index, GameObject root, MasterCube master)
-        {
-            var block = root.GetComponent<MonoBlock>();
-            block.MasterCube = master;
-            block.Index = index;
-            block.Setup();
         }
     }
 }

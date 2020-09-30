@@ -9,9 +9,6 @@ using Summon;
 
 public class Player : MasterCube
 {
-    [SerializeField]
-    protected List<MonoBlock.BlockType> Deck = new List<MonoBlock.BlockType>();
-
     float Timer = 0.0f;
     Vector3 FromPos;
     Vector3 TargetPos;
@@ -20,33 +17,6 @@ public class Player : MasterCube
 
     public override void Build()
     {
-        int x = -1;
-        int y = -1;
-        int z = -1;
-        int index = 1;
-        Vector3 Center = this.transform.position;
-        foreach (var b in Deck)
-        {
-            var block = MonoBlock.Build<MonoBlock>(b, index, this);
-            ChildBlocks.Add(block);
-            block.transform.parent = this.transform;
-            block.transform.position = new Vector3(Center.x + x, Center.y + y + 2.0f, Center.z + z);
-
-            x++;
-            if (x > 1)
-            {
-                x = -1;
-                y++;
-                if (y > 1)
-                {
-                    y = -1;
-                    z++;
-                    if (z > 1) break;
-                }
-            }
-            index++;
-        }
-
         base.Build();
 
         LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 1);
@@ -102,7 +72,7 @@ public class Player : MasterCube
             this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer);
         }
 
-
+        /*
         //キューブの処理
         ChildBlocks.ForEach(c => c.UpdateBlock());
 
@@ -112,6 +82,7 @@ public class Player : MasterCube
             if (SummonGroup[i] == null) continue;
             SummonGroup[i].Update();
         }
+        */
     }
 }
 

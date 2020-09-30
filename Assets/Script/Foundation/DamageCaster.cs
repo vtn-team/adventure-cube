@@ -54,11 +54,11 @@ public class DamageCaster
         return atkSet.Atk;
     }
 
-    virtual protected int DecideTarget(AttackSet atkSet)
+    virtual protected MonoBlock DecideTarget(AttackSet atkSet)
     {
         //tbd
         //とりあえず当たり判定で当たったブロックへ
-        return atkSet.TargetBlock.Index;
+        return atkSet.TargetBlock;
     }
 
 
@@ -66,6 +66,7 @@ public class DamageCaster
     static public DamageSet Evaluate(AttackSet atkSet)
     {
         DamageSet dmg = new DamageSet();
+/*
         if (atkSet == null) return dmg;
         if (atkSet.TargetBlock == null) return dmg;
         if (atkSet.Master == null) return dmg;
@@ -93,7 +94,7 @@ public class DamageCaster
         //防御してくれなかったらターゲットを選ぶ
         //選ぶ優先度はアタックキャスターが決める
         dmg.TargetIndex = atkSet.Master.AttackDamageCaster.DecideTarget(atkSet);
-        
+        */
         return dmg;
     }
 

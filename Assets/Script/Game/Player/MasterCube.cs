@@ -7,26 +7,30 @@ using Summon;
 
 public class MasterCube : MonoBehaviour
 {
-    protected List<MonoBlock> ChildBlocks = new List<MonoBlock>();
-    protected List<MonoBlock> RemoveList = new List<MonoBlock>();
-    protected bool PowerOff = false;
-    protected IObjectGroup<SummonObject>[] SummonGroup = new IObjectGroup<SummonObject>[(int)SummonObject.SummonType.MAX];
-
-    [SerializeField]
-    protected int friendId = 0;
-    //protected UnitStatus Stats = new UnitStatus();
+    [SerializeField] protected List<CubeStock> Blocks = new List<CubeStock>();
+    [SerializeField] protected int friendId = 0;
+    
+    protected List<MonoBlock> Inventory = new List<MonoBlock>();
 
     public int FriendId => friendId;
+
     public DamageCaster TakeDamageCaster { get; private set; }
     public DamageCaster AttackDamageCaster { get; private set; }
-
-
+    
     public virtual void Build()
     {
         GameObjectCache.AddCharacterCache(this);
 
-        TakeDamageCaster = new DamageCaster(ChildBlocks);
-        AttackDamageCaster = new DamageCaster(ChildBlocks);
+        Vector3 Center = this.transform.position;
+        foreach (var b in Blocks)
+        {
+            int id = ResourceCache.CubeMaster.GetRandomCubeId(b.StockType);
+            var block = b.Build(id);
+            block.transform.parent = this.transform;
+        }
+
+        TakeDamageCaster = new DamageCaster(Inventory);
+        AttackDamageCaster = new DamageCaster(Inventory);
     }
 
     public void CallEvent()
@@ -38,42 +42,17 @@ public class MasterCube : MonoBehaviour
     {
         return friendId == fId;
     }
-
-    public void AddSummonGroup(SummonObject.SummonType type, SummonObject summon)
-    {
-        if(SummonGroup[(int)type] == null)
-        {
-            SummonGroup[(int)type] = SummonObject.Build(type, this);
-        }
-        SummonGroup[(int)type].Add(summon);
-        SummonGroup[(int)type].Replace();
-    }
     
     public void UpdateDamage(DamageCaster.DamageSet dmg)
     {
-        RemoveList.Clear();
-
-        bool isAliveCore = false;
-        foreach(var b in ChildBlocks)
+        foreach(var b in Blocks)
         {
-            if (b.IsAlive())
+            if (!b.IsAlive())
             {
-                if (b.Type == MonoBlock.BlockType.Core) isAliveCore = true;
-                continue;
+                b.BreakDown();
+                Debug.Log("breakdown");
             }
-
-            b.BreakDown();
-            Debug.Log("breakdown");
-            RemoveList.Add(b);
         }
-
-        //コアが全部消えたら死
-        if(!isAliveCore)
-        {
-            Death();
-        }
-
-        RemoveList.ForEach(rm => ChildBlocks.Remove(rm));
     }
     
     protected virtual void Death()
