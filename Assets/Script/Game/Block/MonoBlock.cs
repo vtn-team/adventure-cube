@@ -5,16 +5,20 @@ using System.Linq;
 
 namespace Block
 {
+    /// <summary>
+    /// ブロック基底
+    /// 
+    /// NOTE: このクラスをベースにブロック処理を記述する。すべてのブロックに共通する処理がここに記載される。
+    /// NOTE: このクラスは継承することを前提に作られている
+    /// </summary>
     public class MonoBlock : MonoBehaviour
     {
         public enum BlockType
         {
-            Blank,
+            Normal,
             Core,
-            Wood,
-            Sword,
-            Shield,
-            MAX
+            Attack,
+            Skill
         }
 
         [SerializeField] protected int life = 1;
@@ -71,7 +75,13 @@ namespace Block
         }
 
 
-
+        /// <summary>
+        /// ブロックを作る
+        /// </summary>
+        /// <typeparam name="T">作るブロックの型</typeparam>
+        /// <param name="index"></param>
+        /// <param name="master"></param>
+        /// <returns></returns>
         static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
         {
             var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
@@ -82,14 +92,6 @@ namespace Block
             block.Index = index;
             block.Setup();
             return block;
-        }
-
-        static public void Assign(int index, GameObject root, MasterCube master)
-        {
-            var block = root.GetComponent<MonoBlock>();
-            block.MasterCube = master;
-            block.Index = index;
-            block.Setup();
         }
     }
 }

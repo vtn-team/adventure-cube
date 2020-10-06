@@ -19,7 +19,9 @@ public enum ResourceType
     MaterialTypeEnd,
 }
 
-//
+/// <summary>
+/// 
+/// </summary>
 public class ResourceCache
 {
     bool AssetBundleSwitch = false;

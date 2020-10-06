@@ -6,20 +6,14 @@ using UnityEngine;
 
 using Block;
 
+/// <summary>
+/// ダメージ計算器
+/// 
+/// NOTE: 関心の分離やStrategyパターンの活用
+/// NOTE: ゲーム中のダメージはこのクラスで処理する
+/// </summary>
 public class DamageCaster
 {
-    public delegate int DamageEffectDelegate(int dir, ref int dmg);
-    public DamageEffectDelegate DamageEffect { get; set; }
-
-    protected List<MonoBlock> Children = null;
-
-    private DamageCaster() { }
-    public DamageCaster(List<MonoBlock> c)
-    {
-        Children = c;
-    }
-
-
     public class AttackSet
     {
         public bool IsPowerfull = false;
@@ -40,25 +34,18 @@ public class DamageCaster
         public MasterCube TargetMaster = null;
     }
 
-    //Internal
-    virtual protected void PreventDamage(AttackSet atkSet, ref DamageSet dmg)
+    //内部関数
+    protected void PreventDamage(AttackSet atkSet, ref DamageSet dmg)
     {
         //tbd
         //シールドはここで解決する
     }
 
-    virtual protected int CalcDamage(AttackSet atkSet)
+    protected int CalcDamage(AttackSet atkSet)
     {
         //tbd
         //とりあえず
         return atkSet.Atk;
-    }
-
-    virtual protected int DecideTarget(AttackSet atkSet)
-    {
-        //tbd
-        //とりあえず当たり判定で当たったブロックへ
-        return atkSet.TargetBlock.Index;
     }
 
 
