@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 using Block;
 
+/// <summary>
+/// ゲーム管理クラス
+/// 
+/// NOTE: 
+/// </summary>
 public class GameManager
 {
     static GameManager Instance = new GameManager();

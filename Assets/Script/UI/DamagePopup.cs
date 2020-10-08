@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// ダメージ数字をポップアップさせる
+/// 
+/// NOTE: 3D座標から2D座標に変換している
+/// </summary>
 public class DamagePopup : MonoBehaviour
 {
     [SerializeField] Damage DamageTemplate = null;

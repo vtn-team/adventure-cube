@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using Block;
 using Summon;
 
+
+/// <summary>
+/// プレイヤーブロック基底
+/// </summary>
 public class MasterCube : MonoBehaviour
 {
     [SerializeField] protected List<CubeStock> Blocks = new List<CubeStock>();

@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// ライフサイクルイベントを別のクラスで使う時に使うクラス
+/// 
+/// NOTE: あまり使わないほうがいい
+/// </summary>
 public class BehaviourAttachment : MonoBehaviour
 {
     public delegate void LifeCycleEvent();
@@ -11,9 +16,13 @@ public class BehaviourAttachment : MonoBehaviour
     LifeCycleEvent UpdateCallback = null;
     LifeCycleEvent DestroyCallback = null;
 
-    private void Update()
+    void Update()
     {
         UpdateCallback();
+    }
+
+    void OnDestroy()
+    {
         DestroyCallback();
     }
 

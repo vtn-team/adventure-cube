@@ -5,38 +5,43 @@ using System.Linq;
 
 namespace Block
 {
+    /// <summary>
+    /// ブロック基底
+    /// 
+    /// NOTE: このクラスをベースにブロック処理を記述する。すべてのブロックに共通する処理がここに記載される。
+    /// NOTE: このクラスは継承することを前提に作られている
+    /// </summary>
     public class MonoBlock : MonoBehaviour
     {
         public enum BlockType
         {
-            Blank,
+            Normal,
             Core,
-            Wood,
-            Sword,
-            Shield,
-            MAX
+            Attack,
+            Skill
         }
 
-        //外部セット用で最初以外使用しない
-        [SerializeField] protected BlockType _BlockType = BlockType.Blank;
-        [SerializeField] protected int _Life = 1;
-        [SerializeField] protected int _Figure = 1;
-        [SerializeField] protected int _Rare = 1;
-        [SerializeField] protected int _Priority = 1;
+        [SerializeField] protected int life = 1;
+        [SerializeField] protected int figure = 1; //一応。
+
+        public MasterCube MasterCube { get; private set; }
+        public int Index { get; private set; }
+        public BlockType Type { get; private set; }
 
         public int Life { get; protected set; }
         public int Figure { get; protected set; }
 
-        public BlockType Type => _BlockType;
-        public int Rare => _Rare;
-        public int Priority => _Priority;
 
         void Awake()
         {
-            Life = _Life;
-            Figure = _Figure;
-
+            Life = life;
+            Figure = figure;
             GameObjectCache.AddMonoBlockCache(this);
+        }
+
+        public bool IsFriend(int friendId)
+        {
+            return MasterCube.IsFriend(friendId);
         }
 
         public virtual bool IsAlive()
@@ -70,12 +75,21 @@ namespace Block
         }
 
 
-
-        static public T Build<T>(int id) where T : MonoBlock
+        /// <summary>
+        /// ブロックを作る
+        /// </summary>
+        /// <typeparam name="T">作るブロックの型</typeparam>
+        /// <param name="index"></param>
+        /// <param name="master"></param>
+        /// <returns></returns>
+        static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
         {
-            var prefab = ResourceCache.GetCube(id);
+            var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<T>();
+            block.MasterCube = master;
+            block.Type = type;
+            block.Index = index;
             block.Setup();
             return block;
         }
