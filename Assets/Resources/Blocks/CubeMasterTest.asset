@@ -10,6 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b31433f976e84574b86215e4f9b98f98, type: 3}
-  m_Name: CubeMaster
+  m_Name: CubeMasterTest
   m_EditorClassIdentifier: 
-  CubeAssetList: []
+  CubeAssetList:
+  - Key: Wood
+    Block: {fileID: 9011029525292923434, guid: d10ade1d5257c7f4e990d419baf0bc1a, type: 3}
+  - Key: Shield
+    Block: {fileID: 9011029525292923434, guid: d10ade1d5257c7f4e990d419baf0bc1a, type: 3}
+  - Key: 
+    Block: {fileID: 0}
