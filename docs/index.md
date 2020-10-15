@@ -25,7 +25,7 @@
 
 ## 設計-実践編
 
-[01.クラスの関係性を意識する](/EducationText/実践/01-クラスの関係性を意識する.md)  
+[01.モデル図を書こう](/EducationText/実践/01-モデル図を書こう.md)  
 
 
 [02.抽象化](/EducationText/実践/02-抽象化.md)  
@@ -38,9 +38,45 @@
 
 
 
+## データ設計編
+
+[01.マスターデータとExcel](/EducationText/データ設計/01-.md)  
+
+
+[02.ScriptableObject](/EducationText/データ設計/01-.md)  
+
+
+[03.データベースとリレーション](/EducationText/データ設計/01-.md)  
+
+
+
+## デザインパターン編
+
+[01.Builderパターン](/EducationText/デザインパターン/01-.md)  
+
+
+[02.Observerパターン](/EducationText/デザインパターン/01-.md)  
+
+
+[03.Singletonパターン](/EducationText/データ設計/01-.md)  
+
+
+[04.Facadeパターン](/EducationText/データ設計/01-.md)  
+
+
+[05.Storategyパターン](/EducationText/データ設計/01-.md)  
+
+
+[06.Bridgeパターン](/EducationText/データ設計/01-.md)  
+
+
+
 ## プログラム実装 - 基礎編
 
-[01.数学初歩](/EducationText/実践/05-数学初歩.md)  
+[01.数学初歩](/EducationText//05-数学初歩.md)  
+
+
+[02.コルーチン](/EducationText//.md)  
 
 
 
