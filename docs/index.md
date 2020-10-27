@@ -52,7 +52,7 @@
 
 ## デザインパターン編
 
-　[01.Builderパターン](/EducationText/デザインパターン/01-.md)  
+　[01.Builderパターン](/EducationText/デザインパターン/01-Builderパターン.md)  
 
 
 　[02.Observerパターン](/EducationText/デザインパターン/01-.md)  
