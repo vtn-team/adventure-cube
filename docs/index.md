@@ -31,16 +31,16 @@
 　[02.抽象化](/EducationText/実践/02-抽象化.md)  
 
 
-　[03.派生](/EducationText/実践/03-派生.md)  
+　[03.インタフェース](/EducationText/実践/03-インタフェース.md)  
 
 
-　[04.インタフェース](/EducationText/実践/04-インタフェース.md)  
+　[04.メタプログラミングとWhere](/EducationText/実践/04-メタプログラミングとWhere.md)  
 
 
 
 ## データ設計編
 
-　[01.マスターデータとExcel](/EducationText/データ設計/01-.md)  
+　[01.マスターデータとExcel](/EducationText/データ設計/01-マスターデータとExcel.md)  
 
 
 　[02.ScriptableObject](/EducationText/データ設計/01-.md)  
