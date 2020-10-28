@@ -25,7 +25,7 @@ public class EditBoxLayouter : MonoBehaviour
         for (int i = 0; i < 15; ++i)
         {
             if (human == i) continue;
-            EditBoxList[i].Select(Random.Range(1, (int)MonoBlock.BlockType.MAX));
+            //EditBoxList[i].Select(Random.Range(1, (int)MonoBlock.BlockType.MAX));
         }
     }
 

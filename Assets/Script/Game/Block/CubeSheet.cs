@@ -13,11 +13,20 @@ public class CubeSheet : ScriptableObject
     [Serializable]
     class CubeAsset
     {
+        public int Id;
         public string Key;
         public MonoBlock Block;
     }
 
     [SerializeField] List<CubeAsset> CubeAssetList = new List<CubeAsset>();
+
+    public MonoBlock GetAsset(int id)
+    {
+        if (id < 0) return null;
+        if (id >= CubeAssetList.Count) return null;
+
+        return CubeAssetList[id].Block;
+    }
 
     public string GetAssetKey(int id)
     {

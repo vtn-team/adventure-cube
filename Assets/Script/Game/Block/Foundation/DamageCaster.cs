@@ -34,6 +34,12 @@ public class DamageCaster
         public MasterCube TargetMaster = null;
     }
 
+    MasterCubeParameter OwnerParam; //オーナーとなるキューブが持つ値。参照のみ。
+    public DamageCaster(MasterCubeParameter param)
+    {
+        OwnerParam = param;
+    }
+
     //内部関数
     protected void PreventDamage(AttackSet atkSet, ref DamageSet dmg)
     {
@@ -79,7 +85,7 @@ public class DamageCaster
 
         //防御してくれなかったらターゲットを選ぶ
         //選ぶ優先度はアタックキャスターが決める
-        dmg.TargetIndex = atkSet.Master.AttackDamageCaster.DecideTarget(atkSet);
+        //dmg.TargetIndex = atkSet.Master.AttackDamageCaster.DecideTarget(atkSet);
         
         return dmg;
     }

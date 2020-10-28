@@ -23,6 +23,7 @@ namespace Block
 
         [SerializeField] protected int life = 1;
         [SerializeField] protected int figure = 1; //一応。
+        [SerializeField] protected int rare = 1;
 
         public MasterCube MasterCube { get; private set; }
         public int Index { get; private set; }
@@ -30,6 +31,7 @@ namespace Block
 
         public int Life { get; protected set; }
         public int Figure { get; protected set; }
+        public int Rare => rare;
 
 
         void Awake()
@@ -78,13 +80,28 @@ namespace Block
         /// <summary>
         /// ブロックを作る
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        static public MonoBlock Build(int id, MasterCube master)
+        {
+            var obj = Instantiate(ResourceCache.CubeMaster.GetAsset(id));
+            var block = obj.GetComponent<MonoBlock>();
+            block.MasterCube = master;
+            block.Setup();
+            return block;
+        }
+
+        /*
+        /// <summary>
+        /// ブロックを作る
+        /// </summary>
         /// <typeparam name="T">作るブロックの型</typeparam>
         /// <param name="index"></param>
         /// <param name="master"></param>
         /// <returns></returns>
-        static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
+        static public T Build<T>(MasterCube master) where T : MonoBlock
         {
-            var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
+            var prefab = ResourceCache.GetCache(ResourceType.Cube, type.ToString());
             var obj = GameObject.Instantiate(prefab);
             var block = obj.GetComponent<T>();
             block.MasterCube = master;
@@ -93,5 +110,6 @@ namespace Block
             block.Setup();
             return block;
         }
+        */
     }
 }

@@ -18,12 +18,12 @@ public class BehaviourAttachment : MonoBehaviour
 
     void Update()
     {
-        UpdateCallback();
+        UpdateCallback?.Invoke();
     }
 
     void OnDestroy()
     {
-        DestroyCallback();
+        DestroyCallback?.Invoke();
     }
 
     public void SetUpdateCallback(LifeCycleEvent evt)

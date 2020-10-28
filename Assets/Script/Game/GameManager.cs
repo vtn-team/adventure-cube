@@ -21,23 +21,12 @@ public class GameManager
         Instance.PlayerDeck = deck;
     }
 
+    //ランダムで敵を作る
     static public void CreateRandomEnemyDeck()
     {
         Instance.EnemyDeck = new List<MonoBlock.BlockType>();
 
         int human = Random.Range(0, 15);
-
-        for (int i = 0; i < 15; ++i)
-        {
-            if (human == i)
-            {
-                Instance.EnemyDeck.Add(MonoBlock.BlockType.Core);
-            }
-            else
-            {
-                Instance.EnemyDeck.Add((MonoBlock.BlockType)Random.Range(2, (int)MonoBlock.BlockType.MAX));
-            }
-        }
     }
 
     static public List<MonoBlock.BlockType> GetDeck(int playerId)
