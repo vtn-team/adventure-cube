@@ -7,7 +7,7 @@ using Block;
 /// 
 /// NOTE: パッシブ効果を持つキューブにこのインタフェースをつける
 /// </summary>
-public interface IPassive
+public interface IPassiveBlock
 {
     Passive.PassiveType PassiveType { get; }        // タイプを返す実装が必要
 

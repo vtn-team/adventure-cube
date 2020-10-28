@@ -17,8 +17,11 @@ public class MasterCube : MonoBehaviour
 
     protected MasterCubeParameter Param = new MasterCubeParameter();
     protected List<MonoBlock> Inventory = new List<MonoBlock>();
+    protected float YOffset = 0.0f;
 
     public int FriendId => friendId;
+
+    List<AutoAttack> AutoAttacker = new List<AutoAttack>();
 
     public DamageCaster TakeDamageCaster { get; private set; }
     public DamageCaster AttackDamageCaster { get; private set; }
@@ -27,6 +30,7 @@ public class MasterCube : MonoBehaviour
     {
         GameObjectCache.AddCharacterCache(this);
 
+        YOffset = 0;
         Vector3 Center = this.transform.position;
         foreach (var b in Blocks)
         {
@@ -37,8 +41,14 @@ public class MasterCube : MonoBehaviour
                 b.Equip(id);
             }
             Inventory.Add(b.CurrentCube);
+
+            //Y計算
+            if (YOffset < b.CurrentCube.transform.position.y) YOffset = b.CurrentCube.transform.position.y;
         }
-        
+
+        //Y移動
+        this.transform.Translate(0, YOffset, 0);
+
         //キューブ更新したタイミングで呼び出す
         UpdateCube();
 
@@ -79,7 +89,20 @@ public class MasterCube : MonoBehaviour
         //Inventory.Select(c => c as IPassive).Where(c => c as IPassive != null).ToList();
 
         //便利なGetComponentの使い方
-        var PassiveList = GetComponentsInChildren<IPassive>();
+        var PassiveList = GetComponentsInChildren<IPassiveBlock>();
+    }
+
+    protected void UpdateAttackCube()
+    {
+        var AttackList = GetComponentsInChildren<IAttackBlock>();
+        foreach (var atk in AttackList)
+        {
+            if (AutoAttacker.Exists(a => a.IsSame(atk))) continue;
+
+            AutoAttack attacker = new AutoAttack();
+            attacker.Setup(atk);
+            AutoAttacker.Add(attacker);
+        }
     }
 
     protected virtual void Death()
