@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 719046862}
   - component: {fileID: 719046860}
   m_Layer: 8
-  m_Name: CubeController
+  m_Name: Player
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 866080794}
   - component: {fileID: 866080796}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -448,9 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1027354543}
   Result: {fileID: 1899134380}
-  PlayableChar: {fileID: 0}
-  Enemy:
-  - {fileID: 2022027367}
+  PlayableChar: {fileID: 719046860}
+  Enemy: []
   NPC: []
 --- !u!4 &866080795
 Transform:
