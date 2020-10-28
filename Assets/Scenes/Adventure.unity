@@ -293,16 +293,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Blocks:
-  - PositionOffset: {x: 0, y: 0, z: 0}
+  - CubeId: 0
+    PositionOffset: {x: 0, y: 0, z: 0}
     _StockType: 1
-  - PositionOffset: {x: 1, y: 0, z: 0}
-    _StockType: 1
-  - PositionOffset: {x: 0, y: 1, z: 0}
-    _StockType: 1
-  - PositionOffset: {x: -1, y: 0, z: 0}
+  - CubeId: 0
+    PositionOffset: {x: 1, y: 0, z: 0}
+    _StockType: 3
+  - CubeId: 0
+    PositionOffset: {x: 0, y: 1, z: 0}
+    _StockType: 0
+  - CubeId: 0
+    PositionOffset: {x: -1, y: 0, z: 0}
     _StockType: 2
-  - PositionOffset: {x: 0, y: -1, z: 0}
-    _StockType: 2
+  - CubeId: 0
+    PositionOffset: {x: 0, y: -1, z: 0}
+    _StockType: 0
   friendId: 1
 --- !u!4 &719046862
 Transform:
@@ -443,7 +448,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1027354543}
   Result: {fileID: 1899134380}
-  Player: {fileID: 719046860}
+  PlayableChar: {fileID: 0}
+  Enemy:
+  - {fileID: 2022027367}
+  NPC: []
 --- !u!4 &866080795
 Transform:
   m_ObjectHideFlags: 0
@@ -796,11 +804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5aa17b15d16a614bb3e254e1b7b9257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _BlockType: 0
-  _Life: 1
-  _Figure: 1
-  _Rare: 1
-  _Priority: 1
+  life: 1
+  figure: 1
+  rare: 1
 --- !u!136 &1318162525
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1392,7 +1398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059640288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
