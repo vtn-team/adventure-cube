@@ -41,6 +41,11 @@ namespace Block
             GameObjectCache.AddMonoBlockCache(this);
         }
 
+        protected virtual void Setup()
+        {
+
+        }
+
         public bool IsFriend(int friendId)
         {
             return MasterCube.IsFriend(friendId);
@@ -49,16 +54,6 @@ namespace Block
         public virtual bool IsAlive()
         {
             return Life > 0;
-        }
-
-        protected virtual void Setup()
-        {
-
-        }
-
-        public virtual void UpdateBlock()
-        {
-
         }
 
         public virtual void Damage(int dmg)

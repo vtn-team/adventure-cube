@@ -8,30 +8,32 @@ using UnityEngine;
 
 namespace Block
 {
-    public class AutoAttack
+    public class AutoAttackTimer
     {
-        IAttackBlock AttackBlock = null;
+        public bool IsAttackOK => (Timer >= Interval);
         float Timer = 0;
         float Interval;
 
-        public bool IsSame(IAttackBlock block)
+        public void Setup(float interval)
         {
-            return AttackBlock == block;
-        }
-
-        public void Setup(IAttackBlock block)
-        {
-            AttackBlock = block;
             Timer = 0;
-            Interval = block.Interval;
+            Interval = interval;
         }
 
         public void Update()
         {
             Timer += Time.deltaTime;
-            if(Timer >= Interval)
+        }
+
+        public void ResetTimer(bool isIntervalReset = true)
+        {
+            if (isIntervalReset)
             {
-                AttackBlock.Attack();
+                Timer -= Interval;
+            }
+            else
+            {
+                Timer = 0;
             }
         }
     }
