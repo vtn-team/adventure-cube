@@ -21,8 +21,6 @@ public class MasterCube : MonoBehaviour
 
     public int FriendId => friendId;
 
-    List<AutoAttack> AutoAttacker = new List<AutoAttack>();
-
     public DamageCaster TakeDamageCaster { get; private set; }
     public DamageCaster AttackDamageCaster { get; private set; }
     
@@ -95,14 +93,6 @@ public class MasterCube : MonoBehaviour
     protected void UpdateAttackCube()
     {
         var AttackList = GetComponentsInChildren<IAttackBlock>();
-        foreach (var atk in AttackList)
-        {
-            if (AutoAttacker.Exists(a => a.IsSame(atk))) continue;
-
-            AutoAttack attacker = new AutoAttack();
-            attacker.Setup(atk);
-            AutoAttacker.Add(attacker);
-        }
     }
 
     protected virtual void Death()

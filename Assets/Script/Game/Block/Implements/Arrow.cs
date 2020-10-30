@@ -18,14 +18,14 @@ namespace Block
 
         protected override void Setup()
         {
-            CanIAttack
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
         }
 
-        
-        public void Attack(DamageCaster dc)
+        // 攻撃の実装が必要
+        public void Attack()
         {
-            // 攻撃の実装が必要
+            //キューブを作って飛ばす
+
         }
 
         void UnityUpdate()
