@@ -30,8 +30,8 @@ public class CacheTemplate<T> where T : UnityEngine.Object
 ```
 や  
 ```
-MonoBlock.cs
-static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
+Bullet.cs
+static public T Build<T>(string name, MasterCube master, MonoBlock owner, Transform parent) where T : Bullet
 {
 }
 ```
@@ -84,21 +84,29 @@ https://qiita.com/k7a/items/df6dd8ea66cbc5a1e21d
 なので、今後の対応のためにも、読み込み部分はまとまっていると楽ですよね。  
 
 
-次に、MonoBlockのビルダーです。  
+次に、Bulletのビルダーです。  
 ビルダーとは何ぞや？という人は、次にやる[デザインパターン](/EducationText/デザインパターン/01-Builderパターン.md)編を見てください。  
 ```
-MonoBlock.cs
-static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
+Bullet.cs
+static public T Build<T>(string name, MasterCube master, MonoBlock owner, Transform parent) where T : Bullet
 {
-  var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
-  var obj = GameObject.Instantiate(prefab);
-  var block = obj.GetComponent<T>();
-  block.MasterCube = master;
-  block.Type = type;
-  block.Index = index;
-  block.Setup();
-  return block;
+    var prefab = ResourceCache.GetCache(ResourceType.Bullet, name);
+    GameObject obj = null;
+    if (parent == null)
+    {
+        obj = GameObject.Instantiate(prefab);
+    }
+    else
+    {
+        obj = GameObject.Instantiate(prefab, parent);
+    }
+
+    var blt = obj.GetComponent<T>();
+    blt.MasterCube = master;
+    blt.OwnerCube = owner;
+    blt.Setup();
+    return blt;
 }
 ```
 このコード、実はジェネリックで型を受け取る意味はそこまでないです。  
-よって制約をつけている意味も実はそこまでない(すべてMonoBlockで直打ちしても通る処理)んですが、型制約をつけることで、どのブロックを作ったのかというのがコード上で確認しやすくなります。  
+よって制約をつけている意味も実はそこまでない(すべてBulletで直打ちしても通る処理)んですが、型制約をつけることで、どのオブジェクトを作ったのかというのがコード上で確認しやすくなります。  
