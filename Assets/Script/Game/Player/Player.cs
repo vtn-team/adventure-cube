@@ -71,6 +71,8 @@ public class Player : MasterCube
             this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer); 
         }
 
+        _Coord.SetPosition(this.transform.position);
+
         /*
         //キューブの処理
         ChildBlocks.ForEach(c => c.UpdateBlock());

@@ -17,12 +17,14 @@ public class DamagePopup : MonoBehaviour
         Instance = this;
     }
 
-    static public void Pop(GameObject go, int dmg)
+    static public void Pop(GameObject go, int dmg, Color col)
     {
         var obj = Instantiate(Instance.DamageTemplate.gameObject, Instance.transform.parent);
         var rt = obj.GetComponent<RectTransform>();
         rt.position = RectTransformUtility.WorldToScreenPoint(Camera.main, go.transform.position);
-        var dob = obj.GetComponent<Damage>();
-        dob.Set(dmg);
+
+        var damage = obj.GetComponent<Damage>();
+        damage.Set(go, dmg);
+        damage.SetColor(col);
     }
 }

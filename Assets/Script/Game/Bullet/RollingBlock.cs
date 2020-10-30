@@ -30,15 +30,19 @@ namespace BulletObject
             AttackSet.Atk = 1;
             AttackSet.Attacker = this.gameObject;
             AttackSet.Master = MasterCube;
+
+            this.transform.position = MasterCube.transform.position; // new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
         }
 
         public void SetTarget(MasterCube target)
         {
+            //雑な放物線
             //中間点を計算する
             Vector3 sub = target.transform.position - this.transform.position;
-            sub /= 2.0f;
-            sub.y += 8.0f;//山なりになるように
-            TopPos = sub;
+            sub *= 0.5f;
+            sub.y += 4.0f;//山なりになるように
+            TopPos = this.transform.position + sub;
+
             StartPos = this.transform.position;
             TargetPos = target.transform.position;
 
@@ -57,11 +61,11 @@ namespace BulletObject
             }
             else
             {
-                this.transform.position = Vector3.Lerp(TopPos, TargetPos, Timer / (Life - Life / 2.0f));
+                this.transform.position = Vector3.Lerp(TopPos, TargetPos, (Timer - Life / 2.0f) / (Life - Life / 2.0f));
             }
 
             //適当に回転させる
-            this.transform.Rotate(Time.deltaTime * 30, Time.deltaTime * 40, Time.deltaTime * 50);
+            this.transform.Rotate(Time.deltaTime * 300, Time.deltaTime * 400, Time.deltaTime * 500);
 
             if(Timer >= Life)
             {
@@ -72,8 +76,7 @@ namespace BulletObject
         protected override void Attack(MasterCube hitObject)
         {
             if (IsAttacked) return;
-
-            Debug.Log("attack");
+            
             AttackSet.Target = hitObject;
             DamageCaster.CastDamage(AttackSet);
             IsAttacked = true;

@@ -81,7 +81,6 @@ public class ResourceCache
                 case ResourceType.Bullet:     Path.AppendFormat("Bullet/{0}", name); break;
             }
         }
-        Debug.Log(Path.ToString());
         return Path.ToString();
     }
 

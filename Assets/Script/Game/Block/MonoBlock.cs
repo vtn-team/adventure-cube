@@ -72,6 +72,25 @@ namespace Block
         }
 
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            /*
+            // Bulletが当たった
+            if (collision.gameObject.CompareTag("Bullet"))
+            {
+                var mc = GameObjectCache.GetCharacter(collision.gameObject);
+                if (mc == null)
+                {
+                    Debug.Log("不正な設定のオブジェクト:" + collision.gameObject.name);
+                    return;
+                }
+                //if (mc.IsFriend(FriendId)) return;
+                Callback(mc);
+            }
+            */
+        }
+
+
         /// <summary>
         /// ブロックを作る(idから)
         /// </summary>

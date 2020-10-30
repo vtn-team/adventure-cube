@@ -9,7 +9,13 @@ using Block;
 /// </summary>
 public interface IPassiveBlock
 {
-    Passive.PassiveType PassiveType { get; }        // タイプを返す実装が必要
+    PassiveType PassiveType { get; }               // タイプを返す実装が必要
 
-    void PassiveEvent(Passive.PassiveEffect evt);   // パッシブ効果を処理する実装が必要
+    int PassiveEvent(int param, int subparam=0);   // パッシブ効果を処理する実装が必要
+}
+
+public enum PassiveType
+{
+    None,
+    DamageBuff,
 }

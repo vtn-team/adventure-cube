@@ -14,8 +14,8 @@ public struct CubeCoordinates
     public float Y;
     public float Z;
 
-    public float Top;
-    public float Bottom;
+    public float Top { get; set; }
+    public float Bottom { get; set; }
 
     public void SetPosition(Vector3 pos)
     {

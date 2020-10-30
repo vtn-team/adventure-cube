@@ -9,5 +9,5 @@ using UnityEngine;
 public class MasterCubeParameter
 {
     [SerializeField] int Life = 100;
-    [SerializeField] int Atk = 1;
+    [SerializeField] int Atk = 0;
 }

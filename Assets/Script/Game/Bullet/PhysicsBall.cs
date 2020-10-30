@@ -48,8 +48,7 @@ namespace BulletObject
         protected override void Attack(MasterCube hitObject)
         {
             if (IsAttacked) return;
-
-            Debug.Log("attack");
+            
             AttackSet.Target = hitObject;
             DamageCaster.CastDamage(AttackSet);
             IsAttacked = true;

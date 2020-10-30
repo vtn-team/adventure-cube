@@ -8,5 +8,5 @@ using System.Collections;
 /// </summary>
 public interface IShieldBlock
 {
-    void Defence(DamageCaster dc);  //シールド処理する実装が必要
+    int Defence(int dmg);  //シールド処理する実装が必要
 }

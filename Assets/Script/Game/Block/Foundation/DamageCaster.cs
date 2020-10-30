@@ -27,29 +27,54 @@ public class DamageCaster
     {
         public bool IsKnockback = false;
         public int TargetIndex = 0;
+        public int ShieldDamage = 0;
         public int Damage = 0;
         public AttackSet AttackSet = null;
         public MasterCube Target = null;
     }
 
+    MasterCube Owner;
     MasterCubeParameter OwnerParam; //オーナーとなるキューブが持つ値。参照のみ。
-    public DamageCaster(MasterCubeParameter param)
+    public DamageCaster(MasterCube owner, MasterCubeParameter param)
     {
+        Owner = owner;
         OwnerParam = param;
     }
 
     //内部関数
     protected void PreventDamage(AttackSet atkSet, ref DamageSet dmg)
     {
-        //tbd
-        //シールドはここで解決する
+        //シールド解決
+        foreach (var sh in Owner.ShieldCubes)
+        {
+            int before = dmg.Damage;
+            dmg.Damage = sh.Defence(dmg.Damage);
+            dmg.ShieldDamage += before - dmg.Damage;
+            if (dmg.Damage <= 0) break;
+        }
     }
 
     protected int CalcDamage(AttackSet atkSet)
     {
-        //tbd
-        //とりあえず
-        return atkSet.Atk;
+        int dmg = atkSet.Atk;
+
+        //攻撃側のパッシブ効果を探す
+        atkSet.Master.PassiveCubes.ForEach(p => {
+            if(p.PassiveType == PassiveType.DamageBuff)
+            {
+                dmg += p.PassiveEvent(0);
+            }
+        });
+
+        //防御側のパッシブ効果を探す
+        atkSet.Target.PassiveCubes.ForEach(p => {
+            if (p.PassiveType == PassiveType.DamageBuff)
+            {
+                dmg += p.PassiveEvent(1);
+            }
+        });
+
+        return dmg;
     }
 
 
@@ -65,11 +90,11 @@ public class DamageCaster
         dmg.Target = atkSet.Target;
 
         //ダメージ値の決定
-        dmg.Damage = atkSet.Master.AttackDamageCaster.CalcDamage(atkSet);
+        dmg.Damage = atkSet.Master.DamageCaster.CalcDamage(atkSet);
 
         //防御対象と軽減ダメージを検索する
         dmg.TargetIndex = -1;
-        atkSet.Target.TakeDamageCaster.PreventDamage(atkSet, ref dmg);
+        atkSet.Target.DamageCaster.PreventDamage(atkSet, ref dmg);
 
         //ダメージがすべて軽減されたらそれで返す
         if (dmg.Damage <= 0)
@@ -89,7 +114,16 @@ public class DamageCaster
     //ダメージを確定する
     static public void CastDamage(AttackSet atkSet)
     {
-        CastDamage(Evaluate(atkSet));
+        var dmg = Evaluate(atkSet);
+        CastDamage(dmg);
+        if (dmg.Damage > 0)
+        {
+            DamagePopup.Pop(dmg.Target.gameObject, dmg.Damage, Color.red);
+        }
+        if (dmg.ShieldDamage > 0)
+        {
+            DamagePopup.Pop(dmg.Target.gameObject, dmg.ShieldDamage, Color.green);
+        }
     }
     //ダメージを確定する
     static public void CastDamage(DamageSet dmg)

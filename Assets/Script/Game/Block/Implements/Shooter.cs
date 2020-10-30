@@ -12,14 +12,15 @@ namespace Block
     /// <summary>
     /// 何かを飛ばす実装
     /// </summary>
-    public class RollingBlock : MonoBlock, IAttackBlock
+    public class Shooter : MonoBlock, IAttackBlock
     {
         [SerializeField] int interval;
         public bool CanIAttack => false;
-        AutoAttackTimer AutoAttack;
+        AutoAttackTimer AutoAttack = new AutoAttackTimer();
 
         protected override void Setup()
         {
+            AutoAttack.Setup(interval);
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
         }
 
@@ -29,12 +30,17 @@ namespace Block
             //キューブを作って飛ばす
             //キューブはマスターキューブの直上+1mにつくる
             var Obj = Bullet.Build<BulletObject.RollingBlock>("RollingBlock", MasterCube, this, null);
-            Obj.transform.position = new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
+            Obj.SetTarget(TargetHelper.SearchTarget(MasterCube, TargetHelper.SearchLogicType.NearestOne));
         }
 
         void UnityUpdate()
         {
-
+            AutoAttack.Update();
+            if(AutoAttack.IsAttackOK)
+            {
+                Attack();
+                AutoAttack.ResetTimer();
+            }
         }
     }
 }
