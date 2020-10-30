@@ -6,18 +6,14 @@ using UnityEngine;
 
 using Block;
 
-namespace Summon
+namespace BulletObject
 {
-    public class Bullet : SummonObject
+    public class PhysicsBall : Bullet
     {
         [SerializeField]
         float Life = 1.5f;
 
-        [SerializeField]
-        AttackCollider Collider;
-
-        bool IsAttacked = false;
-        DamageCaster.AttackSet attack = new DamageCaster.AttackSet();
+        bool IsSetUp = false;
         float Timer = 0.0f;
         Rigidbody RigidBody;
 
@@ -25,20 +21,14 @@ namespace Summon
         {
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
             RigidBody = GetComponent<Rigidbody>();
-            Type = SummonType.Bullet;
             Timer = 0.0f;
+
             base.Setup();
-        }
 
-        public void SetupAttackCallback(int atk, MasterCube master)
-        {
-            Collider.Setup(Attack, master.FriendId);
-
-            attack.IsPowerfull = true;
-            attack.Power = 1;
-            attack.Atk = atk;
-            attack.Attacker = this.gameObject;
-            attack.Master = master;
+            AttackSet.IsPowerfull = true;
+            AttackSet.Atk = 1;
+            AttackSet.Attacker = this.gameObject;
+            AttackSet.Master = MasterCube;
         }
 
         public void AddForce(Vector3 force)
@@ -49,19 +39,19 @@ namespace Summon
         void UnityUpdate()
         {
             Timer += Time.deltaTime;
-            if(Timer >= Life)
+            if (Timer >= Life)
             {
                 LifeCycleManager.RegisterDestroy(this.gameObject);
             }
         }
-        
-        void Attack(MonoBlock target)
+
+        protected override void Attack(MasterCube hitObject)
         {
             if (IsAttacked) return;
 
             Debug.Log("attack");
-            attack.TargetBlock = target;
-            DamageCaster.CastDamage(attack);
+            AttackSet.Target = hitObject;
+            DamageCaster.CastDamage(AttackSet);
             IsAttacked = true;
 
             LifeCycleManager.RegisterDestroy(this.gameObject);

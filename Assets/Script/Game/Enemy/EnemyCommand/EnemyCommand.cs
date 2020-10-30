@@ -4,18 +4,27 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// 敵行動管理クラス
+/// 
+/// NOTE: コマンドという概念を駆使して管理する
+/// NOTE: SerializeReferenceを使っています
+/// </summary>
 class EnemyCommand : MonoBehaviour
 {
+    /// <summary>
+    /// 敵コマンド管理単位
+    /// </summary>
     [Serializable]
     class EnemyCommandSet
     {
-        public bool IsWait = true;
+        public bool IsWait = true;              // 行動が終わるまで待つか？
         [SerializeReference, SubclassSelector]
-        public ICommand Command;
-        public int Probability = 1;
-        public float CastTime = 0;
-        public float CoolTime = 0;
-        public int NextIndex = -1;
+        public ICommand Command;                // コマンド
+        public int Probability = 1;             // 実行確率
+        public float CastTime = 0;              // 行動までの時間
+        public float CoolTime = 0;              // 行動後のインターバル
+        public int NextIndex = -1;              // 次に必ずそのIndexの行動をする。-1で抽選に戻る
     }
 
     [SerializeField]

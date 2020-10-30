@@ -12,13 +12,18 @@ using UnityEngine;
 /// 
 /// NOTE: キューブはBlankになることがある
 /// NOTE: 指定されたタイプ以外のキューブは装備できない
+/// 
+/// NOTE: 教材用に初期キューブ直指定できるようにした。
 /// </summary>
 [Serializable]
 public class CubeStock
 {
-    [SerializeField] int CubeId;
+    //[SerializeField] int CubeId;
+    int CubeId;
+    [SerializeField] MonoBlock InitCube;
     [SerializeField] Vector3 PositionOffset = Vector3.zero;
-    [SerializeField] MonoBlock.BlockType _StockType = MonoBlock.BlockType.Normal;
+    //[SerializeField] MonoBlock.BlockType _StockType = MonoBlock.BlockType.Normal;
+    MonoBlock.BlockType _StockType = MonoBlock.BlockType.Normal;
 
     MonoBlock Cube = null;
     MasterCube MasterCube = null;
@@ -37,6 +42,14 @@ public class CubeStock
     public void SetRoot(MasterCube master)
     {
         MasterCube = master;
+    }
+
+    public void SetUpInitCube()
+    {
+        CubeId = 1; //ダミー
+        Cube = MonoBlock.Build(InitCube, MasterCube); //仮の挙動
+        Cube.transform.SetParent(MasterCube.transform);
+        Cube.transform.localPosition = PositionOffset;
     }
 
     public void Equip(int id)

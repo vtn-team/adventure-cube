@@ -17,11 +17,10 @@ public class DamageCaster
     public class AttackSet
     {
         public bool IsPowerfull = false;
-        public float Power;
         public int Atk;
         public MasterCube Master;
+        public MasterCube Target;
         public GameObject Attacker;
-        public MonoBlock TargetBlock;
     }
 
     public class DamageSet
@@ -30,8 +29,7 @@ public class DamageCaster
         public int TargetIndex = 0;
         public int Damage = 0;
         public AttackSet AttackSet = null;
-        public MonoBlock Target = null;
-        public MasterCube TargetMaster = null;
+        public MasterCube Target = null;
     }
 
     MasterCubeParameter OwnerParam; //オーナーとなるキューブが持つ値。参照のみ。
@@ -60,20 +58,18 @@ public class DamageCaster
     {
         DamageSet dmg = new DamageSet();
         if (atkSet == null) return dmg;
-        if (atkSet.TargetBlock == null) return dmg;
+        if (atkSet.Target == null) return dmg;
         if (atkSet.Master == null) return dmg;
-        if (atkSet.TargetBlock.MasterCube == null) return dmg;
 
         dmg.AttackSet = atkSet;
-        dmg.Target = atkSet.TargetBlock;
-        dmg.TargetMaster = atkSet.TargetBlock.MasterCube;
+        dmg.Target = atkSet.Target;
 
         //ダメージ値の決定
         dmg.Damage = atkSet.Master.AttackDamageCaster.CalcDamage(atkSet);
 
         //防御対象と軽減ダメージを検索する
         dmg.TargetIndex = -1;
-        atkSet.TargetBlock.MasterCube.TakeDamageCaster.PreventDamage(atkSet, ref dmg);
+        atkSet.Target.TakeDamageCaster.PreventDamage(atkSet, ref dmg);
 
         //ダメージがすべて軽減されたらそれで返す
         if (dmg.Damage <= 0)
@@ -98,7 +94,7 @@ public class DamageCaster
     //ダメージを確定する
     static public void CastDamage(DamageSet dmg)
     {
-        dmg.Target.Damage(dmg.Damage);
-        dmg.TargetMaster.UpdateDamage(dmg);
+        //dmg.Target.Damage(dmg.Damage);
+        dmg.Target.UpdateDamage(dmg);
     }
 }

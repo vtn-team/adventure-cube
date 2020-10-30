@@ -5,10 +5,12 @@ using System.Text;
 using UnityEngine;
 
 using Block;
-using Summon;
 
 namespace EnemyAction
 {
+    /// <summary>
+    /// 弾をとばす
+    /// </summary>
     class Bullet : ICommand
     {
         [SerializeField]
@@ -21,7 +23,7 @@ namespace EnemyAction
         float Interval = 0;
 
         [SerializeField]
-        string BulletName = "Bullet";
+        string BulletName = "PhysicsBall";
 
         MasterCube Owner;
         //LinkedList<Summon.Bullet> Summon = new LinkedList<Summon.Bullet>();
@@ -42,11 +44,9 @@ namespace EnemyAction
 
             while(ShotCount < ShotNum)
             {
-                var blt = SummonObject.Build<Summon.Bullet>("Bullet", Owner, null, null);
+                var blt = BulletObject.Bullet.Build<BulletObject.PhysicsBall>(BulletName, Owner, null, null);
                 blt.transform.position = Owner.transform.position + Owner.transform.forward * 1.5f;
                 blt.AddForce(Owner.transform.forward * 250.0f);
-                blt.SetupAttackCallback(Atk, Owner);
-                //Summon.AddLast(blt);
 
                 ShotCount++;
                 Timer = 0.0f;

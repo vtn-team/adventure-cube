@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+using BulletObject;
+
 namespace Block
 {
     /// <summary>
-    /// 矢(？)を飛ばす実装
+    /// 何かを飛ばす実装
     /// </summary>
-    public class Arrow : MonoBlock, IAttackBlock
+    public class RollingBlock : MonoBlock, IAttackBlock
     {
         [SerializeField] int interval;
         public bool CanIAttack => false;
@@ -25,7 +27,9 @@ namespace Block
         public void Attack()
         {
             //キューブを作って飛ばす
-
+            //キューブはマスターキューブの直上+1mにつくる
+            var Obj = Bullet.Build<BulletObject.RollingBlock>("RollingBlock", MasterCube, this, null);
+            Obj.transform.position = new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
         }
 
         void UnityUpdate()

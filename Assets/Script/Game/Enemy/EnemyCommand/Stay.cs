@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace EnemyAction
 {
+    /// <summary>
+    /// 待機
+    /// </summary>
     class Stay : ICommand
     {
         public void Setup(MasterCube owner)

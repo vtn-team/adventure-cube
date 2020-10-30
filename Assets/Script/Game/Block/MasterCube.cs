@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Block;
-using Summon;
 
 
 /// <summary>
@@ -17,27 +16,35 @@ public class MasterCube : MonoBehaviour
 
     protected MasterCubeParameter Param = new MasterCubeParameter();
     protected List<MonoBlock> Inventory = new List<MonoBlock>();
+
+    public CubeCoordinates Coord { get; private set; }
     protected float YOffset = 0.0f;
 
     public int FriendId => friendId;
 
     public DamageCaster TakeDamageCaster { get; private set; }
     public DamageCaster AttackDamageCaster { get; private set; }
+
+    protected ICoreBlock CoreCube = null;
     
     public virtual void Build()
     {
         GameObjectCache.AddCharacterCache(this);
 
         YOffset = 0;
+        Coord.SetPosition(transform.position);
         Vector3 Center = this.transform.position;
         foreach (var b in Blocks)
         {
             b.SetRoot(this);
+            b.SetUpInitCube(); //教材用実装変更
+            /*
             if (!b.HasCube)
             {
                 int id = ResourceCache.CubeMaster.GetRandomCubeId(b.StockType);
                 b.Equip(id);
             }
+            */
             Inventory.Add(b.CurrentCube);
 
             //Y計算
@@ -49,6 +56,14 @@ public class MasterCube : MonoBehaviour
 
         //キューブ更新したタイミングで呼び出す
         UpdateCube();
+
+        //コア設定
+        CoreCube = GetComponentInChildren<ICoreBlock>();
+        if(CoreCube==null)
+        {
+            Debug.LogError("コアが設定されていないブロックです。破棄します。");
+            Death();
+        }
 
         TakeDamageCaster = new DamageCaster(Param);
         AttackDamageCaster = new DamageCaster(Param);

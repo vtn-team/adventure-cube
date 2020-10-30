@@ -9,35 +9,39 @@ using Block;
 /// 
 /// NOTE: 
 /// </summary>
-public class GameManager
+public class GameManager : MonoBehaviour
 {
+    [SerializeField] MasterCube PlayableChar = null;
+    [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
+    [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
+
     static GameManager Instance = new GameManager();
 
-    List<MonoBlock.BlockType> PlayerDeck = null;
-    List<MonoBlock.BlockType> EnemyDeck = null;
-
-    static public void SavePlayerDeck(List<MonoBlock.BlockType> deck)
+    private void Awake()
     {
-        Instance.PlayerDeck = deck;
+        Instance = this;
+        GameObjectCache.Setup();
+        ResourceCache.SetupCubeSheet("CubeMasterTest");
     }
 
-    //ランダムで敵を作る
-    static public void CreateRandomEnemyDeck()
+    private void Start()
     {
-        Instance.EnemyDeck = new List<MonoBlock.BlockType>();
+        PlayableChar.Build();
 
-        int human = Random.Range(0, 15);
+        var lists = GameObject.FindObjectsOfType<FieldEnemy>();
+        foreach (var e in lists)
+        {
+            Enemy.Add(e);
+        }
     }
 
-    static public List<MonoBlock.BlockType> GetDeck(int playerId)
+    static public MasterCube GetPlayableChar()
     {
-        if (playerId == 0) return Instance.PlayerDeck;
-        if (playerId == 1) return Instance.EnemyDeck;
-        return null;
+        return Instance.PlayableChar;
     }
 
-    static public void Death(int plNo)
+    static public List<MasterCube> GetEnemyList()
     {
-
+        return Instance.Enemy;
     }
 }

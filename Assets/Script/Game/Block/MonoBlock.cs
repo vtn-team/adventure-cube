@@ -73,7 +73,7 @@ namespace Block
 
 
         /// <summary>
-        /// ブロックを作る
+        /// ブロックを作る(idから)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -85,26 +85,20 @@ namespace Block
             block.Setup();
             return block;
         }
-
-        /*
+        
         /// <summary>
-        /// ブロックを作る
+        /// ブロックを作る(インスタンスから/今後消す予定)
         /// </summary>
-        /// <typeparam name="T">作るブロックの型</typeparam>
-        /// <param name="index"></param>
-        /// <param name="master"></param>
+        /// <param name="prefab">元オブジェクト</param>
+        /// <param name="master">親</param>
         /// <returns></returns>
-        static public T Build<T>(MasterCube master) where T : MonoBlock
+        static public MonoBlock Build(MonoBlock prefab, MasterCube master)
         {
-            var prefab = ResourceCache.GetCache(ResourceType.Cube, type.ToString());
             var obj = GameObject.Instantiate(prefab);
-            var block = obj.GetComponent<T>();
+            var block = obj.GetComponent<MonoBlock>();
             block.MasterCube = master;
-            block.Type = type;
-            block.Index = index;
             block.Setup();
             return block;
         }
-        */
     }
 }

@@ -11,11 +11,12 @@ public enum ResourceType
     PrefabTypeStart = 10,
     FieldMap,
     Cube,
-    SummonObject,
+    Bullet,
     PrefabTypeEnd,
 
     MaterialTypeStart = 100,
     FieldMaterial,
+    CubeMaterial,
     MaterialTypeEnd,
 }
 
@@ -75,11 +76,12 @@ public class ResourceCache
         {
             switch(type)
             {
-                case ResourceType.FieldMap:     Path.AppendFormat("Field/{0}", name); break;
-                case ResourceType.Cube:         Path.AppendFormat("Blocks/{0}", name); break;
-                case ResourceType.SummonObject: Path.AppendFormat("Summon/{0}", name); break;
+                case ResourceType.FieldMap:   Path.AppendFormat("Field/{0}", name); break;
+                case ResourceType.Cube:       Path.AppendFormat("Blocks/{0}", name); break;
+                case ResourceType.Bullet:     Path.AppendFormat("Bullet/{0}", name); break;
             }
         }
+        Debug.Log(Path.ToString());
         return Path.ToString();
     }
 
@@ -95,6 +97,7 @@ public class ResourceCache
             switch (type)
             {
                 case ResourceType.FieldMaterial: Path.AppendFormat("Material/Field/{0}", name); break;
+                case ResourceType.CubeMaterial:  Path.AppendFormat("Material/Cube/{0}", name); break;
             }
         }
         return Path.ToString();
