@@ -111,11 +111,14 @@ public class DamageCaster
         return dmg;
     }
 
+    static public int PopDamege { get; private set; }
+    public int LifeDamege { get; } = PopDamege;
     //ダメージを確定する
     static public void CastDamage(AttackSet atkSet)
     {
         var dmg = Evaluate(atkSet);
         CastDamage(dmg);
+        PopDamege = dmg.Damage;
         if (dmg.Damage > 0)
         {
             DamagePopup.Pop(dmg.Target.gameObject, dmg.Damage, Color.red);
