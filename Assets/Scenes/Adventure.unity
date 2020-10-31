@@ -488,7 +488,7 @@ MonoBehaviour:
   - InitCube: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143,
       type: 3}
     PositionOffset: {x: 0, y: 0, z: 0}
-  - InitCube: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170,
+  - InitCube: {fileID: 9032014496319730669, guid: 13888e632c0d3e54c97aeacdc1fd8ae2,
       type: 3}
     PositionOffset: {x: 0, y: 1, z: 0}
   - InitCube: {fileID: 2350541773951691628, guid: b24c22c35ca3e8a43b02b7d831a396b1,
