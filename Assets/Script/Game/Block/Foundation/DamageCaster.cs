@@ -54,6 +54,17 @@ public class DamageCaster
         }
     }
 
+    protected void Counter()
+    {
+        foreach (var counterCube in Owner.CounterCubes)
+        {
+            foreach (var attackCube in Owner.AttackCubes)
+            {
+                counterCube.Counter(attackCube);
+            }
+        }
+    }
+
     protected int CalcDamage(AttackSet atkSet)
     {
         int dmg = atkSet.Atk;
@@ -107,6 +118,8 @@ public class DamageCaster
         //防御してくれなかったらターゲットを選ぶ
         //選ぶ優先度はアタックキャスターが決める
         //dmg.TargetIndex = atkSet.Master.AttackDamageCaster.DecideTarget(atkSet);
+
+        atkSet.Target.DamageCaster.Counter();
         
         return dmg;
     }
