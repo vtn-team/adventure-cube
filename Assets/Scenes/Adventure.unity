@@ -488,18 +488,9 @@ MonoBehaviour:
   - InitCube: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143,
       type: 3}
     PositionOffset: {x: 0, y: 0, z: 0}
-  - InitCube: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170,
+  - InitCube: {fileID: 7025025173174330965, guid: c8b91199399ac8a4f880b6e83a393c56,
       type: 3}
     PositionOffset: {x: 0, y: 1, z: 0}
-  - InitCube: {fileID: 2350541773951691628, guid: b24c22c35ca3e8a43b02b7d831a396b1,
-      type: 3}
-    PositionOffset: {x: 0, y: 2, z: 0}
-  - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
-      type: 3}
-    PositionOffset: {x: 0, y: 3, z: 0}
-  - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
-      type: 3}
-    PositionOffset: {x: 0, y: 4, z: 0}
   friendId: 1
 --- !u!4 &719046862
 Transform:

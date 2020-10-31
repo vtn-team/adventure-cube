@@ -49,7 +49,8 @@ public class DamageCaster
         {
             int before = dmg.Damage;
             dmg.Damage = sh.Defence(dmg.Damage);
-            dmg.ShieldDamage += before - dmg.Damage;
+            //dmg.ShieldDamage += before - dmg.Damage;
+            dmg.ShieldDamage = dmg.Damage;
             if (dmg.Damage <= 0) break;
         }
     }
@@ -120,7 +121,7 @@ public class DamageCaster
         {
             DamagePopup.Pop(dmg.Target.gameObject, dmg.Damage, Color.red);
         }
-        if (dmg.ShieldDamage > 0)
+        if (dmg.ShieldDamage >= 0)
         {
             DamagePopup.Pop(dmg.Target.gameObject, dmg.ShieldDamage, Color.green);
         }
