@@ -18,4 +18,5 @@ public enum PassiveType
 {
     None,
     DamageBuff,
+    Jump,
 }

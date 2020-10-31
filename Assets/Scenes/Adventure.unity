@@ -1084,6 +1084,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2000760701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000760704}
+  - component: {fileID: 2000760703}
+  - component: {fileID: 2000760702}
+  m_Layer: 8
+  m_Name: Enemy4
+  m_TagString: Character
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2000760702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000760701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c8bc95b3c51d9429ae91e98a6ec24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterCube: {fileID: 2000760703}
+  Commands:
+  - IsWait: 1
+    Command:
+      id: 0
+    Probability: 10
+    CastTime: 0
+    CoolTime: 0
+    NextIndex: 1
+  - IsWait: 1
+    Command:
+      id: 1
+    Probability: 0
+    CastTime: 1
+    CoolTime: 1
+    NextIndex: -1
+  references:
+    version: 1
+    00000000:
+      type: {class: RandomMove, ns: EnemyAction, asm: Assembly-CSharp}
+      data:
+        Speed: 2
+        Range: 8
+    00000001:
+      type: {class: Bullet, ns: EnemyAction, asm: Assembly-CSharp}
+      data:
+        ShotNum: 3
+        Atk: 1
+        Interval: 1
+        BulletName: PhysicsBall
+--- !u!114 &2000760703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000760701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6799ca68ffb6a794e8e132117bcab602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Blocks:
+  - InitCube: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143,
+      type: 3}
+    PositionOffset: {x: 0, y: 0, z: 0}
+  - InitCube: {fileID: 4066057921076432433, guid: 9cef0d08110a3ce4e8a608333bcf6f20,
+      type: 3}
+    PositionOffset: {x: 0, y: 1, z: 0}
+  friendId: 2
+  DropCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
+    type: 3}
+--- !u!4 &2000760704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000760701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.76, y: 1.5, z: -7.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022027365
 GameObject:
   m_ObjectHideFlags: 0
