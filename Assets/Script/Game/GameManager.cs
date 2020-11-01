@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
         GameObjectCache.Setup();
         ResourceCache.SetupCubeSheet("CubeMasterTest");
+
+        Network.WebRequest.Request<Network.WebRequest.GetDynamic>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.Json, (dynamic json) =>
+        {
+            Debug.Log(json[0]["Id"]);
+        });
     }
 
     private void Start()
