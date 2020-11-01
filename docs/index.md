@@ -31,7 +31,7 @@
 　[02.抽象化](/EducationText/実践/02-抽象化.md)  
 
 
-　[03.インターフェース](/EducationText/実践/03-インターフェース.md)  
+　[03.インタフェース](/EducationText/実践/03-インタフェース.md)  
 
 
 　[04.メタプログラミングとWhere](/EducationText/実践/04-メタプログラミングとWhere.md)  
