@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace EnemyAction
 {
+    /// <summary>
+    /// 範囲内移動
+    /// 
+    /// NOTE: つくりかけ
+    /// </summary>
     [Serializable]
     public class TerritoryMove : ICommand
     {

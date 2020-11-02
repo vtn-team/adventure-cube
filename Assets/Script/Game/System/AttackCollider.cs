@@ -9,7 +9,7 @@ using Block;
 public class AttackCollider : MonoBehaviour
 {
     //public delegate void CharacterHitCallback(MasterCube master);
-    public delegate void MonoBlockHitCallback(MonoBlock block);
+    public delegate void MonoBlockHitCallback(MasterCube block);
     MonoBlockHitCallback Callback { get; set; }
     int FriendId { get; set; }
 
@@ -45,15 +45,19 @@ public class AttackCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("MonoBlock"))
         {
             //
-            var mc = GameObjectCache.GetMonoBlock(collision.gameObject);
-            if (mc == null)
+            var block = GameObjectCache.GetMonoBlock(collision.gameObject);
+            if (block == null)
+            {
+                block = collision.gameObject.GetComponent<MonoBlock>();
+            }
+            if (block == null)
             {
                 Debug.Log("不正な設定のオブジェクト:" + collision.gameObject.name);
                 return;
             }
-            //if (mc.IsFriend(FriendId)) return;
+            if (block.MasterCube.IsFriend(FriendId)) return;
 
-            Callback(mc);
+            Callback(block.MasterCube);
         }
     }
 }

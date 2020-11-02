@@ -8,6 +8,6 @@ public interface ICommand
 {
     void Setup(MasterCube owner);
 
-    //舞フレーム呼び出され、trueで終了する
+    //実行タイミングで呼び出され、trueで終了する
     bool Execute();
 }

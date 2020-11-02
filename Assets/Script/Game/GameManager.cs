@@ -9,46 +9,44 @@ using Block;
 /// 
 /// NOTE: 
 /// </summary>
-public class GameManager
+public class GameManager : MonoBehaviour
 {
+    [SerializeField] MasterCube PlayableChar = null;
+    [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
+    [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
+
     static GameManager Instance = new GameManager();
 
-    List<MonoBlock.BlockType> PlayerDeck = null;
-    List<MonoBlock.BlockType> EnemyDeck = null;
-
-    static public void SavePlayerDeck(List<MonoBlock.BlockType> deck)
+    private void Awake()
     {
-        Instance.PlayerDeck = deck;
+        Instance = this;
+        GameObjectCache.Setup();
+        ResourceCache.SetupCubeSheet("CubeMasterTest");
+
+        Network.WebRequest.Request<Network.WebRequest.GetDynamic>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.Json, (dynamic json) =>
+        {
+            Debug.Log(json[0]["Id"]);
+        });
     }
 
-    static public void CreateRandomEnemyDeck()
+    private void Start()
     {
-        Instance.EnemyDeck = new List<MonoBlock.BlockType>();
+        PlayableChar.Build();
 
-        int human = Random.Range(0, 15);
-
-        for (int i = 0; i < 15; ++i)
+        var lists = GameObject.FindObjectsOfType<FieldEnemy>();
+        foreach (var e in lists)
         {
-            if (human == i)
-            {
-                Instance.EnemyDeck.Add(MonoBlock.BlockType.Core);
-            }
-            else
-            {
-                Instance.EnemyDeck.Add((MonoBlock.BlockType)Random.Range(2, (int)MonoBlock.BlockType.MAX));
-            }
+            Enemy.Add(e);
         }
     }
 
-    static public List<MonoBlock.BlockType> GetDeck(int playerId)
+    static public MasterCube GetPlayableChar()
     {
-        if (playerId == 0) return Instance.PlayerDeck;
-        if (playerId == 1) return Instance.EnemyDeck;
-        return null;
+        return Instance.PlayableChar;
     }
 
-    static public void Death(int plNo)
+    static public List<MasterCube> GetEnemyList()
     {
-
+        return Instance.Enemy;
     }
 }

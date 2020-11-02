@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 597593112138004083}
   - component: {fileID: 8627434073150885524}
   - component: {fileID: -6473562896168026547}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Core
   m_TagString: MonoBlock
   m_Icon: {fileID: 0}
@@ -93,8 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f6bd37f19b27e46842b18c3588014a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 1
+  life: 100
   figure: 1
+  rare: 1
 --- !u!65 &-6473562896168026547
 BoxCollider:
   m_ObjectHideFlags: 0

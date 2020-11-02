@@ -23,6 +23,7 @@ namespace Block
 
         [SerializeField] protected int life = 1;
         [SerializeField] protected int figure = 1; //一応。
+        [SerializeField] protected int rare = 1;
 
         public MasterCube MasterCube { get; private set; }
         public int Index { get; private set; }
@@ -30,6 +31,7 @@ namespace Block
 
         public int Life { get; protected set; }
         public int Figure { get; protected set; }
+        public int Rare => rare;
 
 
         void Awake()
@@ -37,6 +39,11 @@ namespace Block
             Life = life;
             Figure = figure;
             GameObjectCache.AddMonoBlockCache(this);
+        }
+
+        protected virtual void Setup()
+        {
+
         }
 
         public bool IsFriend(int friendId)
@@ -47,16 +54,6 @@ namespace Block
         public virtual bool IsAlive()
         {
             return Life > 0;
-        }
-
-        protected virtual void Setup()
-        {
-
-        }
-
-        public virtual void UpdateBlock()
-        {
-
         }
 
         public virtual void Damage(int dmg)
@@ -75,21 +72,50 @@ namespace Block
         }
 
 
-        /// <summary>
-        /// ブロックを作る
-        /// </summary>
-        /// <typeparam name="T">作るブロックの型</typeparam>
-        /// <param name="index"></param>
-        /// <param name="master"></param>
-        /// <returns></returns>
-        static public T Build<T>(BlockType type, int index, MasterCube master) where T : MonoBlock
+        private void OnCollisionEnter(Collision collision)
         {
-            var prefab = ResourceCache.GetCache(ResourceType.MonoBlock, type.ToString());
-            var obj = GameObject.Instantiate(prefab);
-            var block = obj.GetComponent<T>();
+            /*
+            // Bulletが当たった
+            if (collision.gameObject.CompareTag("Bullet"))
+            {
+                var mc = GameObjectCache.GetCharacter(collision.gameObject);
+                if (mc == null)
+                {
+                    Debug.Log("不正な設定のオブジェクト:" + collision.gameObject.name);
+                    return;
+                }
+                //if (mc.IsFriend(FriendId)) return;
+                Callback(mc);
+            }
+            */
+        }
+
+
+        /// <summary>
+        /// ブロックを作る(idから)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        static public MonoBlock Build(int id, MasterCube master)
+        {
+            var obj = Instantiate(ResourceCache.CubeMaster.GetAsset(id));
+            var block = obj.GetComponent<MonoBlock>();
             block.MasterCube = master;
-            block.Type = type;
-            block.Index = index;
+            block.Setup();
+            return block;
+        }
+        
+        /// <summary>
+        /// ブロックを作る(インスタンスから/今後消す予定)
+        /// </summary>
+        /// <param name="prefab">元オブジェクト</param>
+        /// <param name="master">親</param>
+        /// <returns></returns>
+        static public MonoBlock Build(MonoBlock prefab, MasterCube master)
+        {
+            var obj = GameObject.Instantiate(prefab);
+            var block = obj.GetComponent<MonoBlock>();
+            block.MasterCube = master;
             block.Setup();
             return block;
         }

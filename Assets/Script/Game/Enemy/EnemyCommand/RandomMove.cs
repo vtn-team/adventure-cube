@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace EnemyAction
 {
+    /// <summary>
+    /// ランダム徘徊
+    /// </summary>
     [Serializable]
     public class RandomMove : ICommand
     {

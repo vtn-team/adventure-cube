@@ -6,7 +6,7 @@ using UnityEngine;
 
 using Block;
 
-class FieldEnemy : MasterCube
+public class FieldEnemy : MasterCube
 {
     [SerializeField] MonoBlock DropCube;
 

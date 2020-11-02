@@ -8,7 +8,7 @@ using System.Collections;
 /// </summary>
 public interface IAttackBlock
 {
-    int Interval { get; }           // 攻撃インターバルの実装が必要
+    bool CanIAttack { get; }    // 攻撃インターバル、または攻撃可能を知らせる実装が必要
 
-    void Attack(DamageCaster dc);   // 攻撃の実装が必要
+    void Attack();              // 攻撃の実装が必要
 }

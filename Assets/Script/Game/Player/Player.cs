@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 
 using Block;
-using Summon;
 
 public class Player : MasterCube
 {
@@ -45,7 +44,7 @@ public class Player : MasterCube
                     Timer = 0.0f;
                     FromPos = this.transform.position;
                     TargetPos = hit.point;
-                    TargetPos.y = 0.0f;
+                    TargetPos.y = YOffset;
                     IsMove = true;
                     this.transform.LookAt(TargetPos, Vector3.up);
                 }
@@ -69,8 +68,10 @@ public class Player : MasterCube
                 Timer = 1.0f;
                 IsMove = false;
             }
-            this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer);
+            this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer); 
         }
+
+        _Coord.SetPosition(this.transform.position);
 
         /*
         //キューブの処理
