@@ -33,6 +33,11 @@ public class MasterCube : MonoBehaviour
     public List<IShieldBlock> ShieldCubes { get; protected set; }
     public List<IPassiveBlock> PassiveCubes { get; protected set; }
 
+    public void CreateDeck(int charId)
+    {
+        GameManager.GetDeckFromCharId();
+    }
+
     public virtual void Build()
     {
         GameObjectCache.AddCharacterCache(this);

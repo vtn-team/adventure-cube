@@ -11,9 +11,13 @@ using Block;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    //ゲーム中のオブジェクトデータ
     [SerializeField] MasterCube PlayableChar = null;
     [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
     [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
+
+    //ゲームデータ
+
 
     static GameManager Instance = new GameManager();
 
@@ -25,7 +29,7 @@ public class GameManager : MonoBehaviour
 
         Network.WebRequest.Request<Network.WebRequest.GetDynamic>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.Json, (dynamic json) =>
         {
-            Debug.Log(json[0]["Id"]);
+            Debug.Log(json["data"][0]["Id"]);
         });
     }
 
