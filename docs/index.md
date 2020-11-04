@@ -43,10 +43,10 @@
 　[01.マスターデータとExcel](/EducationText/データ設計/01-マスターデータとExcel.md)  
 
 
-　[02.ScriptableObject](/EducationText/データ設計/01-.md)  
+　[02.ScriptableObject](/EducationText/データ設計/02-ScriptableObject.md)  
 
 
-　[03.データベースとリレーション](/EducationText/データ設計/01-.md)  
+　[03.リレーション](/EducationText/データ設計/03-リレーション.md)  
 
 
 
