@@ -11,8 +11,7 @@ using Block;
 /// </summary>
 public class MasterCube : MonoBehaviour
 {
-    [SerializeField] protected List<CubeStock> Blocks = new List<CubeStock>();
-    [SerializeField] protected int friendId = 0;
+    protected List<CubeStock> Blocks = new List<CubeStock>();
 
     protected MasterCubeParameter Param = new MasterCubeParameter();
     protected List<MonoBlock> Inventory = new List<MonoBlock>();
@@ -22,7 +21,8 @@ public class MasterCube : MonoBehaviour
     
     protected float YOffset = 0.0f;
 
-    public int FriendId => friendId;
+    public int CharcaterId { get; private set; }
+    public int FriendId { get; protected set; }
 
     public DamageCaster DamageCaster { get; private set; }
 
@@ -32,33 +32,33 @@ public class MasterCube : MonoBehaviour
     public List<ISkillBlock> SkillCubes { get; protected set; }
     public List<IShieldBlock> ShieldCubes { get; protected set; }
     public List<IPassiveBlock> PassiveCubes { get; protected set; }
+    
 
-    public void CreateDeck(int charId)
+    public virtual void Build(int charId)
     {
-        GameManager.GetDeckFromCharId();
-    }
+        //マスターからデッキを取得して、生成すべきキューブを特定
+        var deck = GameManager.CharacterDeckMaster.Where(d => d.CharId == charId);
 
-    public virtual void Build()
-    {
         GameObjectCache.AddCharacterCache(this);
 
         YOffset = 0;
         Vector3 Center = this.transform.position;
-        foreach (var b in Blocks)
+        foreach (var b in deck)
         {
-            b.SetRoot(this);
-            b.SetUpInitCube(); //教材用実装変更
-            /*
-            if (!b.HasCube)
+            Vector3 offset = new Vector3(b.OffsetX, b.OffsetY, b.OffsetZ);
+            CubeStock stock = new CubeStock();
+            stock.SetRoot(this);
+            stock.SetUp(b.InitCubeId, offset, (MonoBlock.BlockType)b.Type);
+
+            if (stock.HasCube)
             {
-                int id = ResourceCache.CubeMaster.GetRandomCubeId(b.StockType);
-                b.Equip(id);
+                Inventory.Add(stock.CurrentCube);
             }
-            */
-            Inventory.Add(b.CurrentCube);
 
             //Y計算
-            if (YOffset < b.CurrentCube.transform.position.y) YOffset = b.CurrentCube.transform.position.y;
+            if (YOffset < b.OffsetY) YOffset = b.OffsetY;
+
+            Blocks.Add(stock);
         }
 
         //Y移動
@@ -88,7 +88,7 @@ public class MasterCube : MonoBehaviour
 
     public bool IsFriend(int fId)
     {
-        return friendId == fId;
+        return FriendId == fId;
     }
     
     public void UpdateDamage(DamageCaster.DamageSet dmg)

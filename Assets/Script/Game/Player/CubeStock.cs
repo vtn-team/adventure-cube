@@ -18,16 +18,14 @@ using UnityEngine;
 [Serializable]
 public class CubeStock
 {
-    [SerializeField] int CubeId;
-    //[SerializeField] MonoBlock InitCube;
-    [SerializeField] Vector3 PositionOffset = Vector3.zero;
-    [SerializeField] MonoBlock.BlockType _StockType = MonoBlock.BlockType.Normal;
+    int CubeId = 0;
+    Vector3 PositionOffset = Vector3.zero;
 
     MonoBlock Cube = null;
     MasterCube MasterCube = null;
 
     public bool HasCube { get { return CubeId > 0; } }
-    public MonoBlock.BlockType StockType => _StockType;
+    public MonoBlock.BlockType StockType { get; private set; }
     public MonoBlock CurrentCube => Cube;
     public bool IsAlive() { return Cube ? Cube.IsAlive() : false; }
 
@@ -40,6 +38,28 @@ public class CubeStock
     public void SetRoot(MasterCube master)
     {
         MasterCube = master;
+    }
+
+    //データシート経由でのセットアップ
+    public void SetUp(int id, Vector3 offset, MonoBlock.BlockType type)
+    {
+        CubeId = id;
+
+        //もし-1ならランダムで作る
+        if(CubeId == -1)
+        {
+            CubeId = 0; //コンドヤル
+        }
+
+        PositionOffset = offset;
+        StockType = type;
+
+        if (CubeId != 0)
+        {
+            Cube = MonoBlock.Build(CubeId, MasterCube); //仮の挙動
+            Cube.transform.SetParent(MasterCube.transform);
+            Cube.transform.localPosition = PositionOffset;
+        }
     }
 
     /*

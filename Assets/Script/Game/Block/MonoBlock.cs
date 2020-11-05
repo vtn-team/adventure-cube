@@ -98,7 +98,7 @@ namespace Block
         /// <returns></returns>
         static public MonoBlock Build(int id, MasterCube master)
         {
-            var obj = Instantiate(ResourceCache.CubeMaster.GetAsset(id));
+            var obj = Instantiate(ResourceCache.GetCube(id));
             var block = obj.GetComponent<MonoBlock>();
             block.MasterCube = master;
             block.Setup();
