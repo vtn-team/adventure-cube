@@ -1,11 +1,11 @@
 # スプレッドシートをJsonで受け取る
 
-1. 新規のスプレッドシートを作成しましょう  
+### 1. 新規のスプレッドシートを作成しましょう  
 
 Google Driveを開く→新規→新規スプレッドシート  
 
 
-2. スクリプトを記述しましょう  
+### 2. スクリプトを記述しましょう  
 
 シート上部のツール→>スクリプトエディタを選択してください。  
 ※Googleに複数のアカウントでログインしていた際、エラーになることがあるので注意してください。  
@@ -67,7 +67,7 @@ function doGet(param) {
 }
 ```
 
-3. Web Appとして公開する
+### 3. Web Appとして公開する
 
 スクリプトエディタのメニューから、  
 公開→ウェブアプリケーションとして導入を選択してください。  
@@ -81,7 +81,7 @@ function doGet(param) {
 変更したら更新を押します。
 
 
-4. スクリプトを修正した場合
+### 4. スクリプトを修正した場合
 
 スクリプトエディタのメニューから、再度、  
 公開→ウェブアプリケーションとして導入 を選択してください。  
@@ -91,18 +91,26 @@ Project versionを「New」にして、更新ボタンを押します。
 
 ## 通信
 
-### めんどくさくてJsonを型を気にせず受け取りたい場合(dynamicと、Utf8Jsonというアセットを使います)  
+### 型を気にせず受け取りたい場合
+
+dynamicと、Utf8Jsonというアセットを使います  
+※ほかのアセットでもいいですが、これが一番いいと思います。  
+
+UTF8Json  
+https://www.fast-system.jp/unity-utf8json-howto/  
+をプロジェクトにImportしてください。  
+
 ```
 Network.WebRequest.Request<Network.WebRequest.GetDynamic>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.Json, (dynamic json) =>
 {
   Debug.Log(json["Data"][0]["Id"]);
 });
 ```
-#### UTF8Json  
-https://www.fast-system.jp/unity-utf8json-howto/  
 
 
-### 型を気にする場合(JsonUtilityを使う場合)  
+### 型を気にする場合
+
+JsonUtilityを使ってクラスにします。  
 ```
 Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.String, (string json) =>
 {
