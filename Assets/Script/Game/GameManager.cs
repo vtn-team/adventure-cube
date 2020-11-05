@@ -7,13 +7,25 @@ using Block;
 /// <summary>
 /// ゲーム管理クラス
 /// 
-/// NOTE: 
+/// NOTE: パーシャルクラスにして、進行と管理を分けました
 /// </summary>
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
+    //ゲーム中のオブジェクトデータ
+    [SerializeField] bool IsVersionUpFlag = false;
     [SerializeField] MasterCube PlayableChar = null;
     [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
     [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
+
+    //ゲームデータ
+    MasterData.MasterDataClass<MasterData.Cube> cubeMaster;
+    MasterData.MasterDataClass<MasterData.Character> characterMaster;
+    MasterData.MasterDataClass<MasterData.CharacterDeck> characterDeckMaster;
+    static public MasterData.Cube[] CubeMaster => Instance.cubeMaster.Data;
+    static public MasterData.Character[] CharacterMaster => Instance.characterMaster.Data;
+    static public MasterData.CharacterDeck[] CharacterDeckMaster => Instance.characterDeckMaster.Data;
+    int LoadingCount = 0;
+    delegate void LoadMasterDataCallback<T>(T data);
 
     static GameManager Instance = new GameManager();
 
@@ -21,25 +33,37 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         GameObjectCache.Setup();
-        ResourceCache.SetupCubeSheet("CubeMasterTest");
 
-        Network.WebRequest.Request<Network.WebRequest.GetDynamic>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.Json, (dynamic json) =>
-        {
-            Debug.Log(json[0]["Id"]);
-        });
+        LoadMasterData("Cube", (MasterData.MasterDataClass<MasterData.Cube> data) => cubeMaster = data);
+        LoadMasterData("Character", (MasterData.MasterDataClass<MasterData.Character> data) => characterMaster = data);
+        LoadMasterData("CharacterDeck", (MasterData.MasterDataClass<MasterData.CharacterDeck> data) => characterDeckMaster = data);
+
+        LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
     }
 
-    private void Start()
+    private void LoadMasterData<T>(string file, LoadMasterDataCallback<T> callback)
     {
-        PlayableChar.Build();
-
-        var lists = GameObject.FindObjectsOfType<FieldEnemy>();
-        foreach (var e in lists)
+        var data = LocalData.Load<T>(file);
+        if(data == null || IsVersionUpFlag)
         {
-            Enemy.Add(e);
+            LoadingCount++;
+            Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet="+file, Network.WebRequest.ResultType.String, (string json) =>
+            {
+                Debug.Log(json);
+                var dldata = JsonUtility.FromJson<T>(json);
+                LocalData.Save<T>(file, dldata);
+                callback(dldata);
+                Debug.Log("Network download. : " + file + " / " + json + "/" + dldata);
+                --LoadingCount;
+            });
+        }
+        else
+        {
+            Debug.Log("Local load. : " + file + " / " + data);
+            callback(data);
         }
     }
-
+    
     static public MasterCube GetPlayableChar()
     {
         return Instance.PlayableChar;

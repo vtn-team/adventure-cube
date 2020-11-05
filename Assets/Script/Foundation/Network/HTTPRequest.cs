@@ -44,7 +44,6 @@ public class HTTPRequest : MonoBehaviour
     void DataParse<T>(Packet<T> p, UnityWebRequest req)
     {
         string str = req.downloadHandler.text;
-        Debug.Log(str);
         switch (p.Type)
         {
             case ResultType.String:

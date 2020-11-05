@@ -36,6 +36,8 @@ namespace BulletObject
 
         public void SetTarget(MasterCube target)
         {
+            if (target == null) return;
+
             //雑な放物線
             //中間点を計算する
             Vector3 sub = target.transform.position - this.transform.position;

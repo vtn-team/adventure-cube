@@ -29,8 +29,16 @@ namespace Block
         {
             //キューブを作って飛ばす
             //キューブはマスターキューブの直上+1mにつくる
-            var Obj = Bullet.Build<BulletObject.RollingBlock>("RollingBlock", MasterCube, this, null);
-            Obj.SetTarget(TargetHelper.SearchTarget(MasterCube, TargetHelper.SearchLogicType.NearestOne));
+            var target = TargetHelper.SearchTarget(MasterCube, TargetHelper.SearchLogicType.NearestOne);
+            if (target)
+            {
+                var Obj = Bullet.Build<BulletObject.RollingBlock>("RollingBlock", MasterCube, this, null);
+                Obj.SetTarget(target);
+            }
+            else
+            {
+                Debug.Log("ターゲットが見つかりませんでした。");
+            }
         }
 
         void UnityUpdate()

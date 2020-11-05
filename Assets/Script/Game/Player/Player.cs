@@ -13,10 +13,12 @@ public class Player : MasterCube
     Vector3 TargetPos;
     bool IsMove = false;
     bool IsAction = false;
-
-    public override void Build()
+    
+    public override void Build(int charId)
     {
-        base.Build();
+        FriendId = 1;
+
+        base.Build(charId);
 
         LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 1);
     }
