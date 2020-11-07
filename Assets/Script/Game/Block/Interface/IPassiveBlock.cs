@@ -11,11 +11,12 @@ public interface IPassiveBlock
 {
     PassiveType PassiveType { get; }               // タイプを返す実装が必要
 
-    int PassiveEvent(int param, int subparam=0);   // パッシブ効果を処理する実装が必要
+    int PassiveEvent(float param, float subparam=0);   // パッシブ効果を処理する実装が必要
 }
 
 public enum PassiveType
 {
     None,
     DamageBuff,
+    IntervalBuff,
 }

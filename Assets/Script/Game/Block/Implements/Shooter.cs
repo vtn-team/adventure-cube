@@ -14,7 +14,9 @@ namespace Block
     /// </summary>
     public class Shooter : MonoBlock, IAttackBlock
     {
-        [SerializeField] int interval;
+        [SerializeField] protected float interval;
+
+        public float Interval { get; protected set; }
         public bool CanIAttack => false;
         AutoAttackTimer AutoAttack = new AutoAttackTimer();
 

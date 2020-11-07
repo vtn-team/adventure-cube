@@ -14,7 +14,7 @@ namespace Block
         public PassiveType PassiveType => PassiveType.DamageBuff;      // タイプを返す実装が必要
 
         // パッシブ効果を処理する実装が必要
-        public int PassiveEvent(int param, int subparam)
+        public int PassiveEvent(float param, float subparam)
         {
             return figure;
         }
