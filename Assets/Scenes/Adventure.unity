@@ -1163,6 +1163,12 @@ MonoBehaviour:
   - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
       type: 3}
     PositionOffset: {x: 0, y: 1, z: 0}
+  - InitCube: {fileID: 4034038272076100598, guid: 69089f5e368c5a64e95efc281c4dcf60,
+      type: 3}
+    PositionOffset: {x: 0, y: 2, z: 0}
+  - InitCube: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170,
+      type: 3}
+    PositionOffset: {x: 0, y: 3, z: 0}
   friendId: 2
   DropCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
     type: 3}

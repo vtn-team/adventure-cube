@@ -88,6 +88,14 @@ public class MasterCube : MonoBehaviour
     
     public void UpdateDamage(DamageCaster.DamageSet dmg)
     {
+		foreach (var cube in AttackCubes)
+		{
+			if (cube.CanIAttack)
+			{
+                cube.Attack();
+			}
+		}
+
         foreach(var b in Blocks)
         {
             if (!b.IsAlive())

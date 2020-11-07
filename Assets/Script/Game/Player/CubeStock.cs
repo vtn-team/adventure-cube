@@ -36,7 +36,6 @@ public class CubeStock
 
     public void BreakDown()
     {
-
     }
 
     public void SetRoot(MasterCube master)
