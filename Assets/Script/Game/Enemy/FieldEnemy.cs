@@ -10,9 +10,11 @@ public class FieldEnemy : MasterCube
 {
     [SerializeField] MonoBlock DropCube;
 
-    private void Awake()
+    public override void Build(int charId)
     {
-        Build();
+        FriendId = 2;
+
+        base.Build(charId);
     }
 
     protected override void Death()

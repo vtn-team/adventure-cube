@@ -29,20 +29,37 @@ public class ResourceCache
     StringBuilder Path = new StringBuilder(256);
     static ResourceCache Instance = new ResourceCache();
 
-    CubeSheet CubeSheet = null;
     CacheTemplate<GameObject> PrefabCache = new CacheTemplate<GameObject>();
     CacheTemplate<Material> MaterialCache = new CacheTemplate<Material>();
 
-    static public CubeSheet CubeMaster => Instance.CubeSheet;
+    Dictionary<int, MasterData.Cube> CubeMasterCache = new Dictionary<int, MasterData.Cube>();
 
+    /*
+    CubeSheet CubeSheet = null;
+    static public CubeSheet CubeMaster => Instance.CubeSheet;
     static public void SetupCubeSheet(string name)
     {
         Instance.CubeSheet = Resources.Load<CubeSheet>(Instance.GetPrefabPath(ResourceType.Cube, name));
     }
+    */
+
+    static public void SetupCubeCache(MasterData.Cube[] master)
+    {
+        Instance.CubeMasterCache.Clear();
+        foreach (var d in master)
+        {
+            Instance.CubeMasterCache.Add(d.Id, d);
+        }
+    }
 
     static public GameObject GetCube(int id)
     {
-        return Instance.PrefabCache.GetCache(Instance.GetPrefabPath(ResourceType.Cube, Instance.CubeSheet.GetAssetKey(id)));
+        if(!Instance.CubeMasterCache.ContainsKey(id))
+        {
+            Debug.LogError(id + "のキューブはデータがありません。");
+            return null;
+        }
+        return Instance.PrefabCache.GetCache(Instance.GetPrefabPath(ResourceType.Cube, Instance.CubeMasterCache[id].Prefab));
     }
 
     static public GameObject GetCache(ResourceType type,  string name)
