@@ -15,6 +15,5 @@ public class UIBlockStatus : MonoBehaviour
 
     public void UpdateCube(MonoBlock cube)
     {
-
     }
 }

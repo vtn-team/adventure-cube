@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31433f976e84574b86215e4f9b98f98, type: 3}
+  m_Name: CubeSheet
+  m_EditorClassIdentifier: 
+  CubeAssetList:
+  - Id: 1100001
+    Key: Core
+    Block: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143, type: 3}
+    Rare: 0
+  - Id: 1000001
+    Key: SimpleCore
+    Block: {fileID: 0}
+    Rare: 0
+  - Id: 1000002
+    Key: HumanCore
+    Block: {fileID: 0}
+    Rare: 0
+  - Id: 2100001
+    Key: Shooter
+    Block: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170, type: 3}
+    Rare: 0
+  - Id: 3100001
+    Key: 
+    Block: {fileID: 0}
+    Rare: 0
+  - Id: 4100001
+    Key: 
+    Block: {fileID: 0}
+    Rare: 0
