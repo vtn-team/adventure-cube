@@ -32,6 +32,7 @@ public class MasterCube : MonoBehaviour
     public List<ISkillBlock> SkillCubes { get; protected set; }
     public List<IShieldBlock> ShieldCubes { get; protected set; }
     public List<IPassiveBlock> PassiveCubes { get; protected set; }
+    public List<ISpeedBlock> SpeedCubes { get; protected set; }
 
     public virtual void Build()
     {

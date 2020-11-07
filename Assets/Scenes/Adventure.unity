@@ -159,7 +159,7 @@ MonoBehaviour:
     Probability: 10
     CastTime: 0
     CoolTime: 0
-    NextIndex: 1
+    NextIndex: -1
   - IsWait: 1
     Command:
       id: 1
@@ -347,7 +347,7 @@ MonoBehaviour:
     Probability: 10
     CastTime: 0
     CoolTime: 0
-    NextIndex: 1
+    NextIndex: -1
   - IsWait: 1
     Command:
       id: 1
@@ -491,13 +491,13 @@ MonoBehaviour:
   - InitCube: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170,
       type: 3}
     PositionOffset: {x: 0, y: 1, z: 0}
-  - InitCube: {fileID: 2350541773951691628, guid: b24c22c35ca3e8a43b02b7d831a396b1,
+  - InitCube: {fileID: 6831003301955169491, guid: 7cfa38d6464af344e966f0a428d5ca03,
       type: 3}
     PositionOffset: {x: 0, y: 2, z: 0}
-  - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
+  - InitCube: {fileID: 6831003301955169491, guid: 7cfa38d6464af344e966f0a428d5ca03,
       type: 3}
     PositionOffset: {x: 0, y: 3, z: 0}
-  - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
+  - InitCube: {fileID: 6831003301955169491, guid: 7cfa38d6464af344e966f0a428d5ca03,
       type: 3}
     PositionOffset: {x: 0, y: 4, z: 0}
   friendId: 1
@@ -1122,13 +1122,6 @@ MonoBehaviour:
     Probability: 10
     CastTime: 0
     CoolTime: 0
-    NextIndex: 1
-  - IsWait: 1
-    Command:
-      id: 1
-    Probability: 0
-    CastTime: 1
-    CoolTime: 1
     NextIndex: -1
   references:
     version: 1
@@ -1137,13 +1130,6 @@ MonoBehaviour:
       data:
         Speed: 2
         Range: 8
-    00000001:
-      type: {class: Bullet, ns: EnemyAction, asm: Assembly-CSharp}
-      data:
-        ShotNum: 3
-        Atk: 1
-        Interval: 1
-        BulletName: PhysicsBall
 --- !u!114 &2022027367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,9 +1146,12 @@ MonoBehaviour:
   - InitCube: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143,
       type: 3}
     PositionOffset: {x: 0, y: 0, z: 0}
-  - InitCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
+  - InitCube: {fileID: 6831003301955169491, guid: 7cfa38d6464af344e966f0a428d5ca03,
       type: 3}
     PositionOffset: {x: 0, y: 1, z: 0}
+  - InitCube: {fileID: 6831003301955169491, guid: 7cfa38d6464af344e966f0a428d5ca03,
+      type: 3}
+    PositionOffset: {x: 0, y: 2, z: 0}
   friendId: 2
   DropCube: {fileID: -2792047072638938225, guid: d10ade1d5257c7f4e990d419baf0bc1a,
     type: 3}

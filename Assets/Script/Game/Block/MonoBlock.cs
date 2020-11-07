@@ -18,7 +18,8 @@ namespace Block
             Normal,
             Core,
             Attack,
-            Skill
+            Skill,
+            Speed
         }
 
         [SerializeField] protected int life = 1;

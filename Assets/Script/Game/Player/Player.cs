@@ -13,12 +13,21 @@ public class Player : MasterCube
     Vector3 TargetPos;
     bool IsMove = false;
     bool IsAction = false;
+    float Speed = 4;
 
     public override void Build()
     {
         base.Build();
 
         LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 1);
+
+        if (base.SpeedCubes != null)
+        {
+            for (int i = 1; base.SpeedCubes.Count >= i; i++)
+            {
+                Speed--;
+            }
+        }
     }
 
     protected override void Death()
@@ -62,13 +71,14 @@ public class Player : MasterCube
 
         if (IsMove)
         {
-            Timer += Time.deltaTime;
+            Timer += Time.deltaTime / Speed;
             if (Timer > 1.0f)
             {
                 Timer = 1.0f;
                 IsMove = false;
             }
-            this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer); 
+            this.transform.position = Vector3.Lerp(FromPos, TargetPos, Timer);
+            
         }
 
         _Coord.SetPosition(this.transform.position);

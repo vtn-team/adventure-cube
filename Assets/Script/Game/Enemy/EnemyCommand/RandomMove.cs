@@ -15,10 +15,10 @@ namespace EnemyAction
         MasterCube Owner;
 
         [SerializeField]
-        float Speed = 1.0f;
+        float Speed = 1f;
 
         [SerializeField]
-        float Range = 5.0f;
+        float Range = 10.0f;
 
         float Timer = 0.0f;
         float TotalTime;
@@ -29,7 +29,14 @@ namespace EnemyAction
         {
             Owner = owner;
             Timer = 0.0f;
-
+            if (owner.SpeedCubes != null)
+            {
+                for (int i = 1; owner.SpeedCubes.Count >= i; i++)
+                {
+                    Speed--;
+                }
+            }
+            
             StartPos = Owner.transform.position;
             TargetPos = StartPos + (Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0) * new Vector3(UnityEngine.Random.Range(0, Range), 0, 0));
             TotalTime = (TargetPos - StartPos).magnitude / Speed;
