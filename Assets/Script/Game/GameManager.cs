@@ -47,7 +47,7 @@ public partial class GameManager : MonoBehaviour
         if(data == null || IsVersionUpFlag)
         {
             LoadingCount++;
-            Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet="+file, Network.WebRequest.ResultType.String, (string json) =>
+            Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbx9HqohfgOD53S7-WQFKY6pRmBaPWUls_h_se3-IXBWz0sXzOqO/exec" + file, Network.WebRequest.ResultType.String, (string json) =>
             {
                 Debug.Log(json);
                 var dldata = JsonUtility.FromJson<T>(json);

@@ -13,6 +13,7 @@ public class CubeSheet : ScriptableObject
     [Serializable]
     public class CubeAsset
     {
+        public Language language;
         public int Id;
         public string Key;
         public MonoBlock Block;
@@ -65,4 +66,11 @@ public class CubeSheet : ScriptableObject
         CubeAssetList = data;
     }
 #endif
+}
+
+public enum Language
+{
+    None = 0,
+    JP = 1,
+    En = 2,
 }

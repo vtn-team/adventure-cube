@@ -17,7 +17,7 @@ public class CubeSheetUpdator : Editor
         //更新ボタンを表示
         if (GUILayout.Button("スプレッドシートから更新"))
         {
-            Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbyc6WmX57vj8_V5tRL7eN4QCWMcLUQx8Jtu_B_JyqnMRGxH0Uk/exec?sheet=Cube", Network.WebRequest.ResultType.String, (string json) =>
+            Network.WebRequest.Request<Network.WebRequest.GetString>("https://script.google.com/macros/s/AKfycbx9HqohfgOD53S7-WQFKY6pRmBaPWUls_h_se3-IXBWz0sXzOqO/exec", Network.WebRequest.ResultType.String, (string json) =>
             {
                 var dldata = JsonUtility.FromJson<MasterData.MasterDataClass<MasterData.Cube>>(json);
                 Debug.Log("Update:" + dldata);
@@ -27,6 +27,7 @@ public class CubeSheetUpdator : Editor
                 foreach(var d in dldata.Data)
                 {
                     CubeSheet.CubeAsset cs = new CubeSheet.CubeAsset();
+                    cs.language = Language.None + d.Language;
                     cs.Id = d.Id;
                     cs.Key = d.Prefab;
                     cs.Block = Resources.Load<Block.MonoBlock>("Blocks/" + d.Prefab);

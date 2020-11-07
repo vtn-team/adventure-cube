@@ -13,27 +13,63 @@ MonoBehaviour:
   m_Name: CubeMasterTest
   m_EditorClassIdentifier: 
   CubeAssetList:
-  - Id: 1100001
+  - language: 1
+    Id: 1000000
     Key: Core
     Block: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143, type: 3}
     Rare: 0
-  - Id: 1000001
+  - language: 1
+    Id: 1000001
     Key: SimpleCore
     Block: {fileID: 0}
     Rare: 0
-  - Id: 1000002
+  - language: 1
+    Id: 1000002
     Key: HumanCore
     Block: {fileID: 0}
     Rare: 0
-  - Id: 2100001
+  - language: 1
+    Id: 2100001
     Key: Shooter
     Block: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170, type: 3}
     Rare: 0
-  - Id: 3100001
+  - language: 1
+    Id: 3100001
     Key: 
     Block: {fileID: 0}
     Rare: 0
-  - Id: 4100001
+  - language: 1
+    Id: 4100001
+    Key: 
+    Block: {fileID: 0}
+    Rare: 0
+  - language: 2
+    Id: 1000000
+    Key: Core
+    Block: {fileID: 8627434073150885524, guid: 425f7e3265dd80944a7588c4c1e5a143, type: 3}
+    Rare: 0
+  - language: 2
+    Id: 1000001
+    Key: SimpleCore
+    Block: {fileID: 0}
+    Rare: 0
+  - language: 2
+    Id: 1000002
+    Key: HumanCore
+    Block: {fileID: 0}
+    Rare: 0
+  - language: 2
+    Id: 2100001
+    Key: Shooter
+    Block: {fileID: 7807432081859704270, guid: df9723f5c4a878b46a60d8dbe2079170, type: 3}
+    Rare: 0
+  - language: 2
+    Id: 3100001
+    Key: 
+    Block: {fileID: 0}
+    Rare: 0
+  - language: 2
+    Id: 4100001
     Key: 
     Block: {fileID: 0}
     Rare: 0

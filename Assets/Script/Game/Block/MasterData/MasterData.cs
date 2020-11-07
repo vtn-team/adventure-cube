@@ -9,6 +9,7 @@ namespace MasterData
     [Serializable]
     public class Cube
     {
+        public int Language;
         public int Id;
         public string Name;
         public string Prefab;
