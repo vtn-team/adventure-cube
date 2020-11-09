@@ -1,6 +1,9 @@
 # 解説資料のページ
 
 ## 授業の流れ
+
+全体の流れ: 設計について考えよう  
+
 1回目 モデル図を書こう  
 2回目 継承、メタプログラミング、インタフェース  
 3回目 データ設計しよう  
@@ -56,23 +59,28 @@
 
 ## デザインパターン編
 
-　[01.Builderパターン](/EducationText/デザインパターン/01-Builderパターン.md)  
+　[01.Singletonパターン](/EducationText/デザインパターン/01-Singletonパターン.md)  
 
 
-　[02.Observerパターン](/EducationText/デザインパターン/01-.md)  
+　[02.Builderパターン](/EducationText/デザインパターン/02-Builderパターン.md)  
 
 
-　[03.Singletonパターン](/EducationText/データ設計/01-.md)  
+　[03-2つのFactoryパターン](/EducationText/デザインパターン/03-2つのFactoryパターン.md)  
 
 
-　[04.Facadeパターン](/EducationText/データ設計/01-.md)  
+　[04.Bridgeパターン](/EducationText/デザインパターン/04-Bridgeパターン.md)  
 
 
-　[05.Storategyパターン](/EducationText/データ設計/01-.md)  
+　[05.Facadeパターン](/EducationText/デザインパターン/05-Facadeパターン.md)  
 
 
-　[06.Bridgeパターン](/EducationText/データ設計/01-.md)  
+　[06.Storategyパターン](/EducationText/デザインパターン/06-Storategyパターン.md)  
 
+
+　[07.Observerパターン](/EducationText/デザインパターン/07-Observerパターン.md)  
+
+
+　[08.Template Methodパターン](/EducationText/デザインパターン/08-Template Methodパターン.md)  
 
 
 ## プログラム実装 - 基礎編
