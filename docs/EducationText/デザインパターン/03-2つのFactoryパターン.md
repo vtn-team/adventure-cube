@@ -93,7 +93,7 @@ public class ObjectPool<T> where T : UnityEngine.Object, IObjectPool
 このOblectPoolクラスを使用し、Bulletを作ると、高速にBulletを作ることができます。直接ObjectPoolを使ってもいいと思いますが、生成をもっと抽象化して、以下のように生成メソッドを切り替えると良い実装になると思います。  
 これは、BuilderにStorategyのような生成戦略パターンを適用する事例になります。  
 
-````
+```
 /// <summary>
 /// 弾を作る
 /// </summary>
