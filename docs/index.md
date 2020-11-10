@@ -59,10 +59,10 @@
 
 ## デザインパターン編
 
-　[01.Singletonパターン](/EducationText/デザインパターン/01-Singletonパターン.md)  
+　[01.Template Methodパターン](/EducationText/デザインパターン/01-Template Methodパターン.md)  
 
 
-　[02.Builderパターン](/EducationText/デザインパターン/02-Builderパターン.md)  
+　[02.Singletonパターン](/EducationText/デザインパターン/02-Singletonパターン.md)  
 
 
 　[03-2つのFactoryパターン](/EducationText/デザインパターン/03-2つのFactoryパターン.md)  
@@ -74,13 +74,13 @@
 　[05.Facadeパターン](/EducationText/デザインパターン/05-Facadeパターン.md)  
 
 
-　[06.Storategyパターン](/EducationText/デザインパターン/06-Storategyパターン.md)  
+　[06.Compositパターン](/EducationText/デザインパターン/06-Compositパターン.md)  
 
 
-　[07.Observerパターン](/EducationText/デザインパターン/07-Observerパターン.md)  
+　[07.Storategyパターン](/EducationText/デザインパターン/07-Storategyパターン.md)  
 
 
-　[08.Template Methodパターン](/EducationText/デザインパターン/08-Template Methodパターン.md)  
+　[08.Observerパターン](/EducationText/デザインパターン/08-Observerパターン.md)  
 
 
 ## プログラム実装 - 基礎編

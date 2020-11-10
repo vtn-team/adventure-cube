@@ -1,8 +1,10 @@
 #　Facadeパターン
 ファサードと読むようです。  
-Facadeパターンは、機能をひとつまとめるSingletonのようなクラスを作って、コード上のまとまりを良くしようという試みで使用します。  
+Facadeパターンは、機能をひとつまとめるクラスを作って、コード上のまとまりを良くしようという試みで使用します。  
+ゲーム処理の見通しをよくするために覚えておくとよいでしょう。  
 
-## UIまとめ役としてのFacade
+
+## まとめ役としてのFacade例
 
 よく使っていたのが、ゲーム中のデータのまとめ役、UIのまとめ役としてのFacadeです。  
 
@@ -10,7 +12,71 @@ Facadeパターンは、機能をひとつまとめるSingletonのようなク�
 ```
 public class　GameParameter
 {
-  PlayerParam player;
-  static public PlayerParam Player => player;
+  public PlayerParam Player { get; private set; }
+  public PlayerParam Enemy { get; private set; }
+  public BuffParam Buff { get; private set; }
+
+  void Setup()
+  {
+    //設定
+    ...
+  }
+
+  void Dispose()
+  {
+    //破棄
+    ...
+  }
+
+  //毎フレーム処理される何か
+  void UpdateFrame()
+  {
+    //毎フレ実行するデータへの処理
+  }
 }
 ```
+みたいに、バトル中のパラメータを集約させて、必要がなくなったら捨てるというクラスにしていました。  
+アクセス性や複数生成されてはならないよう、シングルトンにしても良いと思います。  
+
+
+UIのまとめ役は、  
+```
+public sealed class　GameUI
+{
+  public ResultUI Result { get; private set; }
+  public EquipUI Equip { get; private set; }
+
+  void Setup()
+  {
+    //各画面の設定
+    ...
+  }
+
+  void Dispose()
+  {
+    //破棄
+    ...
+  }
+
+  //表示しているUIを切り替える
+  void ChangeUI(UIType type)
+  {
+    //UI切り替え
+  }
+}
+```
+のように設計します。  
+UIの変更など複雑な処理をまとめてくれるので、便利に使用することができます。  
+
+※厳密にはFacadeはサブシステムからの呼び出しを行ってはいけませんが、まあいいでしょう。  
+
+
+## Facadeはいろんなパターンで応用できる
+この「まとめクラス」はいろんな場所に応用できます。  
+「まとめクラス」が色々な場所に書かれる予定の処理を持ってくれれば、実装に変更があった時、1か所の修正で変更に対応することができます。  
+
+まとめ役なので、多くはManagerとして設計されると思いますが、  
+まとめかたとしては、Bridgeパターンで紹介するDamageCasterのような、小さいものも考えられます。  
+すべてにManagerを付けてしまうと混乱のもとになるので、多用する際は注意するか、名前付けを工夫しましょう。  
+
+ゲームは複雑な手続きが多いので、このような「手続きをまとめる」という処理を書くだけでも、可読性が上がったり、簡単なコードで書けるようになってミスを減らすことができるようになります。
