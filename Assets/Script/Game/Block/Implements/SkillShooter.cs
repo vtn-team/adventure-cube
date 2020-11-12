@@ -12,25 +12,34 @@ namespace Block
     /// <summary>
     /// 何かを飛ばす実装
     /// </summary>
-    public class Shooter : MonoBlock, IAttackBlock
+    public class SkillShooter : MonoBlock, ISkillBlock, IObserver<InputObserver.InputData>
     {
         [SerializeField] int interval;
         public bool CanIAttack => false;
-        AttackTimer AutoAttack = new AttackTimer();
+        AttackTimer IntervalTimer = new AttackTimer();
 
         ObjectPool<RollingBlock> ObjPool = new ObjectPool<RollingBlock>();
 
         protected override void Setup()
         {
-            AutoAttack.Setup(interval);
+            GameManager.Instance.InputObs.AddObserver(this);
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
+            IntervalTimer.Setup(interval);
 
             //作っておいてプールする
             ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
+
+            base.Setup();
+        }
+
+        public override void BreakDown()
+        {
+            GameManager.Instance.InputObs.DeleteObserver(this);
+            base.BreakDown();
         }
 
         // 攻撃の実装が必要
-        public void Attack()
+        public void Skill()
         {
             //キューブを作って飛ばす
             //キューブはマスターキューブの直上+1mにつくる
@@ -38,10 +47,7 @@ namespace Block
             if (target)
             {
                 var Obj = ObjPool.Instantiate();
-                if (Obj)
-                {
-                    Obj.SetTarget(target);
-                }
+                Obj.SetTarget(target);
             }
             else
             {
@@ -51,11 +57,15 @@ namespace Block
 
         void UnityUpdate()
         {
-            AutoAttack.Update();
-            if(AutoAttack.IsAttackOK)
+            IntervalTimer.Update();
+        }
+
+        public void NotifyUpdate(InputObserver.InputData input)
+        {
+            if (input.Type == InputObserver.InputType.Skill && IntervalTimer.IsAttackOK)
             {
-                Attack();
-                AutoAttack.ResetTimer();
+                Skill();
+                IntervalTimer.ResetTimer(false);
             }
         }
     }

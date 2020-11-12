@@ -14,6 +14,7 @@ public partial class GameManager
         InGame,
     }
     public GameState CurrentState { get; private set; }
+    public InputObserver InputObs { get; private set; }
 
     void UnityUpdate()
     {
@@ -64,6 +65,13 @@ public partial class GameManager
 
     void InGame()
     {
-
+        string[] ButtonLabels = { "Fire1", "Fire2"};
+        foreach (var label in ButtonLabels)
+        {
+            if (Input.GetButtonDown(label))
+            {
+                InputObs.NotifyObserver(InputObserver.CreateInput(label));
+            }
+        }
     }
 }

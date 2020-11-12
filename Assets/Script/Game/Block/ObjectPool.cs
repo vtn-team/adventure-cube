@@ -10,13 +10,19 @@ namespace Block
     /// <typeparam name="T"></typeparam>
     public class ObjectPool<T> where T : UnityEngine.Object, IObjectPool
     {
-        T BaseCube = null;
+        T BaseObj = null;
         List<T> Pool = new List<T>();
         int Index = 0;
-
-        public ObjectPool(T cube)
+        
+        public void SetBaseObj(T obj)
         {
-            BaseCube = cube;
+            BaseObj = obj;
+        }
+
+        public void Pooling(T obj)
+        {
+            obj.DisactiveForInstantiate();
+            Pool.Add(obj);
         }
 
         public void SetCapacity(int size)
@@ -26,7 +32,7 @@ namespace Block
 
             for(int i = Pool.Count-1; i<size; ++i)
             {
-                var Obj = GameObject.Instantiate(BaseCube);
+                var Obj = GameObject.Instantiate(BaseObj);
                 Obj.DisactiveForInstantiate();
                 Pool.Add(Obj);
             }
