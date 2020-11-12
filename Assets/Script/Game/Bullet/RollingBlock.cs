@@ -8,7 +8,7 @@ using Block;
 
 namespace BulletObject
 {
-    public class RollingBlock : Bullet
+    public class RollingBlock : Bullet, IObjectPool
     {
         [SerializeField]
         float Life = 1.5f;
@@ -21,9 +21,9 @@ namespace BulletObject
 
         protected override void Setup()
         {
-            LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
             Timer = 0.0f;
 
+            LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
             base.Setup();
 
             AttackSet.IsPowerfull = true;
@@ -31,7 +31,7 @@ namespace BulletObject
             AttackSet.Attacker = this.gameObject;
             AttackSet.Master = MasterCube;
 
-            this.transform.position = MasterCube.transform.position; // new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
+            this.transform.position = OwnerCube.transform.position; // new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
         }
 
         public void SetTarget(MasterCube target)
@@ -54,6 +54,8 @@ namespace BulletObject
         
         void UnityUpdate()
         {
+            if (!Renderer.enabled) return;
+
             Timer += Time.deltaTime;
 
             //山なりに着弾点に飛んでいく
@@ -71,7 +73,8 @@ namespace BulletObject
 
             if(Timer >= Life)
             {
-                LifeCycleManager.RegisterDestroy(this.gameObject);
+                Destroy();
+                //LifeCycleManager.RegisterDestroy(this.gameObject);
             }
         }
         
@@ -83,7 +86,32 @@ namespace BulletObject
             DamageCaster.CastDamage(AttackSet);
             IsAttacked = true;
 
-            LifeCycleManager.RegisterDestroy(this.gameObject);
+            Destroy();
+            //LifeCycleManager.RegisterDestroy(this.gameObject);
+        }
+
+
+        //オブジェクトプール対応
+        public bool IsActive => Renderer.enabled;
+        Renderer Renderer = null;
+
+        public void DisactiveForInstantiate()
+        {
+            Renderer = GetComponent<Renderer>();
+            Renderer.enabled = false;
+        }
+
+        public void Create()
+        {
+            Renderer.enabled = true;
+            Timer = 0.0f;
+            this.transform.position = OwnerCube.transform.position; // new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
+        }
+
+        public void Destroy()
+        {
+            Renderer.enabled = false;
+            DisactiveForInstantiate();
         }
     }
 }
