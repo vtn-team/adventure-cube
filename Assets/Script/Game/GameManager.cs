@@ -27,11 +27,14 @@ public partial class GameManager : MonoBehaviour
     int LoadingCount = 0;
     delegate void LoadMasterDataCallback<T>(T data);
 
-    static GameManager Instance = new GameManager();
+    static GameManager instance = null;
+    static public GameManager Instance => instance;
+    private GameManager() { }
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
+        InputObs = new InputObserver();
         GameObjectCache.Setup();
 
         LoadMasterData("Cube", (MasterData.MasterDataClass<MasterData.Cube> data) => cubeMaster = data);
