@@ -10,13 +10,81 @@ Observerパターンは、リアクティブプログラミングという考え
 UniRxに優れたObserverの実装があるので、より使い込みたい人はそちらを使用するといいと思います。  
 
 
-## adventure-cubeのObserver例
-キー入力にObserverパターンを付けてみました。
+## シンプルなオブザーバー実装
+
+通知する人
+```
+public interface IObservable<T>
+{
+    void AddObserver(IObserver<T> target);
+    void DeleteObserver(IObserver<T> target);
+    void NotifyObserver(T obj);
+}
+```
+
+通知を受ける人
+```
+public interface IObserver<T>
+{
+    void NotifyUpdate(T obj);
+}
+```
+
+
+## adventure-cubeのObserver使用例
+キー入力にObserverパターンを使ってみました。
 
 Observerパターンは、通知を送るという挙動をうまく活用し、複数の異なるクラス型のオブジェクトに対して一括して処理を実行させたい、というパターンで使用できます。  
-今回の例では、所持しているキューブにオブザーバー実装があれば、そのオブジェクト全員に対してキー入力を発行しています。  
+今回の例では、所持しているキューブから必要に応じてオブザーバー登録し、イベント発生時に登録オブジェクト全員に対してキー入力を通知します。  
+スキルキューブの実装で使用しています。  
 
 
+GameManagerが通知を行います。オブザーバー管理クラスを作り、内部にリストを持っています。クラスを介して登録を受け付けられるようにしています。  
+ボタンイベントが起きたら、NotifyObserverを発行して、すべての登録オブジェクトにInputDataオブジェクトを送信します。  
+```
+GameManager.cs
+
+public InputObserver InputObs { get; private set; }
+
+void Update()
+{
+    string[] ButtonLabels = { "Fire1", "Fire2"};
+    foreach (var label in ButtonLabels)
+    {
+        if (Input.GetButtonDown(label))
+        {
+            InputObs.NotifyObserver(InputObserver.CreateInput(label));
+        }
+    }
+}
+```
+
+スキルキューブの実装です。  
+生成時にオブザーバー登録を行って、死んだときに登録解除しています。  
+
+NotifyUpdateが通知されたとき(ボタンが押されたとき)、攻撃可能であればショットを生成します。  
+```
+SkillShooter.cs
+
+protected override void Setup()
+{
+    GameManager.Instance.InputObs.AddObserver(this);
+}
+
+public override void BreakDown()
+{
+    GameManager.Instance.InputObs.DeleteObserver(this);
+}
+
+public void NotifyUpdate(InputObserver.InputData input)
+{
+    if (input.Type == InputObserver.InputType.Skill && IntervalTimer.IsAttackOK)
+    {
+        Skill();
+        IntervalTimer.ResetTimer(false);
+    }
+}
+```
 
 
 ## 楽をしたいアニメーション処理
