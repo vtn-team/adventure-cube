@@ -11,11 +11,12 @@ using Block;
 public class CubeSheet : ScriptableObject
 {
     [Serializable]
-    class CubeAsset
+    public class CubeAsset
     {
         public int Id;
         public string Key;
         public MonoBlock Block;
+        public int Rare;
     }
 
     [SerializeField] List<CubeAsset> CubeAssetList = new List<CubeAsset>();
@@ -57,4 +58,11 @@ public class CubeSheet : ScriptableObject
         int d = UnityEngine.Random.Range(0, count);
         return CubeAssetList.IndexOf(list.ElementAt(d));
     }
+
+#if UNITY_EDITOR
+    public void SetData(List<CubeAsset> data)
+    {
+        CubeAssetList = data;
+    }
+#endif
 }

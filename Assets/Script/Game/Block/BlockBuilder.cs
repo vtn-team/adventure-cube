@@ -4,24 +4,48 @@ using System.Collections.Generic;
 
 namespace Block
 {
-    public class BlockBuilder
+    /// <summary>
+    /// Unity上の、特定の型のオブジェクトプール
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class ObjectPool<T> where T : UnityEngine.Object, IObjectPool
     {
-        static BlockBuilder Instance = new BlockBuilder();
+        T BaseCube = null;
+        List<T> Pool = new List<T>();
+        int Index = 0;
 
-        Dictionary<MonoBlock.BlockType, GameObject> PrefabCache = new Dictionary<MonoBlock.BlockType, GameObject>();
-
-        static public GameObject GetCache(MonoBlock.BlockType type)
+        public ObjectPool(T cube)
         {
-            if (!Instance.PrefabCache.ContainsKey(type))
-            {
-                Instance.PrefabCache.Add(type, Resources.Load<GameObject>(GetPath(type)));
-            }
-            return Instance.PrefabCache[type];
+            BaseCube = cube;
         }
 
-        static string GetPath(MonoBlock.BlockType type)
+        public void SetCapacity(int size)
         {
-            return "Blocks/" + type.ToString();
+            //既にオブジェクトサイズが大きいときは更新しない
+            if (size < Pool.Count) return;
+
+            for(int i = Pool.Count-1; i<size; ++i)
+            {
+                var Obj = GameObject.Instantiate(BaseCube);
+                Obj.DisactiveForInstantiate();
+                Pool.Add(Obj);
+            }
+        }
+
+        public T Instantiate()
+        {
+            T ret = null;
+            for (int i = 0; i < Pool.Count; ++i)
+            {
+                int index = (Index + i) % Pool.Count;
+                if(Pool[index].IsActive) continue;
+
+                Pool[index].Create();
+                ret = Pool[index];
+                break;
+            }
+
+            return ret;
         }
     }
 }
