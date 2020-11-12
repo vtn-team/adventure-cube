@@ -35,6 +35,11 @@ class EnemyCommandSet
 
 [SerializeField]
 List<EnemyCommandSet> Commands = new List<EnemyCommandSet>();
+```
+
+#### やってみたよ
+
+![](assets/image1.png)
 
 「……」
 
