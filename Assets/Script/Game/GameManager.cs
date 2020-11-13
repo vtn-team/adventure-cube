@@ -13,7 +13,7 @@ public partial class GameManager : MonoBehaviour
 {
     //ゲーム中のオブジェクトデータ
     [SerializeField] bool IsVersionUpFlag = false;
-    [SerializeField] MasterCube PlayableChar = null;
+    [SerializeField] Player PlayableChar = null;
     [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
     [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
 
@@ -67,7 +67,7 @@ public partial class GameManager : MonoBehaviour
         }
     }
     
-    static public MasterCube GetPlayableChar()
+    static public Player GetPlayableChar()
     {
         return Instance.PlayableChar;
     }

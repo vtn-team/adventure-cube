@@ -20,6 +20,9 @@ public class Player : MasterCube
 
         base.Build(charId);
 
+        int PlayerLayerId = LayerMask.NameToLayer("Player");
+        Inventory.ForEach(c => c.gameObject.layer = PlayerLayerId);
+
         LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 1);
     }
 

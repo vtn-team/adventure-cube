@@ -36,6 +36,7 @@ public partial class GameManager
 
         //キャラデータを設定していく
         var gameObject = new GameObject("Player");
+        gameObject.layer = LayerMask.NameToLayer("Player"); //
         PlayableChar = gameObject.AddComponent<Player>();
         var plList = CharacterMaster.Where(d => d.IsPlayable==1 && d.FriendId == 1);
         var playable = plList.ElementAt(Random.Range(0,plList.Count()));
