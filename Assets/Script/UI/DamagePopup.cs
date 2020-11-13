@@ -22,8 +22,6 @@ public class DamagePopup : MonoBehaviour
 
     static public void Pop(GameObject go, int dmg, Color col)
     {
-        return;
-
         var damage = Instance.DamegeUIPool.Instantiate();//Instantiate(Instance.DamageTemplate.gameObject, Instance.transform.parent);
         var rt = damage.GetComponent<RectTransform>();
         rt.position = RectTransformUtility.WorldToScreenPoint(Camera.main, go.transform.position);

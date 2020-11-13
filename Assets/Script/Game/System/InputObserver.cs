@@ -46,9 +46,8 @@ public class InputObserver : InputDataObservable
     {
         switch(label)
         {
-            case "Fire1": return StableInputData[(int)InputType.Skill];
+            case "Fire1": return StableInputData[(int)InputType.Move];
             case "Fire2": return StableInputData[(int)InputType.Skill];
-            case "R": return StableInputData[(int)InputType.Skill];
             default: return null;
         }
     }
