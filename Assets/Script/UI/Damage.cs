@@ -2,17 +2,17 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Damage : MonoBehaviour
+public class Damage : MonoBehaviour, IObjectPool
 {
     [SerializeField] AnimationCurve AnimCurve = null;
 
     Text Text;
-    float time = 0.0f;
+    float Timer = 0.0f;
     Vector3 MovVec = new Vector3(0, 0.2f, 0);
     Vector3 Mov = Vector3.zero;
     Vector2 Random = Vector2.zero;
     RectTransform Transform;
-    GameObject Target;
+    GameObject Target = null;
 
     private void Awake()
     {
@@ -22,17 +22,24 @@ public class Damage : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void UnityUpdate()
     {
-        time += Time.deltaTime;
+        if (Renderer.cull) return;
+        if (Target == null)
+        {
+            Destroy();
+            return;
+        }
 
-        Mov += MovVec* AnimCurve.Evaluate(time);
+        Timer += Time.deltaTime;
+
+        Mov += MovVec* AnimCurve.Evaluate(Timer);
         Transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, Target.transform.position) + Random;
         Transform.position += Mov;
 
-        if (time > 1.0f)
+        if (Timer > 1.0f)
         {
-            Destroy(this.gameObject);
+            Destroy();
         }
     }
 
@@ -45,5 +52,28 @@ public class Damage : MonoBehaviour
     public void SetColor(Color col)
     {
         Text.color = col;
+    }
+
+    //オブジェクトプールの実装
+    CanvasRenderer Renderer = null;
+    public bool IsActive => !Renderer.cull;
+
+    public void DisactiveForInstantiate()
+    {
+        Renderer = GetComponent<CanvasRenderer>();
+        Renderer.cull = true;
+
+        LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
+    }
+
+    public void Create()
+    {
+        Timer = 0.0f;
+        Renderer.cull = false;
+    }
+
+    public void Destroy()
+    {
+        Renderer.cull = true;
     }
 }
