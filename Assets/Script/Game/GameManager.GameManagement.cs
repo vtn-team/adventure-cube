@@ -63,9 +63,9 @@ public partial class GameManager
         CurrentState = GameState.InGame;
     }
 
+    string[] ButtonLabels = new string[]{ "Fire1", "Fire2" };
     void InGame()
     {
-        string[] ButtonLabels = { "Fire1", "Fire2"};
         foreach (var label in ButtonLabels)
         {
             if (Input.GetButtonDown(label))
