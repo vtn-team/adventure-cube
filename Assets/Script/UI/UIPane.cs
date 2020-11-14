@@ -15,7 +15,7 @@ public class UIPane : MonoBehaviour
     {
         RectTransform = GetComponent<RectTransform>();
         Renderer = GetComponent<CanvasRenderer>();
-        Renderer.cull = !InitVisibility;
+        if (Renderer) { Renderer.cull = !InitVisibility; }
         Setup();
     }
 
