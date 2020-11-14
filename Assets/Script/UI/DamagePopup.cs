@@ -17,16 +17,13 @@ public class DamagePopup : MonoBehaviour
     {
         Instance = this;
         DamegeUIPool.SetBaseObj(DamageTemplate, Instance.transform);
-        DamegeUIPool.SetCapacity(30);
+        DamegeUIPool.SetCapacity(10);
     }
 
     static public void Pop(GameObject go, int dmg, Color col)
     {
-        var damage = Instance.DamegeUIPool.Instantiate();//Instantiate(Instance.DamageTemplate.gameObject, Instance.transform.parent);
-        var rt = damage.GetComponent<RectTransform>();
-        rt.position = RectTransformUtility.WorldToScreenPoint(Camera.main, go.transform.position);
-
-        //var damage = obj.GetComponent<Damage>();
+        Damage damage = Instance.DamegeUIPool.Instantiate();//Instantiate(Instance.DamageTemplate.gameObject, Instance.transform.parent);
+        damage.RectTransform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, go.transform.position);
         damage.Set(go, dmg);
         damage.SetColor(col);
     }

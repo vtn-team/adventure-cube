@@ -105,11 +105,14 @@ namespace BulletObject
         {
             Renderer.enabled = true;
             Timer = 0.0f;
+            IsAttacked = false;
+            IsSetUp = false;
             this.transform.position = OwnerCube.transform.position; // new Vector3(MasterCube.Coord.X, MasterCube.Coord.Top + 1.0f, MasterCube.Coord.Z);
         }
 
         public void Destroy()
         {
+            IsSetUp = false;
             Renderer.enabled = false;
             DisactiveForInstantiate();
         }

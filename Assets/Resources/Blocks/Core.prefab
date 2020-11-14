@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
-  figure: 1
+  figure: 100
   rare: 1
 --- !u!65 &-6473562896168026547
 BoxCollider:
