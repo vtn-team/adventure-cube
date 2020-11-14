@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7807432081859704264}
   - component: {fileID: 7807432081859704265}
   - component: {fileID: 7732602971718644849}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SkillShooter
   m_TagString: MonoBlock
   m_Icon: {fileID: 0}

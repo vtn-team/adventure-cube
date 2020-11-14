@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 9011029525292923433}
   - component: {fileID: 1887714229828706911}
   - component: {fileID: -2792047072638938225}
-  m_Layer: 8
-  m_Name: Wood
+  m_Layer: 0
+  m_Name: Shield
   m_TagString: MonoBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

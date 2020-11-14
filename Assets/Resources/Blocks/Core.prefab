@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 597593112138004083}
   - component: {fileID: 8627434073150885524}
   - component: {fileID: -6473562896168026547}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Core
   m_TagString: MonoBlock
   m_Icon: {fileID: 0}
