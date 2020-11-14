@@ -42,6 +42,9 @@ public partial class GameManager
         var playable = plList.ElementAt(Random.Range(0,plList.Count()));
         PlayableChar.Build(playable.Id);
 
+        //UIつくる
+        GameUI.Instance.Setup();
+
         //処理終わり
         CurrentState = GameState.Build;
     }
