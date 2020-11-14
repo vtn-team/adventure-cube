@@ -12,9 +12,10 @@ namespace Block
     /// <summary>
     /// 何かを飛ばす実装
     /// </summary>
-    public class Shooter : MonoBlock, IAttackBlock
+    public class Shooter : MonoBlock, IAttackBlock, ICooldownTimer
     {
         [SerializeField] int interval;
+        public float CurrentInterval => AutoAttack.Current;
         public bool CanIAttack => false;
         AttackTimer AutoAttack = new AttackTimer();
 
@@ -26,6 +27,8 @@ namespace Block
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
 
             //作っておいてプールする
+            ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
+            ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
             ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
         }
 

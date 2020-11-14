@@ -12,10 +12,11 @@ namespace Block
     /// <summary>
     /// 何かを飛ばす実装
     /// </summary>
-    public class SkillShooter : MonoBlock, ISkillBlock, IObserver<InputObserver.InputData>
+    public class SkillShooter : MonoBlock, ISkillBlock, IObserver<InputObserver.InputData>, ICooldownTimer
     {
         [SerializeField] int interval;
         public bool CanIAttack => false;
+        public float CurrentInterval => IntervalTimer.Current;
         AttackTimer IntervalTimer = new AttackTimer();
 
         ObjectPool<RollingBlock> ObjPool = new ObjectPool<RollingBlock>();
