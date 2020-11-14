@@ -12,6 +12,7 @@ public enum ResourceType
     FieldMap,
     Cube,
     Bullet,
+    UI,
     PrefabTypeEnd,
 
     MaterialTypeStart = 100,
@@ -96,6 +97,7 @@ public class ResourceCache
                 case ResourceType.FieldMap:   Path.AppendFormat("Field/{0}", name); break;
                 case ResourceType.Cube:       Path.AppendFormat("Blocks/{0}", name); break;
                 case ResourceType.Bullet:     Path.AppendFormat("Bullet/{0}", name); break;
+                case ResourceType.UI:         Path.AppendFormat("UI/{0}", name); break;
             }
         }
         return Path.ToString();

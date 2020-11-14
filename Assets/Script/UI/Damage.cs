@@ -2,37 +2,41 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Damage : MonoBehaviour
+public class Damage : UIPane, IObjectPool
 {
     [SerializeField] AnimationCurve AnimCurve = null;
 
     Text Text;
-    float time = 0.0f;
+    float Timer = 0.0f;
     Vector3 MovVec = new Vector3(0, 0.2f, 0);
     Vector3 Mov = Vector3.zero;
     Vector2 Random = Vector2.zero;
-    RectTransform Transform;
-    GameObject Target;
+    GameObject Target = null;
 
-    private void Awake()
+    protected override void Setup()
     {
-        Transform = GetComponent<RectTransform>();
         Text = GetComponent<Text>();
-        Random = new Vector2(UnityEngine.Random.Range(-10.0f, 10.0f), UnityEngine.Random.Range(-5.0f, 5.0f));
     }
 
     // Update is called once per frame
-    void Update()
+    void UnityUpdate()
     {
-        time += Time.deltaTime;
-
-        Mov += MovVec* AnimCurve.Evaluate(time);
-        Transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, Target.transform.position) + Random;
-        Transform.position += Mov;
-
-        if (time > 1.0f)
+        if (Renderer.cull) return;
+        if (Target == null)
         {
-            Destroy(this.gameObject);
+            Destroy();
+            return;
+        }
+
+        Timer += Time.deltaTime;
+
+        Mov += MovVec * AnimCurve.Evaluate(Timer);
+        RectTransform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, Target.transform.position) + Random;
+        RectTransform.position += Mov;
+
+        if (Timer > 1.0f)
+        {
+            Destroy();
         }
     }
 
@@ -45,5 +49,27 @@ public class Damage : MonoBehaviour
     public void SetColor(Color col)
     {
         Text.color = col;
+    }
+
+    //オブジェクトプールの実装
+    public bool IsActive => !Renderer.cull;
+
+    public void DisactiveForInstantiate()
+    {
+        Renderer.cull = true;
+        LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
+    }
+
+    public void Create()
+    {
+        Timer = 0.0f;
+        Mov = Vector3.zero;
+        Random = new Vector2(UnityEngine.Random.Range(-10.0f, 10.0f), UnityEngine.Random.Range(-5.0f, 5.0f));
+        Renderer.cull = false;
+    }
+
+    public void Destroy()
+    {
+        Renderer.cull = true;
     }
 }

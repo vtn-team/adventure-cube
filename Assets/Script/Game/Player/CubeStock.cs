@@ -57,6 +57,7 @@ public class CubeStock
         if (CubeId != 0)
         {
             Cube = MonoBlock.Build(CubeId, MasterCube); //仮の挙動
+            Cube.gameObject.layer = LayerMask.NameToLayer("Block");
             Cube.transform.SetParent(MasterCube.transform);
             Cube.transform.localPosition = PositionOffset;
         }

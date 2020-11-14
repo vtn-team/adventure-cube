@@ -8,8 +8,9 @@ using UnityEngine;
 
 namespace Block
 {
-    public class AutoAttackTimer
+    public class AttackTimer
     {
+        public float Current => (Timer / Interval);
         public bool IsAttackOK => (Timer >= Interval);
         float Timer = 0;
         float Interval;

@@ -12,16 +12,24 @@ namespace Block
     /// <summary>
     /// 何かを飛ばす実装
     /// </summary>
-    public class Shooter : MonoBlock, IAttackBlock
+    public class Shooter : MonoBlock, IAttackBlock, ICooldownTimer
     {
         [SerializeField] int interval;
+        public float CurrentInterval => AutoAttack.Current;
         public bool CanIAttack => false;
-        AutoAttackTimer AutoAttack = new AutoAttackTimer();
+        AttackTimer AutoAttack = new AttackTimer();
+
+        ObjectPool<RollingBlock> ObjPool = new ObjectPool<RollingBlock>();
 
         protected override void Setup()
         {
             AutoAttack.Setup(interval);
             LifeCycleManager.AddUpdate(UnityUpdate, this.gameObject, 0);
+
+            //作っておいてプールする
+            ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
+            ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
+            ObjPool.Pooling(Bullet.Build<RollingBlock>("RollingBlock", MasterCube, this, null));
         }
 
         // 攻撃の実装が必要
@@ -32,8 +40,11 @@ namespace Block
             var target = TargetHelper.SearchTarget(MasterCube, TargetHelper.SearchLogicType.NearestOne);
             if (target)
             {
-                var Obj = Bullet.Build<BulletObject.RollingBlock>("RollingBlock", MasterCube, this, null);
-                Obj.SetTarget(target);
+                var Obj = ObjPool.Instantiate();
+                if (Obj)
+                {
+                    Obj.SetTarget(target);
+                }
             }
             else
             {

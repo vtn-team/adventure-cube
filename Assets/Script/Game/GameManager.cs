@@ -13,7 +13,7 @@ public partial class GameManager : MonoBehaviour
 {
     //ゲーム中のオブジェクトデータ
     [SerializeField] bool IsVersionUpFlag = false;
-    [SerializeField] MasterCube PlayableChar = null;
+    [SerializeField] Player PlayableChar = null;
     [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
     [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
 
@@ -27,11 +27,14 @@ public partial class GameManager : MonoBehaviour
     int LoadingCount = 0;
     delegate void LoadMasterDataCallback<T>(T data);
 
-    static GameManager Instance = new GameManager();
+    static GameManager instance = null;
+    static public GameManager Instance => instance;
+    private GameManager() { }
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
+        InputObs = new InputObserver();
         GameObjectCache.Setup();
 
         LoadMasterData("Cube", (MasterData.MasterDataClass<MasterData.Cube> data) => cubeMaster = data);
@@ -64,7 +67,7 @@ public partial class GameManager : MonoBehaviour
         }
     }
     
-    static public MasterCube GetPlayableChar()
+    static public Player GetPlayableChar()
     {
         return Instance.PlayableChar;
     }

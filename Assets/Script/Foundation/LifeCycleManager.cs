@@ -54,7 +54,8 @@ public class LifeCycleManager
     }
 
     static BehaviourAttachment attachment = null;   // Unityのイベントが必要なのでそれを拾ってくるためのクラス
-    static LifeCycleManager instance = null;        // シングルトン
+    static LifeCycleManager instance = new LifeCycleManager();    // シングルトン
+    private LifeCycleManager(){ }
 
     /// <summary>
     /// シングルトン処理 - 自分自身を返す
@@ -64,12 +65,11 @@ public class LifeCycleManager
     /// </summary>
     static public LifeCycleManager Instance { get
         {
-            if(instance == null)
+            if(attachment == null)
             {
                 attachment = GameObject.FindObjectOfType<BehaviourAttachment>();
                 if(attachment != null)
                 {
-                    instance = new LifeCycleManager();
                     attachment.SetUpdateCallback(instance.UpdateCallback);
                 }
             }

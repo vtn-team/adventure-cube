@@ -61,11 +61,13 @@ public class MasterCube : MonoBehaviour
             Blocks.Add(stock);
         }
 
+        _Coord.Top = YOffset;
+        YOffset = 0;
+
         //Y移動
         this.transform.Translate(0, YOffset, 0);
 
         _Coord.SetPosition(transform.position);
-        _Coord.Top = YOffset;
 
         //キューブ更新したタイミングで呼び出す
         UpdateCube();

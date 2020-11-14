@@ -14,6 +14,7 @@ public partial class GameManager
         InGame,
     }
     public GameState CurrentState { get; private set; }
+    public InputObserver InputObs { get; private set; }
 
     void UnityUpdate()
     {
@@ -35,10 +36,14 @@ public partial class GameManager
 
         //キャラデータを設定していく
         var gameObject = new GameObject("Player");
+        gameObject.layer = LayerMask.NameToLayer("Player"); //
         PlayableChar = gameObject.AddComponent<Player>();
         var plList = CharacterMaster.Where(d => d.IsPlayable==1 && d.FriendId == 1);
         var playable = plList.ElementAt(Random.Range(0,plList.Count()));
         PlayableChar.Build(playable.Id);
+
+        //UIつくる
+        GameUI.Instance.Setup();
 
         //処理終わり
         CurrentState = GameState.Build;
@@ -62,8 +67,15 @@ public partial class GameManager
         CurrentState = GameState.InGame;
     }
 
+    string[] ButtonLabels = new string[]{ "Fire1", "Fire2" };
     void InGame()
     {
-
+        foreach (var label in ButtonLabels)
+        {
+            if (Input.GetButtonDown(label))
+            {
+                InputObs.NotifyObserver(InputObserver.CreateInput(label));
+            }
+        }
     }
 }
