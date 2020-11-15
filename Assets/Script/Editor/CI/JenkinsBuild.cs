@@ -28,7 +28,7 @@ public class JenkinsBuild
             switch (args[i])
             {
                 case "-projectPath":
-                    outpath = args[i + 1];
+                    outpath = args[i + 1] + "\\Build";
                     break;
                 case "-devmode":
                     isDevelopment = args[i + 1] == "true";
