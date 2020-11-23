@@ -26,15 +26,53 @@ public enum ResourceType
 /// </summary>
 public class ResourceCache
 {
-    bool AssetBundleSwitch = false;
+    public enum CacheType
+    {
+        Resources,          //Resourcesを参照します
+        AssetDatabase,      //AssetDatabaseを参照します(Editorのみ)
+        AssetBundleLocal,   //ローカルビルドしたアセットバンドルを参照します
+        AssetBundleRelease, //アセットバンドルは、リリース時と同様の参照方法を取ります
+    }
+    static public CacheType Type => Instance._type;
+
     StringBuilder Path = new StringBuilder(256);
     static ResourceCache Instance = new ResourceCache();
+
+    CacheType _type = CacheType.Resources;
 
     CacheTemplate<GameObject> PrefabCache = new CacheTemplate<GameObject>();
     CacheTemplate<Material> MaterialCache = new CacheTemplate<Material>();
 
     Dictionary<int, MasterData.Cube> CubeMasterCache = new Dictionary<int, MasterData.Cube>();
 
+
+    class AssetBundleRefCounter
+    {
+        public delegate void Callback();
+
+        public AssetBundle Object;
+        public int Counter;
+
+        static public AssetBundleRefCounter LoadAsync(string path, Callback cb)
+        {
+            var ret = new AssetBundleRefCounter();
+            var req = AssetBundle.LoadFromFileAsync(path);
+            req.completed += op => {
+                ret.Object = req.assetBundle;
+                ret.Counter = 1;
+                cb();
+            };
+            return ret;
+        }
+
+        static public AssetBundleRefCounter Load(string path)
+        {
+            var ret = new AssetBundleRefCounter();
+            ret.Object = AssetBundle.LoadFromFile(path);
+            ret.Counter = 1;
+            return ret;
+        }
+    }
     /*
     CubeSheet CubeSheet = null;
     static public CubeSheet CubeMaster => Instance.CubeSheet;
@@ -86,7 +124,7 @@ public class ResourceCache
     string GetPrefabPath(ResourceType type, string name)
     {
         Path.Length = 0;
-        if (AssetBundleSwitch)
+        if (Type != CacheType.Resources)
         {
             //tbd
         }
@@ -106,7 +144,7 @@ public class ResourceCache
     string GetMaterialPath(ResourceType type, string name)
     {
         Path.Length = 0;
-        if (AssetBundleSwitch)
+        if (Type != CacheType.Resources)
         {
             //tbd
         }
