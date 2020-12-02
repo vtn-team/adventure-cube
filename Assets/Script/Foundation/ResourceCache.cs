@@ -114,12 +114,20 @@ public class ResourceCache
     string GetPrefabPath(ResourceType type, string name)
     {
         Path.Length = 0;
+        string ext = "";
+        switch(Type)
+        {
+            case CacheType.Resources: ext = ""; break;
+            case CacheType.AssetDatabase: ext = ""; break;
+            case CacheType.AssetBundleLocal: ext = ".prefab"; break;
+            case CacheType.AssetBundleRelease: ext = ".prefab"; break;
+        }
         switch (type)
         {
-            case ResourceType.FieldMap: Path.AppendFormat("Field/{0}.prefab", name); break;
-            case ResourceType.Cube: Path.AppendFormat("Blocks/{0}.prefab", name); break;
-            case ResourceType.Bullet: Path.AppendFormat("Bullet/{0}.prefab", name); break;
-            case ResourceType.UI: Path.AppendFormat("UI/{0}.prefab", name); break;
+            case ResourceType.FieldMap: Path.AppendFormat("Field/{0}{1}", name, ext); break;
+            case ResourceType.Cube: Path.AppendFormat("Blocks/{0}{1}", name, ext); break;
+            case ResourceType.Bullet: Path.AppendFormat("Bullet/{0}{1}", name, ext); break;
+            case ResourceType.UI: Path.AppendFormat("UI/{0}{1}", name, ext); break;
         }
         return Path.ToString();
     }
@@ -127,10 +135,18 @@ public class ResourceCache
     string GetMaterialPath(ResourceType type, string name)
     {
         Path.Length = 0;
+        string ext = "";
+        switch (Type)
+        {
+            case CacheType.Resources: ext = ""; break;
+            case CacheType.AssetDatabase: ext = ""; break;
+            case CacheType.AssetBundleLocal: ext = ".mat"; break;
+            case CacheType.AssetBundleRelease: ext = ".mat"; break;
+        }
         switch (type)
         {
-            case ResourceType.FieldMaterial: Path.AppendFormat("Material/Field/{0}.mat", name); break;
-            case ResourceType.CubeMaterial: Path.AppendFormat("Material/Cube/{0}.mat", name); break;
+            case ResourceType.FieldMaterial: Path.AppendFormat("Material/Field/{0}{1}", name, ext); break;
+            case ResourceType.CubeMaterial: Path.AppendFormat("Material/Cube/{0}{1}", name, ext); break;
         }
         return Path.ToString();
     }

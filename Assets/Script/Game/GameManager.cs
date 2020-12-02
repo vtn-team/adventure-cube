@@ -13,6 +13,7 @@ public partial class GameManager : MonoBehaviour
 {
     //ゲーム中のオブジェクトデータ
     [SerializeField] bool IsVersionUpFlag = false;
+    [SerializeField] ResourceCache.CacheType CacheType = ResourceCache.CacheType.Resources;
     [SerializeField] Player PlayableChar = null;
     [SerializeField] List<MasterCube> Enemy = new List<MasterCube>();
     [SerializeField] List<MasterCube> NPC = new List<MasterCube>();
@@ -36,7 +37,7 @@ public partial class GameManager : MonoBehaviour
         instance = this;
         InputObs = new InputObserver();
 
-        ResourceCache.SetupResourceManager(ResourceCache.CacheType.AssetBundleLocal);
+        ResourceCache.SetupResourceManager(CacheType);
         GameObjectCache.Setup();
 
         LoadMasterData("Cube", (MasterData.MasterDataClass<MasterData.Cube> data) => cubeMaster = data);
