@@ -63,3 +63,6 @@ Editor拡張側のコードでやってますが、interfaceの派生型を勝�
 [SerializeReference, SubclassSelector]
 public ICommand Command;
 ```
+
+### 参考ソース
+[EnemyCommand.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Game/Enemy/EnemyCommand/EnemyCommand.cs)

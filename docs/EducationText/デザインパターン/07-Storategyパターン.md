@@ -89,3 +89,8 @@ LogicTypeによって帰るものが変わります。
 
 サブルーチン(関数)レベルで切り替えが可能な処理は、このようにヘルパーとして切り出すと汎用性が上がります。  
 ヘルパーは厳密にはStorategyパターンではありませんが、このような検索処理をクラス内部に埋め込む必要があるときは、アルゴリズムを切り替えられるように意識できるとよいでしょう。
+
+
+### 参考ソース
+[DamageCaster.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Game/Block/Foundation/DamageCaster.cs)  
+[TargetHelper.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Game/Block/Logic/TargetHelper.cs)  

@@ -94,3 +94,10 @@ adventure-cubeでの実装はありません。
 
 ただこの処理は、必ずupdateを中継する分処理が飛び飛びになるので、分岐ケースが多いと見づらくなったり、バグも多くなりそうですよね。  
 そういう時に、モーションを再生している場所で、「終わった時をにこういうことをしてくれ」という処理をあわせて書けると、見通しが良くなるというわけです。
+
+
+### 参考ソース
+[IObservable.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Foundation/Interface/IObservable.cs)  
+[IObserver.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Foundation/Interface/IObserver.cs)  
+[InputObserver.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Game/System/InputObserver.cs)  
+[GameManager.GameManagement.cs](https://github.com/vtn-team/adventure-cube/blob/develop/Assets/Script/Game/GameManager.GameManagement.cs)  

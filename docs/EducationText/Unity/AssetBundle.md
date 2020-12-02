@@ -179,6 +179,10 @@ AssetBundleは、2種の状態を持ちます。
 Switch等で開発をする際、メモリ状況を鑑みて、多くの場合はアセットは必要な時に読み出し、必要なくなったらアンロードをするかと思います。  
 そうでなくてもSwitchやディスクアクセスを想定するコンシューマでは、**I/Oスパイクを発生させないためにアセットをメモリ上に展開したままにすることが多い**ので、実質1キャラに対してメモリを2倍食うと考えてよいです。  
 
+### 参考ソース
+[AssetBundleManager.cs](https://github.com/vtn-team/adventure-cube/tree/develop/Assets/Script/Foundation/IO/AssetBundleManager.cs)
+[CacheTemplate.cs](https://github.com/vtn-team/adventure-cube/tree/develop/Assets/Script/Foundation/CacheTemplate.cs)
+[ResourceCache.cs](https://github.com/vtn-team/adventure-cube/tree/develop/Assets/Script/Foundation/ResourceCache.cs)
 
 AssetBundleManagerの実装はあるので、参考にしてみてください。  
 まだ作ってはいませんが、ローカルで動かすアセバン版ではなく、リリース版ではビルトインとダウンロードの切り分けを管理する設定ファイル、アセバンのバージョンの管理をする設定データを用意します。  
