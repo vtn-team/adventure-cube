@@ -35,6 +35,8 @@ public partial class GameManager : MonoBehaviour
     {
         instance = this;
         InputObs = new InputObserver();
+
+        ResourceCache.SetupResourceManager(ResourceCache.CacheType.AssetBundleLocal);
         GameObjectCache.Setup();
 
         LoadMasterData("Cube", (MasterData.MasterDataClass<MasterData.Cube> data) => cubeMaster = data);

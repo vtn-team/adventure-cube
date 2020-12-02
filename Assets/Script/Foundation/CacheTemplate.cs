@@ -33,7 +33,8 @@ public class CacheTemplate<T> where T : UnityEngine.Object
             break;
 #endif
         case ResourceCache.CacheType.AssetBundleLocal:
-            //Cache.Add(path, RefCounter.Build();
+        case ResourceCache.CacheType.AssetBundleRelease:
+            Cache.Add(path, AssetBundleManager.LoadFromPath<T>(path));
             break;
         }
     }

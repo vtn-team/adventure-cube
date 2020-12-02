@@ -45,34 +45,6 @@ public class ResourceCache
 
     Dictionary<int, MasterData.Cube> CubeMasterCache = new Dictionary<int, MasterData.Cube>();
 
-
-    class AssetBundleRefCounter
-    {
-        public delegate void Callback();
-
-        public AssetBundle Object;
-        public int Counter;
-
-        static public AssetBundleRefCounter LoadAsync(string path, Callback cb)
-        {
-            var ret = new AssetBundleRefCounter();
-            var req = AssetBundle.LoadFromFileAsync(path);
-            req.completed += op => {
-                ret.Object = req.assetBundle;
-                ret.Counter = 1;
-                cb();
-            };
-            return ret;
-        }
-
-        static public AssetBundleRefCounter Load(string path)
-        {
-            var ret = new AssetBundleRefCounter();
-            ret.Object = AssetBundle.LoadFromFile(path);
-            ret.Counter = 1;
-            return ret;
-        }
-    }
     /*
     CubeSheet CubeSheet = null;
     static public CubeSheet CubeMaster => Instance.CubeSheet;
@@ -81,6 +53,24 @@ public class ResourceCache
         Instance.CubeSheet = Resources.Load<CubeSheet>(Instance.GetPrefabPath(ResourceType.Cube, name));
     }
     */
+
+    static public void SetupResourceManager(CacheType type)
+    {
+        Instance._type = type;
+        switch(Type)
+        {
+            case CacheType.Resources:
+            case CacheType.AssetDatabase:
+                break;
+
+            case CacheType.AssetBundleLocal:
+            case CacheType.AssetBundleRelease:
+                {
+                    AssetBundleManager.Setup();
+                }
+                break;
+        }
+    }
 
     static public void SetupCubeCache(MasterData.Cube[] master)
     {
@@ -124,19 +114,12 @@ public class ResourceCache
     string GetPrefabPath(ResourceType type, string name)
     {
         Path.Length = 0;
-        if (Type != CacheType.Resources)
+        switch (type)
         {
-            //tbd
-        }
-        else
-        {
-            switch(type)
-            {
-                case ResourceType.FieldMap:   Path.AppendFormat("Field/{0}", name); break;
-                case ResourceType.Cube:       Path.AppendFormat("Blocks/{0}", name); break;
-                case ResourceType.Bullet:     Path.AppendFormat("Bullet/{0}", name); break;
-                case ResourceType.UI:         Path.AppendFormat("UI/{0}", name); break;
-            }
+            case ResourceType.FieldMap: Path.AppendFormat("Field/{0}.prefab", name); break;
+            case ResourceType.Cube: Path.AppendFormat("Blocks/{0}.prefab", name); break;
+            case ResourceType.Bullet: Path.AppendFormat("Bullet/{0}.prefab", name); break;
+            case ResourceType.UI: Path.AppendFormat("UI/{0}.prefab", name); break;
         }
         return Path.ToString();
     }
@@ -144,17 +127,10 @@ public class ResourceCache
     string GetMaterialPath(ResourceType type, string name)
     {
         Path.Length = 0;
-        if (Type != CacheType.Resources)
+        switch (type)
         {
-            //tbd
-        }
-        else
-        {
-            switch (type)
-            {
-                case ResourceType.FieldMaterial: Path.AppendFormat("Material/Field/{0}", name); break;
-                case ResourceType.CubeMaterial:  Path.AppendFormat("Material/Cube/{0}", name); break;
-            }
+            case ResourceType.FieldMaterial: Path.AppendFormat("Material/Field/{0}.mat", name); break;
+            case ResourceType.CubeMaterial: Path.AppendFormat("Material/Cube/{0}.mat", name); break;
         }
         return Path.ToString();
     }
