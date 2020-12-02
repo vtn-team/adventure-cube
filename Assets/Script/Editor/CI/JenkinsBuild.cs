@@ -140,16 +140,17 @@ public class BuildCommand
                                         BuildAssetBundleOptions.None,
                                         platform);
 
-        BuildAssetBundleReference(outPath);
+        BuildAssetBundleReference(outPath, "Assets/Resources/");
     }
 
     [MenuItem("Assets/Build AssetBundleReference")]
     public static void BuildAssetBundleReference()
     {
-        BuildAssetBundleReference("Assets/AssetBundle");
+        Debug.Log("BuildAssetBundleReference");
+        BuildAssetBundleReference("Assets/AssetBundle", "Assets/Resources/");
     }
 
-    public static void BuildAssetBundleReference(string targetPath = "")
+    public static void BuildAssetBundleReference(string targetPath = "Assets/AssetBundle", string infoDataPath="Assets/Resources/")
     {
         // Jenkins(コマンドライン)の引数をパース
         var args = System.Environment.GetCommandLineArgs();
@@ -157,9 +158,14 @@ public class BuildCommand
         {
             switch (args[i])
             {
-                case "-outPath":
+                case "-targetPath":
                     targetPath = args[i + 1];
                     break;
+
+                case "-infoDataPath":
+                    infoDataPath = args[i + 1];
+                    break;
+
                 default:
                     break;
             }
@@ -167,52 +173,81 @@ public class BuildCommand
 
         AssetBundleData BundleData = new AssetBundleData();
 
-        var files = Directory.GetFiles(targetPath);
-        foreach (var f in files)
+        Func<string, bool> IsDirectory = (string path) =>
         {
-            var ab = AssetBundle.LoadFromFile(f);
-            var manifest = ab.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            var assets = ab.GetAllAssetNames();
-            var sr = new System.IO.StreamReader(f);
+            return File
+                .GetAttributes(path)
+                .HasFlag(FileAttributes.Directory);
+        };
 
-            foreach (var a in assets)
+        Action<string> RecursiveSearch = (x)=> { };
+        RecursiveSearch = (string path) =>
+        {
+            var dirs = Directory.GetDirectories(path);
+            foreach (var d in dirs)
             {
-                BundleData.RefPathList.Add(new RefPath() { AssetName = a, RefBundleName = f });
+                RecursiveSearch(d);
             }
-            BundleData.BundleList.Add(new Bundle()
-            {
-                AssetName = f,
-                Hash = sha256(sr.ReadToEnd(), "ab_hash")
-            });
-            sr.Close();
-        }
 
-        string json = JsonUtility.ToJson(BundleData);
-        var sw = new System.IO.StreamWriter(targetPath + "\\AssetBundleData.json");
+            var files = Directory.GetFiles(path);
+            foreach (var f in files)
+            {
+                if(IsDirectory(f))
+                {
+                    RecursiveSearch(f);
+                    continue;
+                }
+
+                //拡張子がmanifestやmetaだったらcontinue
+                var ext = f.Split('.').Last();
+                if (ext == "manifest") continue;
+                if (ext == "meta") continue;//
+
+                Debug.Log("file:" + f.Split('.').Last());//
+                try
+                {
+                    var ab = AssetBundle.LoadFromFile(f);
+                    if (ab == null)
+                    {
+                        continue;
+                    }
+
+                    Debug.Log("asset bundle:" + f);
+                    var manifest = ab.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+                    var assets = ab.GetAllAssetNames();
+
+                    string hash = "";
+                    List<string> dependencies = new List<string>();
+                    if (manifest)
+                    {
+                        foreach (var an in manifest.GetAllAssetBundlesWithVariant())
+                        {
+                            BundleData.BundleList.Add(new Bundle()
+                            {
+                                AssetName = an,
+                                Hash = manifest.GetAssetBundleHash(an).ToString(),
+                                Dependencies = manifest.GetAllDependencies(an).ToList()
+                            });
+                        }
+                    }
+                    foreach (var a in assets)
+                    {
+                        BundleData.RefPathList.Add(new RefPath() { AssetPath = a.Replace("assets/resources/",""), RefBundleName = ab.name });
+                    }
+                    ab.Unload(false);
+                }
+                catch(Exception ex)
+                {
+                    Debug.LogError(ex.Message);
+                }
+            }
+        };
+        RecursiveSearch(targetPath);
+
+        string json = JsonUtility.ToJson(BundleData, true);
+        var sw = new System.IO.StreamWriter(infoDataPath + "\\AssetBundleData.json");
         sw.Write(json);
         sw.Close();
-    }
-
-    [Serializable]
-    class AssetBundleData
-    {
-        public List<Bundle> BundleList = new List<Bundle>();
-        public List<RefPath> RefPathList = new List<RefPath>();
-    }
-
-    [Serializable]
-    class Bundle
-    {
-        public string AssetName;
-        public List<string> Dependencies;
-        public string Hash;
-    }
-
-    [Serializable]
-    class RefPath
-    {
-        public string AssetName;
-        public string RefBundleName;
     }
 
     static string sha256(string planeStr, string key)
