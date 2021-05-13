@@ -11,10 +11,10 @@ jobs:
     container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
     strategy:
       matrix:
-        unity-tag: [2019.2.5f1]
+        unity-tag: [2019.4.0f1]
 
     steps:
-    - uses: actions/checkout@develop
+    - uses: actions/checkout@master
     - run: echo "${LICENSE}" | tr -d '\r' > /opt/Unity/Editor/Unity_lic.ulf
       env:
         LICENSE: ${{ secrets.LICENSE }}
