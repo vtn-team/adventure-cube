@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@master
     - run: mkdir -p /root/.cache/unity3d
     - run:  mkdir -p /root/.local/share/unity3d/Unity/
-    - run: LICENSE=UNITY_LICENSE_CONTENT
+    - run: LICENSE=UNITY_LICENSE
       env:
-        UNITY_LICENSE_CONTENT: ${{ secrets.license }}
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
     - run: echo "${!LICENSE}" | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
