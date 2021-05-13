@@ -1,4 +1,4 @@
-name: WindowsBuild
+name: AndroidBuild
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
     strategy:
       matrix:
-        unity-tag: [2019.4.0f1]
+        unity-tag: [2019.4.0f1-android]
 
     steps:
     - uses: actions/checkout@master
