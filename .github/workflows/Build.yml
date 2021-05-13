@@ -1,4 +1,4 @@
-name: UnityTestRunner
+name: WindowsBuild
 
 on:
   push:
