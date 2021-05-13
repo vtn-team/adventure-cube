@@ -15,7 +15,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod BuildCommand.Build -platform Windows -devmode true
+    - run: echo "${UNITY_LICENSE}" | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod BuildCommand.Build -platform Windows -manualLicenseFile ./Unity_v2018.x.ulf -devmode true
     - uses: actions/upload-artifact@master
       with:
         name: Builds
