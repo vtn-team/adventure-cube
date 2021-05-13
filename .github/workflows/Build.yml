@@ -18,7 +18,7 @@ jobs:
     - run: echo "${LICENSE}" | tr -d '\r' > /opt/Unity/Editor/Unity_lic.ulf
       env:
         LICENSE: ${{ secrets.LICENSE }}
-    - run: /opt/Unity/Editor/Unity -batchmode -logFile -projectPath . -executeMethod BuildCommand.Build -platform Windows -manualLicenseFile /opt/Unity/Editor/Unity_lic.ulf -devmode true
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -logFile -projectPath . -executeMethod BuildCommand.Build -platform Windows -manualLicenseFile /opt/Unity/Editor/Unity_lic.ulf -devmode true
     - uses: actions/upload-artifact@master
       with:
         name: Builds
