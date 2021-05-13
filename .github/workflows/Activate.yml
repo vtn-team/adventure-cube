@@ -1,0 +1,23 @@
+name: Activate
+
+on:
+  push:
+    branches:
+    - develop
+
+jobs:
+  editorTestJob:
+    runs-on: ubuntu-latest
+    container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
+    strategy:
+      matrix:
+        unity-tag: [2018.4.9f1]
+
+    steps:
+    - uses: actions/checkout@master
+    - run: mkdir -p /root/.cache/unity3d
+    - run:  mkdir -p /root/.local/share/unity3d/Unity/
+    - run: LICENSE=UNITY_LICENSE_CONTENT
+      env:
+        UNITY_LICENSE_CONTENT: ${{ secrets.license }}
+    - run: echo "${!LICENSE}" | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
