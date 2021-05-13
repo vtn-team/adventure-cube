@@ -20,8 +20,8 @@ jobs:
         LICENSE: ${{ secrets.LICENSE }}
     - run: ls -al
     - run: /opt/Unity/Editor/Unity -batchmode -logFile -nographics -manualLicenseFile /opt/Unity/Editor/Unity_lic.ulf || exit 0
-    - run: /opt/Unity/Editor/Unity -batchmode -nographics -logFile -projectPath . -projectPath . -executeMethod BuildCommand.Build -platform Windows -runEditorTests -editorTestsResultFile path/to/artifact/results.xml -devmode true || exit 0
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -logFile -projectPath . -projectPath . -executeMethod BuildCommand.Build -platform Android -devmode true || exit 0
     - uses: actions/upload-artifact@master
       with:
         name: Builds
-        path: path/to/artifact
+        path: Build
